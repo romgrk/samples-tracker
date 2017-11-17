@@ -5,6 +5,7 @@
 const passport = require('passport')
 const { OAuth2Strategy } = require('passport-google-oauth')
 
+const Settings = require('./models/settings.js')
 const User = require('./models/user.js')
 const config = require('./config.js')
 
@@ -49,9 +50,10 @@ passport.use(new OAuth2Strategy(config.google.auth, (token, refreshToken, profil
           email: profile.emails[0].value,
         }
 
-        User.create(newUser)
-          .then(() => done(undefined, newUser))
-          .catch(err => done(err))
+        Settings.canLogin(newUser.email)
+        .then(() => User.create(newUser))
+        .then(() => done(undefined, newUser))
+        .catch(err => done(err))
       }
     })
     .catch(err => done(err))

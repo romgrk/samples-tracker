@@ -25,6 +25,9 @@ client.connect((err) => {
  * for usage with postgres module.
  */
 function interpolate(query, params) {
+  if (!params)
+    return { query: query, params: [] }
+
   let index = 1
   const variables = {}
 
