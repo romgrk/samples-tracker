@@ -1,0 +1,25 @@
+version: '2'
+services:
+  db:
+    image: 'postgres:10'
+    ports:
+      - '5432:5432'
+    environment:
+      #POSTGRES_DB: main
+      #POSTGRES_USER: app
+      POSTGRES_PASSWORD: postgres
+  web:
+    build: .
+    ports:
+      - '3000:3000'
+    volumes:
+      - .:/usr/src/app
+    links:
+      - db
+    environment:
+      PGHOST: '172.17.0.1'
+      PGDATABASE: postgres
+      PGUSER: postgres
+      PGPASSWORD: postgres
+    command: ["sh", "-c", "sleep 3; npm run start:dev"]
+    #command: ["/bin/bash", "./wait_for_it.sh", "postgres:5432", "--", "npm", "run", "start:dev"]
