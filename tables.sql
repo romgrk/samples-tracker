@@ -66,9 +66,18 @@ CREATE TABLE templates (
     name         text not null,
     completionFn text null
 ); */
+/* CREATE TYPE Status AS ENUM (
+    'not_done',
+    'done',
+    'in_progress',
+    'error',
+    'on_hold'
+);
+*/
 /* steps_data (
     id           serial  not null,
     index        integer not null,
+    status       Status not null,
     completionFn text null,
 
     constraint "PKey" primary key ("id", "index")
