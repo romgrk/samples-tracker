@@ -48,11 +48,6 @@ app.get('/profile', isLoggedIn, (req, res) => {
   })
 })
 
-app.get('/logout', (req, res) => {
-  req.logout()
-  res.redirect('/')
-})
-
 app.use('/users', users)
 
 
@@ -66,6 +61,11 @@ app.get('/auth/google/callback', passport.authenticate('google', {
   successRedirect : '/profile',
   failureRedirect : '/',
 }))
+app.get('/auth/logout', (req, res) => {
+  req.logout()
+  res.redirect('/')
+})
+
 
 function isLoggedIn(req, res, next) {
   if (req.isAuthenticated())
