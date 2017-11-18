@@ -35,17 +35,18 @@ app.use(passport.session()) // persistent login sessions
 app.use(flash()) // use connect-flash for flash messages stored in session
 
 
+function defaultRoute(req, res) {
+  if (req.isAuthenticated())
+    res.redirect('/profile')
+  else
+    res.render('index.ejs')
+}
+
 app.get('/profile', isLoggedIn, (req, res) => {
   res.render('profile.ejs', {
     user: req.user // get the user out of session and pass to template
   })
 })
-app.get('/login', (req, res) => {
-  // render the page and pass in any flash data if it exists
-  res.render('login.ejs', { message: req.flash('loginMessage') })
-})
-// process the login form
-// app.post('/login', do all our passport stuff here);)
 
 app.get('/logout', (req, res) => {
   req.logout()
@@ -73,7 +74,9 @@ function isLoggedIn(req, res, next) {
 }
 
 
-app.use('/', (req, res) => res.render('index.ejs'))
+
+app.use('/', defaultRoute)
+
 
 // 404 Handler
 app.use((req, res, next) => {
