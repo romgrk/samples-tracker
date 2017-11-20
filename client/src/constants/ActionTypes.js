@@ -1,3 +1,8 @@
-// Counter
-export const INCREMENT_COUNTER = 'INCREMENT_COUNTER'
-export const DECREMENT_COUNTER = 'DECREMENT_COUNTER'
+import { createModelConstants } from '../utils/create-actions.js'
+
+// Settings
+export const SETTINGS = createModelConstants('SETTINGS')
+// Users
+export const USERS    = createModelConstants('USERS')
+// Samples
+export const SAMPLES  = createModelConstants('SAMPLES')

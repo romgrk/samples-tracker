@@ -31,8 +31,11 @@ CREATE TABLE samples (
 DROP TABLE IF EXISTS samples;
 CREATE TABLE samples (
     id          serial  primary key,
+    name        text    not null,
     template_id integer not null,
     tags        jsonb   not null,
+    created     date    not null,
+    modified    date        null,
     steps       jsonb   not null
 );
 DROP TABLE IF EXISTS sample_comments;

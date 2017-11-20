@@ -6,14 +6,30 @@
 const db = require('../database.js')
 
 module.exports = {
-  get,
+  findAll,
+  findByKey,
+  update,
   canLogin,
 }
 
 
-function get(key) {
+function findAll() {
+  return db.selectAll('SELECT * FROM settings')
+    .then(rows =>
+      rows.reduce((acc, cur) => (
+        acc[cur.key] = cur.value,
+        acc
+      ), {})
+    )
+}
+
+function findByKey(key) {
   return db.selectOne('SELECT value FROM settings WHERE key = @key', { key })
     .then(({ value }) => value)
+}
+
+function update(key, value) {
+  return db.query('UPDATE settings SET value = @value WHERE key = @key', { key, value })
 }
 
 function canLogin(email) {

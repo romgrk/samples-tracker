@@ -10,7 +10,6 @@ const flash = require('connect-flash')
 
 const config = require('./config.js')
 const passport = require('./passport.js')
-const users = require('./routes/users')
 
 const app = express()
 
@@ -48,7 +47,8 @@ app.get('/profile', isLoggedIn, (req, res) => {
   })
 })
 
-app.use('/users', users)
+app.use('/api/user',     require('./routes/user'))
+app.use('/api/settings', require('./routes/settings'))
 
 
 

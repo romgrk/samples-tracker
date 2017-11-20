@@ -10,10 +10,19 @@ import 'font-awesome/css/font-awesome.min.css'
 import './styles/reset.css'
 import './styles/global-styles.css'
 
+import settings from './actions/settings'
+
+const store = configureStore()
+
 render(
-  <Provider store={configureStore()}>
+  <Provider store={store}>
     <Routes />
   </Provider>,
   document.getElementById('root')
 )
+
+console.log(settings)
+
+store.dispatch(settings.fetch())
+
 registerServiceWorker()
