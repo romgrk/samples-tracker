@@ -1,7 +1,7 @@
 FROM node:8
 
-# Binds to port 3000
-EXPOSE 3000
+# Binds to port 3001
+EXPOSE 3001
 
 # Working directory for application
 RUN mkdir -p /usr/src/app
