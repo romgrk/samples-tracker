@@ -10,7 +10,7 @@ const Container = styled.div`text-align: center;`
 
 const items = [
   { type: 'item', icon: 'cogs',  path: '/settings',  title: 'Settings' },
-  { type: 'item', icon: 'flask', path: '/',          title: 'Samples' },
+  { type: 'item', icon: 'flask', path: '/samples',   title: 'Samples' },
   { type: 'item', icon: 'list',  path: '/templates', title: 'Templates' },
   { type: 'fill'},
   { type: 'button', icon: 'question-circle', title: 'Help' },
@@ -21,7 +21,7 @@ function Routes() {
   return (
     <Router>
       <div className='App hbox'>
-        <div className='App__sidebar'>
+        <div className='App__sidebar visible'>
           <Route render={(props) =>
             <Sidebar
               index={items.findIndex(i => i.path === props.location.pathname)}
