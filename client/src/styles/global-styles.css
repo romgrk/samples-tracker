@@ -1,0 +1,219 @@
+
+/*
+#292929 --darker-bg
+#2E2E2E --chrome
+#303030 --sidebar?
+#3D3D3D --app-bg
+
+#888888
+#5B5B5B
+#909090
+
+*/
+
+html, body {
+  --color: #909090;
+  --light-color: #ccc;
+  --bg-color: #3D3D3D;
+  --border-color: #2E2E2E;
+  --dark-bg-color: #292929;
+  --hover-color: #ddd;
+  --hover-bg-color: #353535;
+  --active-bg-color: rgba(255, 255, 255, 0.025);
+  --light-border-color: #888888;
+  --dark-border-color: #181818;
+  --accent-color: #599eff;
+  --dark-accent-color: #003580;
+  --selection-color: rgba(255, 255, 255, 0.2);
+
+  --table-color: #bdc4cd;
+  --table-bg-color: #2d2d2d;
+  --table-bg-alt-color: #313131;
+  --table-border-color: #414141;
+
+  --padding: 5px;
+
+  --vertical-step: 5px;
+  --line-height: 25px;
+
+  font-family: Verdana, sans-serif;
+  font-size: 14px;
+  line-height: var(--line-height);
+  font-weight: normal;
+  color: var(--color);
+}
+
+::selection {
+  background: var(--selection-color);
+}
+::-moz-selection {
+  background: var(--selection-color);
+}
+
+.label {
+  margin-right: var(--padding);
+  font-family: Roboto, Ubuntu, Arial, sans-serif;
+  font-size: 12px;
+  font-weight: bold;
+  color: #999;
+}
+
+.line {
+  height: var(--line-height);
+}
+
+.vbox {
+  display: flex;
+  flex-direction: column;
+}
+.hbox {
+  display: flex;
+  flex-direction: row;
+}
+.center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+input[type=text] {
+  color: var(--light-color);
+  background-color: var(--dark-bg-color);
+  outline: none;
+  border: 1px solid var(--dark-border-color);
+  border-radius: 2px;
+  padding: 0 2px;
+}
+input[type=text]:active,
+input[type=text]:focus {
+  outline: none;
+  border: 1px solid var(--light-border-color);
+}
+.input-like {
+  color: var(--light-color);
+  padding: 0 2px;
+}
+
+.Button {
+  font-weight: bold;
+  background-color: transparent;
+  color: var(--color);
+  border: 1px solid var(--light-border-color);
+  border: none;
+  border-radius: 2px;
+  height: 20px;
+  padding: 0 2px;
+  margin: 0 var(--padding);
+  cursor: pointer;
+}
+.Button:hover {
+  color: var(--hover-color);
+  background-color: var(--hover-bg-color);
+}
+
+table {
+  margin-left: var(--padding);
+  font-size: inherit;
+}
+
+tr, td, th {
+  padding: 0;
+  height: 25x;
+  line-height: 25x
+}
+
+h1 {
+  padding: 0 calc(0 * var(--padding));
+  margin: 0;
+  font-size: 28px;
+  font-weight: bold;
+  line-height: 40px;
+}
+
+#root {
+  width: 100%;
+  height: 100%;
+  background-color: var(--bg-color);
+}
+
+.App {
+  width:  100%;
+  height: 100%;
+}
+.App__content {
+  padding: 0 calc(2 * var(--padding));
+}
+
+
+.Sidebar {
+  position: relative;
+  height: 100%;
+  background-color: var(--dark-bg-color);
+}
+.Sidebar a {
+  color: inherit;
+  text-decoration: none;
+}
+.Sidebar__item {
+  --size: 40px;
+  width: var(--size);
+  height: var(--size);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  user-select: none;
+}
+.Sidebar__item:hover, .Sidebar__item.active:hover {
+  background-color: var(--hover-bg-color);
+}
+.Sidebar__item.active {
+  position: relative;
+  background-color: var(--active-bg-color);
+}
+.Sidebar__border {
+  position: absolute;
+  height: 40px;
+  width: 1px;
+  background-color: var(--accent-color);
+  left: 39px;
+  transition: top .15s;
+}
+.Sidebar__fill {
+  flex: 1 1;
+}
+
+
+.Samples__table {
+  width: 100%;
+  background-color: var(--table-bg-color);
+}
+.Samples__header > div {
+  border-top: 1px solid var(--table-border-color);
+  border-bottom: 1px solid var(--table-border-color);
+  line-height: calc(var(--line-height) - 2px);
+}
+.Samples__row:nth-child(2n + 1) { /* skip header */
+  background-color: var(--table-bg-alt-color);
+}
+.Samples__row {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+}
+.Samples__row > div {
+  padding: 0 5px;
+}
+.Samples__row > div:first-child {
+  flex: 0 0 100px;
+}
+.Samples__row > div:not(:first-child) {
+  min-width: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-left: 1px solid var(--table-border-color);
+}
+.Samples__row > div:last-child {
+  flex: 1 1 40px;
+}
