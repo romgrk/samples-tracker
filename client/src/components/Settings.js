@@ -4,7 +4,7 @@ import pure from 'recompose/pure'
 import styled from 'styled-components'
 
 import Label from './Label'
-import List from './List'
+import EditableList from './EditableList'
 
 const Line = ({ children }) =>
   <div className='line'>
@@ -21,7 +21,7 @@ function Settings({ data, onChange }) {
       </Line>
 
       <Label>Email-Whitelist</Label>
-      <List
+      <EditableList
         values={data.whitelist || []}
         onAdd={value => onChange('whitelist', data.whitelist.concat(value))}
         onDelete={value => onChange('whitelist', data.whitelist.filter(v => v === value))}
