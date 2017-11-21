@@ -1,13 +1,8 @@
 import React from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
-import styled from 'styled-components'
 
-//import { CounterContainer } from 'containers'
 import Sidebar from '../components/Sidebar'
 import SettingsContainer from '../containers/SettingsContainer'
-import { Header } from 'components'
-
-const Container = styled.div`text-align: center;`
 
 const items = [
   { type: 'item', icon: 'cogs',  path: '/settings',  title: 'Settings' },
@@ -34,9 +29,6 @@ function Routes() {
           <Route render={(props) =>
             <h1>{ (items.find(i => i.path === props.location.pathname)  || {}).title }</h1>
           }/>
-          <Container>
-            <Header />
-          </Container>
 
           <Switch>
             <Route exact path='/' render={() => <div>Index</div>} />
