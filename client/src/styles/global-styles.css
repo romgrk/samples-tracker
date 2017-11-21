@@ -42,6 +42,10 @@ html, body {
   --bg-color-warning: rgb(173, 124, 11);
   --bg-color-error:   rgb(209, 59, 46);
 
+  --bg-light-color-info:    #7ebef7;
+  --bg-light-color-success: #72da87;
+  --bg-light-color-warning: #f3bf44;
+  --bg-light-color-error:   #e89d96;
 
   --table-color: #bdc4cd;
   --table-bg-color: #2d2d2d;
@@ -51,6 +55,7 @@ html, body {
   --padding: 5px;
 
   --sidebar-size: 40px;
+  --notification-size: 45px;
 
   --vertical-step: 5px;
   --line-height: 25px;

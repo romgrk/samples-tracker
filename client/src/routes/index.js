@@ -2,6 +2,7 @@ import React from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 
 import Sidebar from '../components/Sidebar'
+import NotificationsContainer from '../containers/NotificationsContainer'
 import SettingsContainer from '../containers/SettingsContainer'
 
 const items = [
@@ -35,6 +36,8 @@ function Routes() {
             <Route path='/settings' component={SettingsContainer} />
           </Switch>
         </div>
+
+        <NotificationsContainer />
       </div>
     </Router>
   )

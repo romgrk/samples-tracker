@@ -9,6 +9,7 @@ import registerServiceWorker from './utils/registerServiceWorker'
 import 'font-awesome/css/font-awesome.min.css'
 import './styles/reset.css'
 import './styles/spinner.css'
+import './styles/notifications.css'
 import './styles/global-styles.css'
 
 import settings from './actions/settings'
