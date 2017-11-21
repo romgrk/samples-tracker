@@ -27,9 +27,18 @@ function Routes() {
           }/>
         </div>
         <div className='App__content'>
-          <Route render={(props) =>
-            <h1>{ (items.find(i => i.path === props.location.pathname)  || {}).title }</h1>
-          }/>
+          <Route render={(props) => {
+            const activeItem = items.find(i => i.path === props.location.pathname)
+
+            if (!activeItem)
+              return undefined
+
+            document.title = `Tracker - ${activeItem.title}`
+
+            return (
+              <h1>{ activeItem.title }</h1>
+            )
+          } }/>
 
           <Switch>
             <Route exact path='/' render={() => <div>Index</div>} />
