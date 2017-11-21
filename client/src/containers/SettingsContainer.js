@@ -9,7 +9,6 @@ import SettingsActions from '../actions/settings'
 
 class SettingsContainer extends React.Component {
   render() {
-    console.log(this.props)
     return (
       <Settings
         isLoading={this.props.settings.isLoading}
