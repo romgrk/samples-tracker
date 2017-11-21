@@ -38,7 +38,7 @@ class EditableList extends React.Component {
   }
 
   render() {
-    const { values, loading } = this.props
+    const { values, loading, placeholder } = this.props
     const { value } = this.state
 
     return (
@@ -57,6 +57,7 @@ class EditableList extends React.Component {
         <tr className='EditableList__item'>
           <td className='EditableList__value' colspan='2'>
             <Input
+              placeholder={placeholder}
               loading={loading}
               disabled={loading}
               value={value}

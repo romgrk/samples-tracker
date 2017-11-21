@@ -75,6 +75,16 @@ INSERT INTO steps (template_id, name, "completionFn") VALUES
     (1, 'Compute', NULL),
     (1, 'Report', NULL)
 ;
+INSERT INTO templates (name) VALUES ('Requests');
+INSERT INTO steps (template_id, name, "completionFn") VALUES
+    (2, 'Write', NULL),
+    (2, 'Review', NULL),
+    (2, 'Send', 'function(step, sample) { return step.files.length > 0 }'),
+    (2, 'Response', NULL),
+    (2, 'Read', NULL),
+    (2, 'Archive', NULL),
+    (2, 'Sleep', NULL)
+;
 
 /* steps (
     name         text not null,

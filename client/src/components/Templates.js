@@ -20,7 +20,7 @@ function Templates({ isLoading, data, onChange, onCreate, onError }) {
       {
         data.map(template =>
           <div className='Template'>
-            <div className='Template__info center'>
+            <div className='Template__info vcenter'>
               <Label>{ template.name }</Label>
             </div>
             <div className='Steps'>

@@ -110,6 +110,14 @@ html, body {
   align-items: center;
   justify-content: center;
 }
+.hcenter {
+  display: flex;
+  justify-content: center;
+}
+.vcenter {
+  display: flex;
+  align-items: center;
+}
 
 input[type=text] {
   color: var(--light-color);
@@ -305,7 +313,6 @@ h1 {
 }
 .App__content {
   width:  100%;
-  padding: 0 calc(2 * var(--padding));
 }
 .App__sidebar {
   flex-basis: 0;
@@ -317,6 +324,9 @@ h1 {
   flex-basis: var(--sidebar-size);
   width: var(--sidebar-size);
   transform: translateX(0);
+}
+.App__section {
+  padding: 0 calc(2 * var(--padding));
 }
 
 
@@ -358,9 +368,8 @@ h1 {
 }
 
 section.Settings {
-  padding: 0 calc(4 * var(--padding));
+  padding: 0 calc(6 * var(--padding));
 }
-
 
 .Samples__table {
   width: 100%;
@@ -402,15 +411,23 @@ section.Settings {
   flex-direction: row;
   width: 100%;
   overflow: hidden;
-  border: 1px solid var(--dark-bg-color);
-  border-radius: 2px;
-  /*border-left-color: var(--light-border-color);*/
 }
-.Template:not(:last-of-type) {
-  border-bottom-color: var(--light-border-color);
+.Template .Template__info {
+  border-left: 1px solid var(--light-border-color);
 }
+.Template:not(:last-of-type) .Template__info {
+  border-bottom: 1px solid var(--light-border-color);
+}
+.Template:first-of-type .Steps {
+  border-top: 1px solid var(--dark-bg-color);
+}
+.Template .Steps {
+  border-bottom: 1px solid var(--dark-bg-color);
+}
+
 .Template__info {
   padding: var(--padding);
+  padding-left: calc(2 * var(--padding));
   background-color: var(--dark-bg-color);
   width: 150px;
 }

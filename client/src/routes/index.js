@@ -37,7 +37,7 @@ function Routes() {
             document.title = `Tracker - ${activeItem.title}`
 
             return (
-              <h1>{ activeItem.title }</h1>
+              <h1 className='App__section'>{ activeItem.title }</h1>
             )
           } }/>
 

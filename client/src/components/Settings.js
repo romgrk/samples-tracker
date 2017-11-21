@@ -46,6 +46,7 @@ function Settings({ isLoading, data, onChange, onError }) {
         <Title>Email-Whitelist</Title>
         <p>Emails in this list are allowed to sign up to this application.</p>
         <EditableList
+          placeholder='Multiple emails allowed'
           loading={whitelist.isLoading}
           values={whitelist.data || []}
           onAdd={onWhitelistAdd}
