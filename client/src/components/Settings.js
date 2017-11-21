@@ -24,7 +24,7 @@ function Settings({ data, onChange }) {
       <EditableList
         values={data.whitelist || []}
         onAdd={value => onChange('whitelist', data.whitelist.concat(value))}
-        onDelete={value => onChange('whitelist', data.whitelist.filter(v => v === value))}
+        onDelete={value => onChange('whitelist', data.whitelist.filter(v => v !== value))}
       />
 
     </section>
