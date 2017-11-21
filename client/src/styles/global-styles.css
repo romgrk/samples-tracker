@@ -20,7 +20,8 @@ html, body {
   --hover-color: #ddd;
   --hover-bg-color: #353535;
   --active-bg-color: rgba(255, 255, 255, 0.025);
-  --light-border-color: #888888;
+  --light-border-color: rgba(255,255,255, 0.1);
+  --checkbox-border-color: #888888;
   --dark-border-color: #181818;
 
   --accent-color: #599eff;
@@ -158,7 +159,7 @@ input[type=text]:focus {
   font-size: inherit;
   border-radius: 3px;
   background-color: var(--dark-bg-color);
-  box-shadow: 0 0 0 1px var(--light-border-color);
+  box-shadow: 0 0 0 1px var(--checkbox-border-color);
   transition: background-color 0.16s cubic-bezier(0.5, 0.15, 0.2, 1);
 }
 .input-checkbox:focus {
@@ -385,10 +386,15 @@ section.Settings {
   flex-direction: row;
   width: 100%;
   overflow: hidden;
+  border: 1px solid var(--dark-bg-color);
+  border-left-color: var(--light-border-color);
+}
+.Template:not(:last-of-type) {
+  border-bottom-color: var(--light-border-color);
 }
 .Template__info {
   padding: var(--padding);
-  margin: var(--padding);
+  background-color: var(--dark-bg-color);
   width: 150px;
 }
 .Steps {
