@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import pure from 'recompose/pure'
 
+import arrayEquals from '../utils/array-equals'
 import Icon from './Icon'
 import Input from './Input'
 import Button from './Button'
@@ -32,7 +33,8 @@ class EditableList extends React.Component {
   }
 
   componentWillReceiveProps(props) {
-    this.setState({ value: '' })
+    if (!arrayEquals(props.values, this.props.values))
+      this.setState({ value: '' })
   }
 
   render() {
