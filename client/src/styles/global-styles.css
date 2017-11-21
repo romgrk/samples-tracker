@@ -111,9 +111,6 @@ html, body {
   text-transform: initial;
 }
 
-.line {
-  height: var(--line-height);
-}
 
 .vbox {
   display: flex;
@@ -373,4 +370,9 @@ section.Settings {
 }
 .Samples__row > div:last-child {
   flex: 1 1 40px;
+}
+
+
+.EditableList__value {
+  width: 200px;
 }
