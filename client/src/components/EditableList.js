@@ -46,7 +46,7 @@ class EditableList extends React.Component {
       <tbody>
         {
           values.map(value =>
-            <tr className='EditableList__item'>
+            <tr key={value} className='EditableList__item'>
               <td className='EditableList__value'>{ value }</td>
               <td>
                 <Button icon='close' onClick={() => this.props.onDelete(value)}/>
