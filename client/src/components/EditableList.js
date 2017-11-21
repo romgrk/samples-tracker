@@ -6,7 +6,7 @@ import Icon from './Icon'
 import Input from './Input'
 import Button from './Button'
 
-class List extends React.Component {
+class EditableList extends React.Component {
   static propTypes = {
     loading: PropTypes.bool,
     values: PropTypes.array.isRequired,
@@ -32,8 +32,7 @@ class List extends React.Component {
   }
 
   componentWillReceiveProps(props) {
-    if (props.values.includes(this.state.value))
-      this.setState({ value: '' })
+    this.setState({ value: '' })
   }
 
   render() {
@@ -41,20 +40,20 @@ class List extends React.Component {
     const { value } = this.state
 
     return (
-      <table className='List'>
+      <table className='EditableList'>
       <tbody>
         {
           values.map(value =>
-            <tr className='List__item'>
-              <td className='List__value'>{ value }</td>
+            <tr className='EditableList__item'>
+              <td className='EditableList__value'>{ value }</td>
               <td>
                 <Button icon='close' onClick={() => this.props.onDelete(value)}/>
               </td>
             </tr>
           )
         }
-        <tr className='List__item'>
-          <td className='List__value' colspan='2'>
+        <tr className='EditableList__item'>
+          <td className='EditableList__value' colspan='2'>
             <Input
               loading={loading}
               disabled={loading}
@@ -70,4 +69,4 @@ class List extends React.Component {
   }
 }
 
-export default List
+export default EditableList
