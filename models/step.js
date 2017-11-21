@@ -19,9 +19,7 @@ function fixRows(rows) {
   return rows
 }
 function fixProps(row) {
-  row.completionFn = row.completionfn
   row.templateId = row.template_id
-  delete row.completionfn
   delete row.template_id
   return row
 }

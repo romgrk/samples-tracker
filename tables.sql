@@ -61,14 +61,14 @@ CREATE TABLE templates (
     name        text    not null
 );
 CREATE TABLE steps (
-    id           serial  primary key,
-    template_id  integer not null,
-    name         text    not null,
-    completionFn text        null
+    id             serial  primary key,
+    template_id    integer not null,
+    name           text    not null,
+    "completionFn" text        null
 );
 
 INSERT INTO templates (name) VALUES ('Experiments');
-INSERT INTO steps (template_id, name, completionFn) VALUES
+INSERT INTO steps (template_id, name, "completionFn") VALUES
     (1, 'Extract', NULL),
     (1, 'Pack', NULL),
     (1, 'Analyze', 'function(step, sample) { return step.files.length > 0 }'),
