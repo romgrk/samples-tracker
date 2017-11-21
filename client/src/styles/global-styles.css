@@ -22,9 +22,26 @@ html, body {
   --active-bg-color: rgba(255, 255, 255, 0.025);
   --light-border-color: #888888;
   --dark-border-color: #181818;
+
   --accent-color: #599eff;
+  --light-accent-color: #a6cbff;
   --dark-accent-color: #003580;
   --selection-color: rgba(255, 255, 255, 0.2);
+
+  --text-color: var(--color);
+  --text-color-info:    rgb(100, 148, 237);
+  --text-color-success: rgb(115, 201, 144);
+  --text-color-warning: rgb(226, 192, 141);
+  --text-color-error:   rgb(255, 99, 71);
+  --text-color-selected: #fff;
+  --text-color-highlight:  #ddd;
+  --text-color-subtle: rgba(157, 165, 180, 0.6);
+
+  --bg-color-info:    rgb(15, 130, 230);
+  --bg-color-success: rgb(43, 161, 67);
+  --bg-color-warning: rgb(173, 124, 11);
+  --bg-color-error:   rgb(209, 59, 46);
+
 
   --table-color: #bdc4cd;
   --table-bg-color: #2d2d2d;
@@ -53,6 +70,27 @@ html, body {
 ::-moz-selection {
   background: var(--selection-color);
 }
+
+
+.text-highlight {
+  color: var(--text-color-highlight);
+}
+.text-success {
+  color: var(--text-color-success);
+}
+.text-muted {
+  color: var(--text-color-muted);
+}
+.text-warning {
+  color: var(--text-color-warning);
+}
+.text-error {
+  color: var(--text-color-error);
+}
+.text-info {
+  color: var(--text-color-info);
+}
+
 
 .label {
   margin-right: var(--padding);
@@ -101,9 +139,88 @@ input[type=text]:focus {
   outline: none;
   box-shadow: 0 0 0 1px #0078cf;
 }
-.input-like {
-  color: var(--light-color);
-  padding: 0 2px;
+
+.input-label {
+  position: relative;
+  padding-left: 5px;
+  cursor: pointer;
+}
+.input-checkbox {
+  vertical-align: middle;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  display: inline-block;
+  position: relative;
+  width: 16px;
+  height: 16px;
+  font-size: inherit;
+  border-radius: 3px;
+  background-color: var(--dark-bg-color);
+  box-shadow: 0 0 0 1px var(--light-border-color);
+  transition: background-color 0.16s cubic-bezier(0.5, 0.15, 0.2, 1);
+}
+.input-checkbox:focus {
+  outline: 0;
+}
+.input-checkbox:active {
+  background-color: #0f82e6;
+}
+.input-checkbox:before,
+.input-checkbox:after {
+  content: "";
+  position: absolute;
+  top: 12px;
+  left: 6.4px;
+  height: 2px;
+  border-radius: 1px;
+  background-color: #282c34;
+  transform-origin: 0 0;
+  opacity: 0;
+  transition: transform 0.1s cubic-bezier(0.5, 0.15, 0.2, 1), opacity 0.1s cubic-bezier(0.5, 0.15, 0.2, 1);
+}
+.input-checkbox:before {
+  width: 5.28px;
+  transform: translate3d(0, 0, 0) rotate(225deg) scale(0);
+}
+.input-checkbox:after {
+  width: 10.56px;
+  margin: -1px;
+  transform: translate3d(0, 0, 0) rotate(-45deg) scale(0);
+  transition-delay: .05s;
+}
+.input-checkbox:checked {
+  background-color: #568af2;
+  box-shadow: 0 0 0 1px var(--border-color);
+}
+.input-checkbox:checked:active {
+  background-color: #3f444d;
+}
+.input-checkbox:checked:before {
+  opacity: 1;
+  transform: translate3d(0, 0, 0) rotate(225deg) scale(1);
+  transition-delay: .05s;
+}
+.input-checkbox:checked:after {
+  opacity: 1;
+  transform: translate3d(0, 0, 0) rotate(-45deg) scale(1);
+  transition-delay: 0;
+}
+.input-checkbox:indeterminate {
+  background-color: #0f82e6;
+}
+.input-checkbox:indeterminate:active {
+  background-color: #3f444d;
+}
+.input-checkbox:indeterminate:after {
+  opacity: 1;
+  transform: translate3d(-2.24px, -4px, 0) rotate(0deg) scale(1);
+  transition-delay: 0;
+}
+.input-label .input-radio,
+.input-label .input-checkbox,
+.input-label .input-toggle {
+  margin-top: -0.25em;
+  margin-right: 0.3em;
 }
 
 .Button {
