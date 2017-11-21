@@ -8,10 +8,17 @@ import Button from './Button'
 
 class List extends React.Component {
   static propTypes = {
-    isLoading: PropTypes.bool,
+    loading: PropTypes.bool,
     values: PropTypes.array.isRequired,
     onAdd: PropTypes.func.isRequired,
     onDelete: PropTypes.func.isRequired,
+  }
+
+  constructor() {
+    super()
+    this.state = {
+      value: '',
+    }
   }
 
   onChange = (ev) => {
@@ -24,8 +31,15 @@ class List extends React.Component {
     }
   }
 
+  componentWillReceiveProps(props) {
+    if (props.values.includes(this.state.value))
+      this.setState({ value: '' })
+  }
+
   render() {
-    const { values, isLoading } = this.props
+    const { values, loading } = this.props
+    const { value } = this.state
+
     return (
       <table className='List'>
       <tbody>
@@ -41,10 +55,13 @@ class List extends React.Component {
         }
         <tr className='List__item'>
           <td className='List__value' colspan='2'>
-            <Input onEnter={(value) => this.props.onAdd(value)} />
-            {
-              isLoading && <Icon name='spinner' spin />
-            }
+            <Input
+              loading={loading}
+              disabled={loading}
+              value={value}
+              onChange={value => this.setState({ value })}
+              onEnter={value => this.props.onAdd(value)}
+            />
           </td>
         </tr>
       </tbody>

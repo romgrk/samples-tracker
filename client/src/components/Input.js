@@ -13,14 +13,18 @@ class Input extends React.Component {
   }
 
   render() {
-    const { className, value } = this.props
+    const { className, value, loading, ...rest } = this.props
     return (
-      <input type='text'
-        className={className}
-        value={value}
-        onChange={this.onChange}
-        onKeyDown={this.props.onKeyDown || this.onKeyDown}
-      />
+      <div>
+        <input type='text'
+          { ...rest }
+          className={className}
+          value={value}
+          onChange={this.onChange}
+          onKeyDown={this.props.onKeyDown || this.onKeyDown}
+        />
+        { loading && <span className='loading-spinner-tiny'/> }
+      </div>
     )
   }
 }
