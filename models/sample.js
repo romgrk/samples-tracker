@@ -43,6 +43,6 @@ function create(sample) {
   `, sample)
 }
 
-exports.delete = function(id) {
+module.exports.delete = function(id) {
   return db.query('DELETE FROM samples WHERE id = @id', { id })
 }

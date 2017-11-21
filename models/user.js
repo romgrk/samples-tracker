@@ -24,10 +24,10 @@ function update(user) {
   return db.query('UPDATE users SET name = @name, email = @email WHERE id = @id', user)
 }
 
-exports.delete = function(id) {
-  return db.query('DELETE FROM users WHERE id = @id', { id })
-}
-
 function create(user) {
   return db.query('INSERT INTO users VALUES (@id, @token, @name, @email)', user)
+}
+
+module.exports.delete = function(id) {
+  return db.query('DELETE FROM users WHERE id = @id', { id })
 }

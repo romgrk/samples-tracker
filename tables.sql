@@ -3,6 +3,16 @@
  */
 
 DROP TABLE IF EXISTS settings;
+DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS samples;
+DROP TABLE IF EXISTS sample_comments;
+DROP TABLE IF EXISTS step_comments;
+DROP TABLE IF EXISTS templates;
+DROP TABLE IF EXISTS steps;
+DROP TABLE IF EXISTS history;
+DROP TABLE IF EXISTS files;
+
+
 CREATE TABLE settings (
     key varchar(100) primary key,
     value jsonb      not null
@@ -12,7 +22,6 @@ INSERT INTO settings VALUES
     ('whitelist',  '["rom7011@gmail.com"]') -- users allowed to login/signup
 ;
 
-DROP TABLE IF EXISTS users;
 CREATE TABLE users (
     id    varchar(50) primary key,
     token text        not null,
@@ -20,15 +29,6 @@ CREATE TABLE users (
     email text        not null
 );
 
-DROP TABLE IF EXISTS samples;
-CREATE TABLE samples (
-    id          serial  primary key,
-    template_id integer not null,
-    tags        jsonb   not null,
-    steps       jsonb   not null
-);
-
-DROP TABLE IF EXISTS samples;
 CREATE TABLE samples (
     id          serial  primary key,
     name        text    not null,
@@ -38,7 +38,6 @@ CREATE TABLE samples (
     modified    date        null,
     steps       jsonb   not null
 );
-DROP TABLE IF EXISTS sample_comments;
 CREATE TABLE sample_comments (
     id          serial  primary key,
     sample_id   integer not null,
@@ -47,7 +46,6 @@ CREATE TABLE sample_comments (
     description text    not null
 );
 
-DROP TABLE IF EXISTS step_comments;
 CREATE TABLE step_comments (
     id          serial  primary key,
     sample_id   integer not null,
@@ -58,12 +56,25 @@ CREATE TABLE step_comments (
 );
 
 
-DROP TABLE IF EXISTS templates;
 CREATE TABLE templates (
     id          serial  primary key,
-    name        text    not null,
-    steps       jsonb   not null
+    name        text    not null
 );
+CREATE TABLE steps (
+    id           serial  primary key,
+    template_id  integer not null,
+    name         text    not null,
+    completionFn text        null
+);
+
+INSERT INTO templates (name) VALUES ('Experiments');
+INSERT INTO steps (template_id, name, completionFn) VALUES
+    (1, 'Extract', NULL),
+    (1, 'Pack', NULL),
+    (1, 'Analyze', 'function(step, sample) { return step.files.length > 0 }'),
+    (1, 'Compute', NULL),
+    (1, 'Report', NULL)
+;
 
 /* steps (
     name         text not null,
@@ -86,7 +97,6 @@ CREATE TABLE templates (
     constraint "PKey" primary key ("id", "index")
 ); */
 
-DROP TABLE IF EXISTS history;
 CREATE TABLE history (
     id          serial  primary key,
     sample_id   integer not null,
@@ -97,7 +107,6 @@ CREATE TABLE history (
 );
 
 
-DROP TABLE IF EXISTS files;
 CREATE TABLE files (
     id          serial       primary key,
     sample_id   integer      not null,
