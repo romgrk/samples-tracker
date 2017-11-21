@@ -26,27 +26,29 @@ export function createNetworkConstants(namespace) {
 export function createModelActions(namespace, fns) {
   return {
     fetch:  createFetchActions(namespace.FETCH,  fns.fetch),
-    update: createFetchActions(namespace.UPDATE, fns.update, (res, args) => ({ key: args[0], value: args[1] })),
+    update: createFetchActions(namespace.UPDATE, fns.update,
+      (key, value) => ({ key, value }),
+      (res, key, value) => ({ key, value })),
     delete: createFetchActions(namespace.DELETE, fns.delete),
   }
 }
 
-export function createFetchActions(namespace, fn, process) {
-  const action = createFetchFunction(fn, process)
+export function createFetchActions(namespace, fn, contraMapFn, mapFn) {
+  const action = createFetchFunction(fn, contraMapFn, mapFn)
   action.request = createAction(namespace.REQUEST)
   action.receive = createAction(namespace.RECEIVE)
   action.error   = createAction(namespace.ERROR)
   return action
 }
 
-export function createFetchFunction(fn, process = I) {
+export function createFetchFunction(fn, contraMapFn = I, mapFn = I) {
   const self = function (...args) {
     return (dispatch, getState) => {
 
-      dispatch(self.request())
+      dispatch(self.request(contraMapFn(...args)))
 
       fn(...args)
-      .then(result => dispatch(self.receive(process(result, args))))
+      .then(result => dispatch(self.receive(mapFn(result, ...args))))
       .catch(err =>   dispatch(self.error(err)))
     }
   }
