@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { createStructuredSelector, createSelector } from 'reselect'
 
 import Settings from '../components/Settings'
+import GlobalActions from '../actions/global'
 import SettingsActions from '../actions/settings'
 
 class SettingsContainer extends React.Component {
@@ -14,6 +15,7 @@ class SettingsContainer extends React.Component {
         isLoading={this.props.settings.isLoading}
         data={this.props.settings.data}
         onChange={this.props.update}
+        onError={this.props.showError}
       />
     )
   }
@@ -24,7 +26,7 @@ const mapStateToProps = createStructuredSelector({
 })
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators(SettingsActions, dispatch)
+  return bindActionCreators({ ...SettingsActions, ...GlobalActions }, dispatch)
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(SettingsContainer)

@@ -3,14 +3,29 @@ import PropTypes from 'prop-types'
 import pure from 'recompose/pure'
 import styled from 'styled-components'
 
+import uniq from '../utils/uniq'
+import getEmails from '../utils/get-emails'
 import Label from './Label'
 import EditableList from './EditableList'
+
 
 const Group = styled.div`
   margin-bottom: calc(4 * var(--padding));
 `
 
-function Settings({ isLoading, data, onChange }) {
+function Settings({ isLoading, data, onChange, onError }) {
+
+  const onWhitelistAdd = value => {
+    const emails = uniq(getEmails(value))
+    if (emails.length > 0)
+      onChange('whitelist', uniq(data.whitelist.concat(emails)))
+    else
+      onError(`Couldn't find any email in the input value.`)
+  }
+
+  const onWhitelistDelete = value =>
+    onChange('whitelist', data.whitelist.filter(v => v !== value))
+
   return (
     <section className='Settings'>
 
@@ -26,8 +41,8 @@ function Settings({ isLoading, data, onChange }) {
         <EditableList
           loading={isLoading}
           values={data.whitelist || []}
-          onAdd={value => onChange('whitelist', data.whitelist.concat(value))}
-          onDelete={value => onChange('whitelist', data.whitelist.filter(v => v !== value))}
+          onAdd={onWhitelistAdd}
+          onDelete={onWhitelistDelete}
         />
       </Group>
 
@@ -40,4 +55,4 @@ Settings.propTypes = {
   data: PropTypes.object.isRequired,
 }
 
-export default Settings
+export default pure(Settings)
