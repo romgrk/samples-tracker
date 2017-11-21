@@ -36,13 +36,21 @@ registerServiceWorker()
 // HMR
 
 if (module.hot) {
-  module.hot.accept(['./components/App'], () => {
-    const NextApp = require('./components/App').default;
+  module.hot.accept(['./routes'], () => {
+    const NextRoutes = require('./routes').default;
     render(
       <Provider store={store}>
-        <NextApp />
+        <NextRoutes />
       </Provider>,
       document.querySelector('#root')
-    );
-  });
+    )
+  })
+  module.hot.accept('./styles/global-styles.css', () => {
+    /* eslint-disable global-require */
+    require('styles/global-styles.css')
+  })
+  module.hot.accept('./styles/reset.css', () => {
+    /* eslint-disable global-require */
+    require('./styles/reset.css')
+  })
 }
