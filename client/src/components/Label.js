@@ -3,9 +3,9 @@ import pure from 'recompose/pure'
 
 function Label({ children }) {
   return (
-    <span className='label'>
+    <div className='label'>
       { children }
-    </span>
+    </div>
   )
 }
 

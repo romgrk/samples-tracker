@@ -45,6 +45,8 @@ html, body {
   color: var(--color);
 }
 
+* { box-sizing: border-box; }
+
 ::selection {
   background: var(--selection-color);
 }
@@ -55,13 +57,15 @@ html, body {
 .label {
   margin-right: var(--padding);
   font-family: Roboto, Ubuntu, Arial, sans-serif;
-  font-size: 12px;
+  font-size: 14px;
   font-weight: bold;
   color: #999;
+  text-transform: uppercase;
 }
-.label.large {
-  font-size: 14px;
+.label.small {
+  font-size: 12px;
   line-height: 30px;
+  text-transform: initial;
 }
 
 .line {
@@ -88,16 +92,14 @@ input[type=text] {
   outline: none;
   border: 1px solid var(--dark-border-color);
   border-radius: 2px;
-  padding: 0 2px;
+  padding: 0 8px;
+  height: 30px;
+  transition: box-shadow .25s;
 }
 input[type=text]:active,
 input[type=text]:focus {
   outline: none;
-  border: 1px solid var(--light-border-color);
-}
-input[type=text].large {
-  height: 28px;
-  padding: 0 5px;
+  box-shadow: 0 0 0 1px #0078cf;
 }
 .input-like {
   color: var(--light-color);
@@ -111,18 +113,24 @@ input[type=text].large {
   border: 1px solid var(--light-border-color);
   border: none;
   border-radius: 2px;
-  height: 20px;
+  height: 25px;
+  min-width: 25px;
   padding: 0 2px;
   margin: 0 var(--padding);
   cursor: pointer;
+  transition: box-shadow .25s;
 }
 .Button:hover {
   color: var(--hover-color);
   background-color: var(--hover-bg-color);
 }
+.Button:active,
+.Button:focus {
+  outline: none;
+  box-shadow: 0 0 0 1px #0078cf;
+}
 
 table {
-  margin-left: var(--padding);
   font-size: inherit;
 }
 
@@ -138,6 +146,8 @@ h1 {
   font-size: 28px;
   font-weight: bold;
   line-height: 40px;
+  margin-bottom: 20px;
+  color: var(--light-color);
 }
 
 #root {
@@ -151,6 +161,7 @@ h1 {
   height: 100%;
 }
 .App__content {
+  width:  100%;
   padding: 0 calc(2 * var(--padding));
 }
 .App__sidebar {
@@ -193,14 +204,18 @@ h1 {
 }
 .Sidebar__border {
   position: absolute;
-  height: 40px;
+  height: var(--sidebar-size);
   width: 1px;
   background-color: var(--accent-color);
-  left: 39px;
+  left: calc(var(--sidebar-size) - 1px);
   transition: top .15s;
 }
 .Sidebar__fill {
   flex: 1 1;
+}
+
+section.Settings {
+  padding: 0 calc(4 * var(--padding));
 }
 
 

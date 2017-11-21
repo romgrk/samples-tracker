@@ -6,19 +6,18 @@ import styled from 'styled-components'
 import Label from './Label'
 import EditableList from './EditableList'
 
-const Line = ({ children }) =>
-  <div className='line'>
-    { children }
-  </div>
+const Group = styled.div`
+  margin-bottom: calc(4 * var(--padding));
+`
 
 function Settings({ data, onChange }) {
   return (
-    <section>
+    <section className='Settings'>
 
-      <Line>
+      <Group>
         <Label>Default alert delay</Label>
         <input type='text' value={data.alertDelay} />
-      </Line>
+      </Group>
 
       <Label>Email-Whitelist</Label>
       <EditableList
