@@ -28,6 +28,14 @@ export const samples = {
   delete: (id) => POST(`/sample/delete/${id}`),
 }
 
+export const templates = {
+  list: () => GET('/template/list'),
+  get: (id) => GET(`/template/get/${id}`),
+  create: (id, data) => POST(`/template/create/${id}`, data),
+  update: (id, data) => POST(`/template/update/${id}`, data),
+  delete: (id) => POST(`/template/delete/${id}`),
+}
+
 
 function fetchAPI(url, params, options = {}) {
   let { method = 'get', ...other } = options

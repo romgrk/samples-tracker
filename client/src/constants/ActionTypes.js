@@ -9,8 +9,10 @@ export const SHOW = {
   ERROR:   'SHOW.ERROR',
 }
 // Settings
-export const SETTINGS = createModelConstants('SETTINGS')
+export const SETTINGS  = createModelConstants('SETTINGS')
 // Users
-export const USERS    = createModelConstants('USERS')
+export const USERS     = createModelConstants('USERS')
 // Samples
-export const SAMPLES  = createModelConstants('SAMPLES')
+export const SAMPLES   = createModelConstants('SAMPLES')
+// Templates
+export const TEMPLATES = createModelConstants('TEMPLATES')

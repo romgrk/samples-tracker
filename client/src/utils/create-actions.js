@@ -42,17 +42,17 @@ export function createFetchActions(namespace, fn, contraMapFn, mapFn, errorMapFn
   if (fn === undefined)
     return undefined
   const action = createFetchFunction(fn, contraMapFn, mapFn, errorMapFn)
-  action.request = createAction(namespace.REQUEST)
+  action.request = createAction(namespace.REQUEST, contraMapFn)
   action.receive = createAction(namespace.RECEIVE, undefined, mapFn)
   action.error   = createAction(namespace.ERROR, undefined, errorMapFn)
   return action
 }
 
-export function createFetchFunction(fn, contraMapFn = I, mapFn = I, errorMapFn = I) {
+export function createFetchFunction(fn) {
   const self = function (...args) {
     return (dispatch, getState) => {
 
-      dispatch(self.request(contraMapFn(...args)))
+      dispatch(self.request(...args))
 
       fn(...args)
       .then(result => dispatch(self.receive(result, ...args)))
@@ -61,37 +61,3 @@ export function createFetchFunction(fn, contraMapFn = I, mapFn = I, errorMapFn =
   }
   return self
 }
-
-/*function reateAction(type, payloadCreator = I, metaCreator) {
- *
- *  const finalPayloadCreator = payloadCreator == undefined || payloadCreator === I
- *    ? I
- *    : (head, ...args) => (head instanceof Error
- *      ? head : payloadCreator(head, ...args));
- *
- *  const hasMeta = isFunction(metaCreator);
- *  const typeString = type.toString();
- *
- *  const actionCreator = (...args) => {
- *    const payload = finalPayloadCreator(...args);
- *    const action = { type };
- *
- *    if (payload instanceof Error) {
- *      action.error = true;
- *    }
- *
- *    if (payload !== undefined) {
- *      action.payload = payload;
- *    }
- *
- *    if (hasMeta) {
- *      action.meta = metaCreator(...args);
- *    }
- *
- *    return action;
- *  };
- *
- *  actionCreator.toString = () => typeString;
- *
- *  return actionCreator;
- *}*/

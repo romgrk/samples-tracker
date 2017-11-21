@@ -25,8 +25,9 @@ export default function settings(state = initialState, action) {
     case SETTINGS.UPDATE.REQUEST:
       return set(lensPath(['data', action.payload.key, 'isLoading']), true, state)
     case SETTINGS.UPDATE.RECEIVE:
+      return set(lensPath(['data', action.meta.key]), { isLoading: false, data: action.meta.value }, state)
     case SETTINGS.UPDATE.ERROR:
-      return set(lensPath(['data', action.payload.key]), { isLoading: false, data: action.payload.value }, state)
+      return set(lensPath(['data', action.meta.key, 'isLoading']), false, state)
     default:
       return state
   }
