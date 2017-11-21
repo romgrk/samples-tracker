@@ -6,7 +6,7 @@ import styled from 'styled-components'
 import uniq from '../utils/uniq'
 import getEmails from '../utils/get-emails'
 import Input from './Input'
-import Label from './Label'
+import Title from './Title'
 import EditableList from './EditableList'
 
 
@@ -34,7 +34,7 @@ function Settings({ isLoading, data, onChange, onError }) {
     <section className='Settings'>
 
       <Group>
-        <Label>Alert delay</Label>
+        <Title>Alert delay</Title>
         <p>Default interval of time after which emails are sent when there is no activity.</p>
         <Input
           loading={alertDelay.isLoading}
@@ -43,7 +43,7 @@ function Settings({ isLoading, data, onChange, onError }) {
       </Group>
 
       <Group>
-        <Label>Email-Whitelist</Label>
+        <Title>Email-Whitelist</Title>
         <p>Emails in this list are allowed to sign up to this application.</p>
         <EditableList
           loading={whitelist.isLoading}

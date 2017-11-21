@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import Sidebar from '../components/Sidebar'
 import NotificationsContainer from '../containers/NotificationsContainer'
 import SettingsContainer from '../containers/SettingsContainer'
+import TemplatesContainer from '../containers/TemplatesContainer'
 
 const items = [
   { type: 'item', icon: 'cogs',  path: '/settings',  title: 'Settings' },
@@ -43,6 +44,7 @@ function Routes() {
           <Switch>
             <Route exact path='/' render={() => <div>Index</div>} />
             <Route path='/settings' component={SettingsContainer} />
+            <Route path='/templates' component={TemplatesContainer} />
           </Switch>
         </div>
 

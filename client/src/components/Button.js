@@ -4,11 +4,14 @@ import pure from 'recompose/pure'
 import Icon from './Icon'
 
 
-function Button({ className, children, icon, onClick }) {
+function Button(props) {
+  const { className, type, children, icon, onClick } = props
   const buttonClassName = [
     'Button',
+    type,
+    has(props, 'flat') ? 'flat' : undefined,
     className
-  ].join(' ')
+  ].join(' ').trim()
 
   return (
     <button className={buttonClassName}
@@ -18,6 +21,12 @@ function Button({ className, children, icon, onClick }) {
       { children }
     </button>
   )
+}
+
+function has(props, name) {
+  if (((name in props) && props[name] === undefined) || props[name] === true)
+    return true
+  return false
 }
 
 export default pure(Button)

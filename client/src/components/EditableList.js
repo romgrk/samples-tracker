@@ -49,7 +49,7 @@ class EditableList extends React.Component {
             <tr key={value} className='EditableList__item'>
               <td className='EditableList__value'>{ value }</td>
               <td>
-                <Button icon='close' onClick={() => this.props.onDelete(value)}/>
+                <Button flat icon='close' onClick={() => this.props.onDelete(value)}/>
               </td>
             </tr>
           )

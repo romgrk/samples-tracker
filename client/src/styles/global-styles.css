@@ -24,6 +24,7 @@ html, body {
   --checkbox-border-color: #888888;
   --dark-border-color: #181818;
 
+  --focus-color: #0078cf;
   --accent-color: #599eff;
   --light-accent-color: #a6cbff;
   --dark-accent-color: #003580;
@@ -78,38 +79,21 @@ html, body {
 }
 
 
-.text-highlight {
-  color: var(--text-color-highlight);
-}
-.text-success {
-  color: var(--text-color-success);
-}
-.text-muted {
-  color: var(--text-color-muted);
-}
-.text-warning {
-  color: var(--text-color-warning);
-}
-.text-error {
-  color: var(--text-color-error);
-}
-.text-info {
-  color: var(--text-color-info);
-}
-
-
-.label {
+.title {
   margin-right: var(--padding);
   font-family: Roboto, Ubuntu, Arial, sans-serif;
   font-size: 14px;
+  line-height: 30px;
   font-weight: bold;
   color: #999;
   text-transform: uppercase;
 }
-.label.small {
+.label {
+  margin-right: var(--padding);
+  font-family: Roboto, Ubuntu, Arial, sans-serif;
   font-size: 12px;
   line-height: 30px;
-  text-transform: initial;
+  font-weight: bold;
 }
 
 
@@ -140,7 +124,7 @@ input[type=text] {
 input[type=text]:active,
 input[type=text]:focus {
   outline: none;
-  box-shadow: 0 0 0 1px #0078cf;
+  box-shadow: 0 0 0 1px var(--focus-color);
 }
 
 .input-label {
@@ -231,12 +215,10 @@ input[type=text]:focus {
   background-color: transparent;
   color: var(--color);
   border: 1px solid var(--light-border-color);
-  border: none;
   border-radius: 2px;
   height: 25px;
   min-width: 25px;
   padding: 0 2px;
-  margin: 0 var(--padding);
   cursor: pointer;
   transition: box-shadow .25s;
 }
@@ -247,8 +229,34 @@ input[type=text]:focus {
 .Button:active,
 .Button:focus {
   outline: none;
-  box-shadow: 0 0 0 1px #0078cf;
+  box-shadow: 0 0 0 1px var(--focus-color);
 }
+
+.Button.flat {
+  background-color: transparent;
+  color: var(--color);
+  border: none;
+  height: 25px;
+  min-width: 25px;
+  padding: 0 2px;
+}
+.Button.flat:hover {
+  color: var(--hover-color);
+  background-color: var(--hover-bg-color);
+}
+.Button.flat:active,
+.Button.flat:focus {
+  outline: none;
+  box-shadow: 0 0 0 1px var(--focus-color);
+}
+
+.Button.info {
+  color: #fff;
+}
+.Button.info {
+  background-color: var(--bg-color-info);
+}
+
 
 table {
   font-size: inherit;
@@ -269,6 +277,14 @@ h1 {
   margin-bottom: 20px;
   color: var(--light-color);
 }
+
+
+.text-highlight { color: var(--text-color-highlight); }
+.text-success   { color: var(--text-color-success); }
+.text-muted     { color: var(--text-color-muted); }
+.text-warning   { color: var(--text-color-warning); }
+.text-error     { color: var(--text-color-error); }
+.text-info      { color: var(--text-color-info); }
 
 
 .EditableList__value {
@@ -387,7 +403,8 @@ section.Settings {
   width: 100%;
   overflow: hidden;
   border: 1px solid var(--dark-bg-color);
-  border-left-color: var(--light-border-color);
+  border-radius: 2px;
+  /*border-left-color: var(--light-border-color);*/
 }
 .Template:not(:last-of-type) {
   border-bottom-color: var(--light-border-color);
