@@ -4,6 +4,7 @@
 
 import { createAction } from 'redux-actions'
 
+const I = x => x
 
 
 export function createModelConstants(namespace) {
@@ -25,27 +26,27 @@ export function createNetworkConstants(namespace) {
 export function createModelActions(namespace, fns) {
   return {
     fetch:  createFetchActions(namespace.FETCH,  fns.fetch),
-    update: createFetchActions(namespace.UPDATE, fns.update),
+    update: createFetchActions(namespace.UPDATE, fns.update, (res, args) => ({ key: args[0], value: args[1] })),
     delete: createFetchActions(namespace.DELETE, fns.delete),
   }
 }
 
-export function createFetchActions(namespace, fn) {
-  const action = createFetchFunction(fn)
+export function createFetchActions(namespace, fn, process) {
+  const action = createFetchFunction(fn, process)
   action.request = createAction(namespace.REQUEST)
   action.receive = createAction(namespace.RECEIVE)
   action.error   = createAction(namespace.ERROR)
   return action
 }
 
-export function createFetchFunction(fn) {
+export function createFetchFunction(fn, process = I) {
   const self = function (...args) {
     return (dispatch, getState) => {
 
       dispatch(self.request())
 
       fn(...args)
-      .then(result => dispatch(self.receive(result)))
+      .then(result => dispatch(self.receive(process(result, args))))
       .catch(err =>   dispatch(self.error(err)))
     }
   }

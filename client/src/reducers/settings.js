@@ -13,6 +13,18 @@ export default function settings(state = initialState, action) {
       return { ...state, isLoading: false, data: action.payload }
     case SETTINGS.FETCH.ERROR:
       return { ...state, isLoading: false }
+    case SETTINGS.UPDATE.REQUEST:
+      return { ...state, isLoading: true }
+    case SETTINGS.UPDATE.RECEIVE:
+      return {
+        isLoading: false,
+        data: {
+          ...state.data,
+          [action.payload.key]: action.payload.value,
+        }
+      }
+    case SETTINGS.UPDATE.ERROR:
+      return { ...state, isLoading: false }
     default:
       return state
   }
