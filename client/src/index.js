@@ -13,6 +13,7 @@ import './styles/notifications.css'
 import './styles/global-styles.css'
 
 import settings from './actions/settings'
+import templates from './actions/templates'
 
 const store = configureStore()
 
@@ -26,6 +27,7 @@ render(
 console.log(settings)
 
 store.dispatch(settings.fetch())
+store.dispatch(templates.fetch())
 
 
 
