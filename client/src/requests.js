@@ -52,7 +52,7 @@ function fetchAPI(url, params, options = {}) {
     if (data.ok)
       return Promise.resolve(data.data)
     else
-      return Promise.reject(data.message)
+      return Promise.reject(new Error(data.message))
   })
 }
 
