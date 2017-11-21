@@ -5,6 +5,7 @@
   "author": "romgrk",
   "dependencies": {
     "axios": "^0.17.1",
+    "email-regex": "^2.0.0",
     "font-awesome": "^4.7.0",
     "prop-types": "^15.5.0",
     "react": "^15.5.4",
