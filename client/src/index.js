@@ -25,4 +25,24 @@ console.log(settings)
 
 store.dispatch(settings.fetch())
 
+
+
+// Register service worker
+
 registerServiceWorker()
+
+
+
+// HMR
+
+if (module.hot) {
+  module.hot.accept(['./components/App'], () => {
+    const NextApp = require('./components/App').default;
+    render(
+      <Provider store={store}>
+        <NextApp />
+      </Provider>,
+      document.querySelector('#root')
+    );
+  });
+}
