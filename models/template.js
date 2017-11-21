@@ -29,6 +29,9 @@ function findById(id) {
 
 function update(template) {
   return db.query('UPDATE templates SET name = @name WHERE id = @id', template)
+    .then(() =>
+      Promise.all(template.steps.map(step => Step.update(step)))
+    )
 }
 
 function create(template) {
