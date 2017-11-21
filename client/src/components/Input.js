@@ -7,7 +7,7 @@ class Input extends React.Component {
   }
 
   onKeyDown = (ev) => {
-    if (ev.code === 13 /* Enter */) {
+    if (ev.which === 13 /* Enter */) {
       this.props.onEnter && this.props.onEnter(ev.target.value, ev)
     }
   }
