@@ -32,7 +32,7 @@ function Routes() {
         </div>
         <div className='App__content'>
           <Route render={(props) =>
-            <h1>{ items.find(i => i.path === props.location.pathname).title }</h1>
+            <h1>{ (items.find(i => i.path === props.location.pathname)  || {}).title }</h1>
           }/>
           <Container>
             <Header />
