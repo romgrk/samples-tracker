@@ -29,7 +29,11 @@ function findByKey(key) {
 }
 
 function update(key, value) {
-  return db.query('UPDATE settings SET value = @value WHERE key = @key', { key, value })
+  return db.query('UPDATE settings SET value = @value WHERE key = @key', {
+    key,
+    value: JSON.stringify(value) // https://github.com/brianc/node-postgres/issues/442
+  })
+  .then(() => value)
 }
 
 function canLogin(email) {
