@@ -12,6 +12,7 @@ import './styles/spinner.css'
 import './styles/notifications.css'
 import './styles/global-styles.css'
 
+import samples from './actions/samples'
 import settings from './actions/settings'
 import templates from './actions/templates'
 
@@ -26,6 +27,7 @@ render(
 
 console.log(settings)
 
+store.dispatch(samples.fetch())
 store.dispatch(settings.fetch())
 store.dispatch(templates.fetch())
 

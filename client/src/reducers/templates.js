@@ -1,17 +1,11 @@
 import { get, set, lensPath } from 'ramda'
 import { TEMPLATES } from 'constants/ActionTypes'
 
+import toLoadable from '../utils/to-loadable'
+
 const initialState = {
   isLoading: false,
-  data: []
-}
-
-function toLoadable(object) {
-  const result = {}
-  Object.keys(object).forEach(key => {
-    result[key] = { isLoading: false, data: object[key] }
-  })
-  return result
+  data: {}
 }
 
 export default function templates(state = initialState, action) {

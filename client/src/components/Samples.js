@@ -52,7 +52,7 @@ class Samples extends React.Component {
         </div>
         <div className='Steps'>
           {
-            steps.map(step =>
+            [].map(step =>
               <div className='Step center'>
                 <Label small>{ step.name }</Label>
               </div>
