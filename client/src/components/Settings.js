@@ -37,6 +37,7 @@ function Settings({ isLoading, data, onChange, onError }) {
         <Title>Alert delay</Title>
         <p>Default interval of time after which emails are sent when there is no activity.</p>
         <Input
+          autoSelect
           loading={alertDelay.isLoading}
           value={alertDelay.data}
         />
