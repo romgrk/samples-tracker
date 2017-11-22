@@ -77,7 +77,7 @@ html, body {
 ::-moz-selection {
   background: var(--selection-color);
 }
-::-moz-focus-inner { border:0; }
+::-moz-focus-inner { border: 0; }
 
 .title {
   margin-right: var(--padding);
