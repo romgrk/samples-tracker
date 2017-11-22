@@ -28,12 +28,32 @@ export const samples = {
   delete: (id) => POST(`/sample/delete/${id}`),
 }
 
+export const steps = {
+  list: () => GET('/step/list'),
+  get: (id) => GET(`/step/get/${id}`),
+  update: (id, data) => POST(`/step/update/${id}`, data),
+  delete: (id) => POST(`/step/delete/${id}`),
+}
+
 export const templates = {
   list: () => GET('/template/list'),
   get: (id) => GET(`/template/get/${id}`),
   create: (id, data) => POST(`/template/create/${id}`, data),
   update: (id, data) => POST(`/template/update/${id}`, data),
   delete: (id) => POST(`/template/delete/${id}`),
+}
+
+export const history = {
+  list: () => GET('/history/list'),
+  get: (sampleId) => GET(`/history/sample/${sampleId}`),
+  create: (id, data) => POST(`/history/create/${id}`, data),
+}
+
+export const completionFunctions = {
+  list: () => GET('/completion-function/list'),
+  get: (id) => GET(`/completion-function/get/${id}`),
+  update: (id, data) => POST(`/completion-function/update/${id}`, data),
+  delete: (id) => POST(`/completion-function/delete/${id}`),
 }
 
 
