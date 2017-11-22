@@ -5,8 +5,10 @@ const initialState = {
 }
 
 export default function ui(state = initialState, action) {
-  if (action.error === true)
+  if (action.error === true) {
+    console.error(action.payload)
     return { ...state, notifications: state.notifications.concat({ type: 'error', message: action.payload.message }) }
+  }
   switch (action.type) {
     case SHOW_NOTIFICATION:
       return { ...state, notifications: state.notifications.concat(action.payload) }

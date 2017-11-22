@@ -6,6 +6,7 @@ import styled from 'styled-components'
 import Button from './Button'
 import Input from './Input'
 import Label from './Label'
+import Template from './Template'
 
 
 const Group = styled.div`
@@ -19,20 +20,7 @@ function Templates({ isLoading, data, onChange, onCreate, onError }) {
 
       {
         data.map(template =>
-          <div className='Template'>
-            <div className='Template__info vcenter'>
-              <Label>{ template.name }</Label>
-            </div>
-            <div className='Steps'>
-              {
-                template.steps.map(step =>
-                  <div className='Step center'>
-                    <Label small>{ step.name }</Label>
-                  </div>
-                )
-              }
-            </div>
-          </div>
+          <Template onChange={onChange} data={template} />
         )
       }
 

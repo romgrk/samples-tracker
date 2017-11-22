@@ -35,9 +35,9 @@ html, body {
   --text-color-success: rgb(115, 201, 144);
   --text-color-warning: rgb(226, 192, 141);
   --text-color-error:   rgb(255, 99, 71);
+  --text-color-muted: rgba(157, 165, 180, 0.1);
   --text-color-selected: #fff;
   --text-color-highlight:  #ddd;
-  --text-color-subtle: rgba(157, 165, 180, 0.6);
 
   --bg-color-info:    rgb(15, 130, 230);
   --bg-color-success: rgb(43, 161, 67);
@@ -95,6 +95,34 @@ html, body {
   line-height: 30px;
   font-weight: bold;
 }
+.label.editable {
+  width: 100%;
+}
+div.label.editable {
+  transition: all .25s;
+  cursor: pointer;
+}
+div.label.editable:hover {
+  background-color: var(--hover-bg-color);
+}
+div.label.editable span {
+  flex: 1;
+}
+div.label.editable .Icon {
+  margin: var(--padding);
+  height: 100%;
+  opacity: 0;
+  color: #ddd;
+  transition: opacity .25s;
+}
+div.label.editable:hover .Icon {
+  opacity: 1;
+}
+input.label.editable {
+  color: inherit;
+  background-color: transparent;
+  border: none;
+}
 
 
 .vbox {
@@ -119,7 +147,7 @@ html, body {
   align-items: center;
 }
 
-input[type=text] {
+.Input {
   color: var(--light-color);
   background-color: var(--dark-bg-color);
   outline: none;
@@ -129,8 +157,8 @@ input[type=text] {
   height: 30px;
   transition: box-shadow .25s;
 }
-input[type=text]:active,
-input[type=text]:focus {
+.Input:active,
+.Input:focus {
   outline: none;
   box-shadow: 0 0 0 1px var(--focus-color);
 }

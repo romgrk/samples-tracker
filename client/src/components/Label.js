@@ -2,7 +2,7 @@ import React from 'react'
 import pure from 'recompose/pure'
 
 function Label(props) {
-  const { children, className, type, size } = props
+  const { children, className, type, size, ...rest } = props
 
   const labelClassName = [
     'label',
@@ -17,7 +17,7 @@ function Label(props) {
   ].join(' ').trim()
 
   return (
-    <div className={labelClassName}>
+    <div className={labelClassName} { ...rest }>
       { children }
     </div>
   )
