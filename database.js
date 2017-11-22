@@ -32,8 +32,8 @@ function interpolate(query, params) {
   const variables = {}
 
   const newQuery = query.replace(/@(\w+)/g, (m, name) => {
-    if (!(params[name]))
-      throw new Error(`Missing parameter "${name}"`)
+    if (!(name in params))
+      throw new Error(`Missing parameter "${name}" \nin "${query}" \nwith: ${JSON.stringify(params)}`)
 
     if (!(name in variables))
       variables[name] = { index: index++, value: params[name] }
@@ -74,7 +74,7 @@ function selectAll(q, params, field) {
 }
 
 function insert(q, params) {
-  return query(q, params).then(result => result.rows.length > 0 ? result.rows[0].id : undefined)
+  return query(q, params).then(result => result.rows.length > 0 ? result.rows[0] : undefined)
 }
 
 module.exports = { client, query, selectOne, selectAll, insert }

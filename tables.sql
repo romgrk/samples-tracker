@@ -2,15 +2,20 @@
  * tables.sql
  */
 
-DROP TABLE IF EXISTS settings;
-DROP TABLE IF EXISTS users;
-DROP TABLE IF EXISTS samples;
-DROP TABLE IF EXISTS sample_comments;
-DROP TABLE IF EXISTS step_comments;
-DROP TABLE IF EXISTS templates;
-DROP TABLE IF EXISTS steps;
-DROP TABLE IF EXISTS history;
-DROP TABLE IF EXISTS files;
+DROP SCHEMA public CASCADE;
+CREATE SCHEMA public;
+GRANT ALL ON SCHEMA public TO postgres;
+GRANT ALL ON SCHEMA public TO public;
+
+
+
+CREATE TYPE Status AS ENUM (
+    'NOT_DONE',
+    'DONE',
+    'IN_PROGRESS',
+    'ERROR',
+    'ON_HOLD'
+);
 
 
 CREATE TABLE settings (
@@ -32,80 +37,84 @@ CREATE TABLE users (
 CREATE TABLE samples (
     id          serial  primary key,
     name        text    not null,
-    template_id integer not null,
     tags        jsonb   not null,
+    notes       text        null,
     created     date    not null,
     modified    date        null,
-    steps       jsonb   not null
+    completed   date        null
 );
-CREATE TABLE sample_comments (
+
+CREATE TABLE steps (
+    id             serial  primary key,
+    index          integer not null,
+    sample_id      integer not null,
+    status         Status  not null,
+    name           text    not null,
+    notes          text        null,
+    "completionFn" integer     null
+);
+
+/* CREATE TABLE sample_comments (
     id          serial  primary key,
     sample_id   integer not null,
     user_id     integer not null,
     date        date    not null,
     description text    not null
-);
+); */
 
-CREATE TABLE step_comments (
+/* CREATE TABLE step_comments (
     id          serial  primary key,
     sample_id   integer not null,
     step_index  integer     null,
     user_id     integer not null,
     date        date    not null,
     description text    not null
-);
+); */
 
 
 CREATE TABLE templates (
     id          serial  primary key,
     name        text    not null
 );
-CREATE TABLE steps (
+CREATE TABLE template_steps (
     id             serial  primary key,
+    index          integer not null,
     template_id    integer not null,
     name           text    not null,
-    "completionFn" text        null
+    "completionFn" integer     null
 );
 
 INSERT INTO templates (name) VALUES ('Experiments');
-INSERT INTO steps (template_id, name, "completionFn") VALUES
-    (1, 'Extract', NULL),
-    (1, 'Pack', NULL),
-    (1, 'Analyze', 'function(step, sample) { return step.files.length > 0 }'),
-    (1, 'Compute', NULL),
-    (1, 'Report', NULL)
+INSERT INTO template_steps (template_id, index, name, "completionFn") VALUES
+    (1, 0, 'Extract', NULL),
+    (1, 1, 'Pack', NULL),
+    (1, 2, 'Analyze', 1),
+    (1, 3, 'Compute', NULL),
+    (1, 4, 'Report', NULL)
 ;
 INSERT INTO templates (name) VALUES ('Requests');
-INSERT INTO steps (template_id, name, "completionFn") VALUES
-    (2, 'Write', NULL),
-    (2, 'Review', NULL),
-    (2, 'Send', 'function(step, sample) { return step.files.length > 0 }'),
-    (2, 'Response', NULL),
-    (2, 'Read', NULL),
-    (2, 'Archive', NULL),
-    (2, 'Sleep', NULL)
+INSERT INTO template_steps (template_id, index, name, "completionFn") VALUES
+    (2, 0, 'Write', NULL),
+    (2, 1, 'Review', NULL),
+    (2, 2, 'Send', 1),
+    (2, 3, 'Response', NULL),
+    (2, 4, 'Read', NULL),
+    (2, 5, 'Archive', NULL),
+    (2, 6, 'Sleep', NULL)
 ;
 
-/* steps (
-    name         text not null,
-    completionFn text null
-); */
-/* CREATE TYPE Status AS ENUM (
-    'not_done',
-    'done',
-    'in_progress',
-    'error',
-    'on_hold'
+CREATE TABLE completion_functions (
+    id          serial  primary key,
+    name        text    not null,
+    code        text    not null
 );
-*/
-/* steps_data (
-    id           serial  not null,
-    index        integer not null,
-    status       Status not null,
-    completionFn text null,
+INSERT INTO completion_functions (name, code) VALUES (
+'has-one-file',
+'function(step, sample) {
+    return step.files.length > 0
+}'
+);
 
-    constraint "PKey" primary key ("id", "index")
-); */
 
 CREATE TABLE history (
     id          serial  primary key,
@@ -113,7 +122,7 @@ CREATE TABLE history (
     step_index  integer     null,
     user_id     integer not null,
     date        date    not null,
-    description text    not null
+    description jsonb   not null
 );
 
 

@@ -19,8 +19,8 @@ router.get('/get/:id', (req, res, next) => {
 })
 
 /* GET single step */
-router.get('/template/:id', (req, res, next) => {
-  Step.findByTemplateId(req.params.id)
+router.get('/sample/:id', (req, res, next) => {
+  Step.findBySampleId(req.params.id)
   .then(dataHandler(res))
   .catch(errorHandler(res))
 })
@@ -28,6 +28,20 @@ router.get('/template/:id', (req, res, next) => {
 /* POST update step */
 router.use('/update/:id', (req, res, next) => {
   Step.update({ ...req.body, id: req.params.id })
+  .then(dataHandler(res))
+  .catch(errorHandler(res))
+})
+
+/* POST update step */
+router.use('/update-status/:id/:status', (req, res, next) => {
+  Step.updateStatus(req.params.id, req.params.status)
+  .then(dataHandler(res))
+  .catch(errorHandler(res))
+})
+
+/* POST update step */
+router.use('/delete/:id', (req, res, next) => {
+  Step.delete(req.params.id)
   .then(dataHandler(res))
   .catch(errorHandler(res))
 })

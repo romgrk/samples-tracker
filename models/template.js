@@ -4,7 +4,7 @@
 
 
 const db = require('../database.js')
-const Step = require('./step.js')
+const TemplateStep = require('./template-step.js')
 
 module.exports = {
   findAll,
@@ -14,7 +14,7 @@ module.exports = {
 }
 
 function addSteps(template) {
-  return Step.findByTemplateId(template.id)
+  return TemplateStep.findByTemplateId(template.id)
     .then(steps => (template.steps = steps, template))
 }
 
@@ -30,14 +30,15 @@ function findById(id) {
 function update(template) {
   return db.query('UPDATE templates SET name = @name WHERE id = @id', template)
     .then(() =>
-      Promise.all(template.steps.map(step => Step.update(step)))
+      Promise.all(template.steps.map(step => TemplateStep.update(step)))
     )
 }
 
 function create(template) {
   return db.insert('INSERT INTO templates (name) VALUES (@name)', template)
     .then(templateId =>
-      Promise.all(template.steps.map(step => Step.create({ ...step, templateId })))
+      Promise.all(template.steps.map(step => TemplateStep.create({ ...step, templateId })))
+        .then(() => findById(templateId))
     )
 }
 

@@ -8,49 +8,67 @@ const db = require('../database.js')
 module.exports = {
   findAll,
   findById,
-  findByTemplateId,
+  findBySampleId,
   update,
+  updateStatus,
   create,
 }
 
-// postgres returns case lowercase only names
-function fixRows(rows) {
-  rows.forEach(fixProps)
-  return rows
-}
-function fixProps(row) {
-  row.templateId = row.template_id
-  delete row.template_id
-  return row
-}
+const columns = `
+    id
+  , name
+  , status
+  , notes
+  , "completionFn"
+`
 
 function findAll() {
-  return db.selectAll('SELECT * FROM steps').then(fixRows)
+  return db.selectAll(`SELECT ${columns} FROM steps`)
 }
 
 function findById(id) {
-  return db.selectOne('SELECT * FROM steps WHERE id = @id', { id }).then(fixProps)
+  return db.selectOne(`SELECT ${columns} FROM steps WHERE id = @id`, { id })
 }
 
-function findByTemplateId(templateId) {
+function findBySampleId(sampleId) {
   return db.selectAll(`
-    SELECT *
-      FROM steps
-     WHERE template_id = @templateId`
-    , { templateId }).then(fixRows)
+      SELECT ${columns}
+        FROM steps
+      WHERE sample_id = @sampleId
+    ORDER BY index
+    `
+    , { sampleId })
 }
 
 function update(step) {
-  return db.query('UPDATE steps SET name = @name WHERE id = @id', step)
+  return db.query(`
+    UPDATE steps
+       SET name = @name
+         , notes = @notes
+         , status = @status
+         , "completionFn" = @completionFn
+     WHERE id = @id`, step)
 }
 
-function create(step) {
-  return db.query(`INSERT INTO steps (template_id, name, completionFn)
-    VALUES (
-      @templateId,
-      @name,
-      @completionFn
-    )`, step)
+function updateStatus(id, status) {
+  return db.query(`
+    UPDATE steps
+       SET status = @status
+     WHERE id = @id`, { id, status })
+}
+
+function create(sampleId, steps) {
+  return Promise.all(steps.map((step, index) =>
+    db.insert(`INSERT INTO steps (sample_id, index, status, name, notes, completionFn)
+      VALUES (
+        @sampleId,
+        @index,
+        @status,
+        @name,
+        @notes,
+        @completionFn
+      )`, { ...step, sampleId, index })
+  ))
 }
 
 module.exports.delete = function(id) {
