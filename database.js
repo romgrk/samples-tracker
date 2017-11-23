@@ -73,8 +73,9 @@ function selectAll(q, params, field) {
   return query(q, params).then(result => field ? result.rows.map(r => r[field]) : result.rows)
 }
 
-function insert(q, params) {
-  return query(q, params).then(result => result.rows.length > 0 ? result.rows[0] : undefined)
+function insert(q, params, field = 'id') {
+  return query(q + ` RETURNING ${field}`, params).then(result =>
+    result.rows.length > 0 ? result.rows[0][field] : undefined)
 }
 
 module.exports = { client, query, selectOne, selectAll, insert }
