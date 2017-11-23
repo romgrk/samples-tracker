@@ -42,6 +42,7 @@ function update(sample) {
           , modified = now()
       WHERE id = @id`, sample),
   ].concat(sample.steps.map(step => Step.update(step))))
+  .then(() => findById(step.id))
 }
 
 function complete(id) {
