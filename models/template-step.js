@@ -50,7 +50,7 @@ function update(step) {
 }
 
 function create(step) {
-  return db.query(`INSERT INTO template_steps (template_id, index, name, completionFn)
+  return db.query(`INSERT INTO template_steps (template_id, index, name, "completionFn")
     VALUES (
       @templateId,
       @index,
