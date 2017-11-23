@@ -104,12 +104,14 @@ class Template extends React.Component {
 
     const isLoading = template ? template.isLoading : false
 
-    console.log(Dropdown.Item)
     return (
       <div className='Template'>
         <div className='Template__info vcenter'>
           <EditableLabel onEnter={this.setName} value={name} />
-          <Button flat icon='trash' className='delete' onClick={this.deleteTemplate} />
+          {
+            !isLoading &&
+              <Button flat icon='trash' className='delete' onClick={this.deleteTemplate} />
+          }
           {
             isLoading &&
               <Spinner />

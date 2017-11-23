@@ -579,9 +579,9 @@ section.Settings {
   background-color: var(--dark-bg-color);
   width: 175px;
 }
-.Template__info .delete {
-  width: 30px;
-  flex: 0 0 30px;
+.Template__info .delete,
+.Template__info .Spinner {
+  flex: 0 0 auto;
 }
 .Steps {
   display: flex;
