@@ -13,33 +13,30 @@ module.exports = {
   create,
 }
 
-// postgres returns case lowercase only names
-function fixRows(rows) {
-  rows.forEach(fixProps)
-  return rows
-}
-function fixProps(row) {
-  row.templateId = row.template_id
-  delete row.template_id
-  return row
-}
+const columns = `
+    id
+  , template_id as "templateId"
+  , name
+  , "completionFn"
+`
+
+const selectTemplateQuery = `
+    SELECT ${columns}
+      FROM template_steps
+    WHERE template_id = @templateId
+  ORDER BY index
+`
 
 function findAll() {
-  return db.selectAll('SELECT * FROM template_steps').then(fixRows)
+  return db.selectAll(`SELECT ${columns} FROM template_steps`)
 }
 
 function findById(id) {
-  return db.selectOne('SELECT * FROM template_steps WHERE id = @id', { id }).then(fixProps)
+  return db.selectOne(`SELECT ${columns} FROM template_steps WHERE id = @id`, { id })
 }
 
 function findByTemplateId(templateId) {
-  return db.selectAll(`
-      SELECT id, name, "completionFn"
-        FROM template_steps
-      WHERE template_id = @templateId
-    ORDER BY index
-    `
-    , { templateId }).then(fixRows)
+  return db.selectAll(selectTemplateQuery, { templateId })
 }
 
 function update(step) {
@@ -47,16 +44,33 @@ function update(step) {
     UPDATE template_steps
        SET name = @name
          , "completionFn" = @completionFn
-     WHERE id = @id`, step)
+     WHERE id = @id;
+  `, step)
 }
 
 function create(step) {
-  return db.query(`INSERT INTO template_steps (template_id, name, completionFn)
+  return db.query(`INSERT INTO template_steps (template_id, index, name, completionFn)
     VALUES (
       @templateId,
+      @index,
       @name,
       @completionFn
     )`, step)
+}
+
+function updateOrCreate(step) {
+  return db.query(`INSERT INTO template_steps (template_id, index, name, "completionFn")
+    VALUES (
+      @templateId,
+      @index,
+      @name,
+      @completionFn
+    )
+    ON CONFLICT (template_id, index) DO
+    UPDATE
+       SET name = @name
+         , "completionFn" = @completionFn
+  `, step)
 }
 
 module.exports.delete = function(id) {

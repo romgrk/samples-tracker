@@ -78,10 +78,11 @@ CREATE TABLE templates (
 );
 CREATE TABLE template_steps (
     id             serial  primary key,
-    index          integer not null,
     template_id    integer not null,
+    index          integer not null,
     name           text    not null,
-    "completionFn" integer     null
+    "completionFn" integer     null,
+    unique (template_id, index)
 );
 
 INSERT INTO templates (name) VALUES ('Experiments');

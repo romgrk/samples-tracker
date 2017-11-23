@@ -30,14 +30,15 @@ function findById(id) {
 function update(template) {
   return db.query('UPDATE templates SET name = @name WHERE id = @id', template)
     .then(() =>
-      Promise.all(template.steps.map(step => TemplateStep.update(step)))
+      Promise.all(template.steps.map((step, index) =>
+        TemplateStep.updateOrCreate({ ...step, templateId: template.id, index })))
     )
 }
 
 function create(template) {
   return db.insert('INSERT INTO templates (name) VALUES (@name)', template)
-    .then(templateId =>
-      Promise.all(template.steps.map(step => TemplateStep.create({ ...step, templateId })))
+    .then((templateId, index) =>
+      Promise.all(template.steps.map(step => TemplateStep.create({ ...step, templateId, index })))
         .then(() => findById(templateId))
     )
 }
