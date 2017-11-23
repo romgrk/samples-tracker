@@ -32,7 +32,7 @@ class EditableLabel extends React.Component {
   }
 
   render() {
-    const { value, className, type, size, ...rest } = this.props
+    const { value, className, children, type, size, ...rest } = this.props
     const { editing } = this.state
 
     const labelClassName = [
@@ -68,7 +68,7 @@ class EditableLabel extends React.Component {
           { ...rest }
           onClick={this.setEditing}
         >
-        <span>{ value }</span> <Icon name='pencil' />
+        <span>{ value }{ children }</span> <Icon name='pencil' />
       </div>
     )
   }
@@ -81,4 +81,4 @@ function has(props, name) {
 }
 
 
-export default pure(EditableLabel)
+export default EditableLabel

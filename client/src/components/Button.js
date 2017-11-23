@@ -2,6 +2,7 @@ import React from 'react'
 import pure from 'recompose/pure'
 
 import Icon from './Icon'
+import Spinner from './Spinner'
 
 
 function Button(props) {
@@ -13,12 +14,20 @@ function Button(props) {
     className
   ].join(' ').trim()
 
+  const loading  = has(props, 'loading')
+  const disabled = has(props, 'disabled')
+
   return (
     <button className={buttonClassName}
       onClick={onClick}
+      disabled={loading || disabled}
     >
       { icon !== undefined && <Icon name={icon} /> }
       { children }
+      {
+        loading &&
+          <Spinner />
+      }
     </button>
   )
 }

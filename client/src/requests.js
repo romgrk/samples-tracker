@@ -38,7 +38,7 @@ export const steps = {
 export const templates = {
   list: () => GET('/template/list'),
   get: (id) => GET(`/template/get/${id}`),
-  create: (id, data) => POST(`/template/create/${id}`, data),
+  create: (data) => POST(`/template/create`, data),
   update: (id, data) => POST(`/template/update/${id}`, data),
   delete: (id) => POST(`/template/delete/${id}`),
 }

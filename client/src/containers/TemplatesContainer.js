@@ -12,9 +12,11 @@ class TemplatesContainer extends React.Component {
     return (
       <Templates
         isLoading={this.props.templates.isLoading}
+        isCreating={this.props.templates.isCreating}
         data={this.props.templates.data}
         onCreate={this.props.create}
         onChange={this.props.update}
+        onDelete={this.props.delete}
         onError={this.props.showError}
       />
     )

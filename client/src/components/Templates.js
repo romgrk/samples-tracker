@@ -3,32 +3,55 @@ import PropTypes from 'prop-types'
 import pure from 'recompose/pure'
 import styled from 'styled-components'
 
+import { getNewTemplate } from '../models'
 import Button from './Button'
 import Input from './Input'
 import Label from './Label'
 import Template from './Template'
 
 
-const Group = styled.div`
-  margin-bottom: calc(4 * var(--padding));
-`
+function Templates({ isLoading, isCreating, data, onChange, onDelete, onCreate, onError }) {
 
-function Templates({ isLoading, data, onChange, onCreate, onError }) {
+  const templates = Object.values(data)
+
+  const onClickCreate = () =>
+    onCreate(getNewTemplate())
 
   return (
     <section className='Templates'>
 
       {
-        data.map(template =>
-          <Template onChange={onChange} data={template} />
+        templates.map(template =>
+          <Template
+            key={template.id}
+            onChange={onChange}
+            onDelete={onDelete}
+            template={template}
+          />
         )
       }
+      {
+        templates.length === 0 &&
+          <div className='Template empty'>
+            <div className='Steps' style={{ paddingLeft: 'calc(2 * var(--padding))'}}>
+              <Label large muted>
+                No templates yet
+              </Label>
+            </div>
+          </div>
+      }
 
-      <br/>
+      <div className='row hcenter'>
+        <Button type='info' onClick={onClickCreate} loading={isCreating}>
+          Create
+        </Button>
 
-      <Button type='info'>
-        Create
-      </Button>
+        <div className='fill' />
+
+        <Label>
+          <span className='text-info'>*</span> Has a completion function
+        </Label>
+      </div>
 
     </section>
   )

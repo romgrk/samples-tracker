@@ -36,9 +36,11 @@ html, body {
   --text-color-success: rgb(115, 201, 144);
   --text-color-warning: rgb(226, 192, 141);
   --text-color-error:   rgb(255, 99, 71);
-  --text-color-muted: rgba(157, 165, 180, 0.1);
+  --text-color-muted: rgba(157, 165, 180, 0.4);
   --text-color-selected: #fff;
   --text-color-highlight:  #ddd;
+
+  --text-color-subtle: rgba(157, 165, 180, 0.1);
 
   --bg-color-info:    rgb(15, 130, 230);
   --bg-color-success: rgb(43, 161, 67);
@@ -63,6 +65,10 @@ html, body {
   --vertical-step: 5px;
   --line-height: 25px;
 
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+
   font-family: Verdana, sans-serif;
   font-size: 14px;
   line-height: var(--line-height);
@@ -79,6 +85,20 @@ html, body {
   background: var(--selection-color);
 }
 ::-moz-focus-inner { border: 0; }
+
+
+*::-webkit-scrollbar {
+  width: 10px;
+  background-color: rgba(0, 0, 0, 0.05);
+}
+*::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+*::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background-color: rgba(0, 0, 0, 0.1);
+  box-shadow: inset 0 0 6px rgba(0,0,0,.2);
+}
 
 
 .vbox {
@@ -108,6 +128,17 @@ html, body {
   flex: 1 1;
 }
 
+.row {
+  display: flex;
+  flex-direction: row;
+  padding: calc(2 * var(--padding));
+}
+.row > * {
+  flex: 0 0 auto;
+}
+.row > .fill {
+  flex: 1 1;
+}
 
 .title {
   margin-right: var(--padding);
@@ -125,6 +156,12 @@ html, body {
   line-height: 30px;
   font-weight: bold;
 }
+.label.small {
+  font-size: 10px;
+}
+.label.large {
+  font-size: 18px;
+}
 .label.editable {
   width: 100%;
 }
@@ -137,6 +174,7 @@ div.label.editable:hover {
 }
 div.label.editable span {
   flex: 1;
+  white-space: nowrap;
 }
 div.label.editable .Icon {
   margin: var(--padding);
@@ -156,6 +194,7 @@ input.label.editable {
   padding: 0;
   width: 0;
 }
+
 
 
 .Input {
@@ -305,6 +344,76 @@ input.label.editable {
 }
 
 
+.Dropdown {
+  /*position: relative;*/
+}
+.Dropdown.open .Button {
+  border: 1px solid var(--light-border-color);
+  border-bottom: none;
+  background-color: var(--dark-bg-color);
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+.Dropdown.open .Dropdown__content {
+  display: block;
+}
+.Dropdown__content {
+  display: none;
+  position: absolute;
+  /*top: 100%;*/
+  /*left: 0;*/
+  min-width: 200px;
+  padding: calc(2 * var(--padding) - 2px) 0;
+  border: 1px solid var(--light-border-color);
+  border-radius: 2px;
+  color: var(--light-color);
+  background-color: var(--dark-bg-color);
+  box-shadow: 1px 2px 6px 1px rgba(0, 0, 0, 0.3);
+  cursor: default;
+}
+.Dropdown__content .item {
+  position: relative;
+  display: flex;
+  width: 100%;
+  align-items: center;
+  height: 30px;
+  padding: 0 calc(2 * var(--padding)) 0 calc(6 * var(--padding));
+}
+.Dropdown__content .item[disabled] {
+  color: var(--text-color-muted);
+}
+.Dropdown__content .item:not([disabled]):hover {
+  background-color: var(--focus-color);
+  color: #fff;
+}
+.Dropdown__content .item .Icon {
+  position: absolute;
+  color: var(--color);
+  width: calc(2 * var(--padding));
+  left: calc(2 * var(--padding));
+}
+.Dropdown__content .item[disabled] .Icon {
+  color: var(--text-color-disabled);
+}
+.Dropdown__content .group {
+  position: relative;
+  display: flex;
+  width: 100%;
+  align-items: center;
+  height: 30px;
+  padding: 0 calc(2 * var(--padding));
+  color: var(--color);
+  font-weight: bold;
+}
+.Dropdown__content .separator {
+  width: 100%;
+  height: calc(2 * var(--padding));
+  margin-bottom: calc(2 * var(--padding));
+  border-bottom: 1px solid var(--light-border-color);
+}
+
+
+
 table {
   font-size: inherit;
 }
@@ -352,6 +461,7 @@ h1 {
 }
 .App__content {
   width:  100%;
+  overflow: hidden;
 }
 .App__sidebar {
   flex-basis: 0;
@@ -467,22 +577,34 @@ section.Settings {
 .Template__info {
   padding: var(--padding) calc(2 * var(--padding));
   background-color: var(--dark-bg-color);
-  width: 150px;
+  width: 175px;
+}
+.Template__info .delete {
+  width: 30px;
+  flex: 0 0 30px;
 }
 .Steps {
   display: flex;
   flex-direction: row;
   width: 100%;
   overflow: auto;
+  padding: calc(var(--padding) - 1px);
 }
 .Step {
-  padding: var(--padding);
-  margin: var(--padding);
+  height: calc(8 * var(--padding));
+  padding: calc(var(--padding) - 1px);
   min-width: 100px;
   border: 1px solid var(--light-border-color);
   border-radius: 2px;
   cursor: pointer;
 }
-.Step:hover {
-  /*background-color: var(--hover-bg-color);*/
+.Step:not(:last-child) {
+  margin-right: var(--padding);
+}
+.Step.add:hover {
+  background-color: var(--hover-light-bg-color);
+}
+.Step .Dropdown {
+  /* width: 30px; */
+  flex: 0 0 auto;
 }

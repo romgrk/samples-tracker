@@ -11,12 +11,12 @@ const templates = {
     (res, id, data) => ({ id, data }),
     (err, id, data) => ({ id, data })),
   create: createFetchActions(TEMPLATES.CREATE, requests.templates.create,
-    (id, data) => ({ id, data }),
-    (res, id, data) => ({ id, data }),
-    (err, id, data) => ({ id, data })),
+    (data) => ({ data }),
+    (res, data) => ({ data }),
+    (err, data) => ({ data })),
   delete: createFetchActions(TEMPLATES.DELETE, requests.templates.delete,
-    undefined,
-    (res, id, data) => ({ id, data }),
-    (err, id, data) => ({ id, data })),
+    (id) => ({ id }),
+    (res, id) => ({ id }),
+    (err, id) => ({ id })),
 }
 export default templates
