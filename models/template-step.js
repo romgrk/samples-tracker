@@ -11,6 +11,7 @@ module.exports = {
   findByTemplateId,
   update,
   create,
+  updateOrCreate,
 }
 
 const columns = `

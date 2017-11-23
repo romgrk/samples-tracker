@@ -31,8 +31,11 @@ function update(template) {
   return db.query('UPDATE templates SET name = @name WHERE id = @id', template)
     .then(() =>
       Promise.all(template.steps.map((step, index) =>
-        TemplateStep.updateOrCreate({ ...step, templateId: template.id, index })))
+        TemplateStep.delete(step.id).then(() =>
+          TemplateStep.create({ ...step, templateId: template.id, index })))
+        )
     )
+    .then(() => findById(template.id))
 }
 
 function create(template) {
