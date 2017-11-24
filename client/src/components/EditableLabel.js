@@ -18,9 +18,18 @@ class EditableLabel extends React.Component {
   onKeyDown = (ev) => {
     if (ev.which === 13 /* Enter */) {
       ev.preventDefault()
-      this.props.onEnter && this.props.onEnter(ev.target.value, ev)
+      this.accept(ev)
+    }
+    if (ev.which === 27 /* Escape */ || ev.which === 20 /* CapsLock */) {
+      ev.preventDefault()
       this.setNotEditing()
     }
+  }
+
+  accept = (ev) => {
+    if (ev.target.value !== this.props.value)
+      this.props.onEnter && this.props.onEnter(ev.target.value, ev)
+    this.setNotEditing()
   }
 
   setNotEditing = () => {
@@ -66,7 +75,7 @@ class EditableLabel extends React.Component {
           defaultValue={value}
           onChange={this.onChange}
           onKeyDown={this.onKeyDown}
-          onBlur={this.setNotEditing}
+          onBlur={this.accept}
           ref={ref => ref ? ref.select() : undefined}
         />
       )
