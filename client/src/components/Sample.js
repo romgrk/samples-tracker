@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import pure from 'recompose/pure'
 import styled from 'styled-components'
 
+import humanReadableTime from '../utils/human-readable-time'
 import STATUS from '../constants/status'
 import Badge from './Badge'
 import Button from './Button'
@@ -46,6 +47,11 @@ class Sample extends React.Component {
     this.update(data)
   }
 
+  setNotes = (notes) => {
+    const data = { ...this.state.data, notes }
+    this.update(data)
+  }
+
   render() {
     const { isLoading } = this.props.sample
     const sample = this.state.data
@@ -68,7 +74,16 @@ class Sample extends React.Component {
             />
           )
         }
-        <div/>
+        <div className='Sample__fill' />
+        <div className='Sample__created line'>
+          <small>{ humanReadableTime(sample.created) }</small>
+        </div>
+        <div className='Sample__notes'>
+          <EditableLabel small
+            value={sample.notes}
+            onEnter={this.setNotes}
+          />
+        </div>
       </div>
     )
   }

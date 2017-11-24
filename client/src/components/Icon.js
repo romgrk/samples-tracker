@@ -20,6 +20,7 @@ function Icon(props) {
       'text-muted': props.muted,
       'text-subtle': props.subtle,
       'text-highlight': props.highlight,
+      'fa-spin': props.spin,
     }
   )
 

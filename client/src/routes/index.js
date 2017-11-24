@@ -28,7 +28,7 @@ function Routes() {
             />
           }/>
         </div>
-        <div className='App__content'>
+        <div className='App__content vbox'>
           <Route render={(props) => {
             const activeItem = items.find(i => i.path === props.location.pathname)
 

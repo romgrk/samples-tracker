@@ -120,7 +120,7 @@ class Step extends React.Component {
         ref={this.onRef}
       >
         <Tooltip ref={this.onRefTooltip} position='top'>
-          { step.name }
+          { step.name } - <small>{ step.status }</small>
         </Tooltip>
 
         <StatusIcon name={step.status} />

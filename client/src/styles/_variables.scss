@@ -55,11 +55,11 @@ $bg-light-color-warning: #f3bf44;
 $bg-light-color-error:   #e89d96;
 
 $colors: (
-  normal: (text: $text-color-normal, bg: $bg-color-normal),
-  info: (text: $text-color-info, bg: $bg-color-info),
+  normal:  (text: $text-color-normal,  bg: $bg-color-normal),
+  info:    (text: $text-color-info,    bg: $bg-color-info),
   success: (text: $text-color-success, bg: $bg-color-success),
   warning: (text: $text-color-warning, bg: $bg-color-warning),
-  error: (text: $text-color-error, bg: $bg-color-error),
+  error:   (text: $text-color-error,   bg: $bg-color-error),
 );
 
 $table-color: #bdc4cd;

@@ -38,13 +38,18 @@ class Samples extends React.Component {
       onError
     } = this.props
 
+    const samples = Object.values(data)
+
+
     const newSampleButton =
-      <Button loading={templates.isLoading} iconAfter={ templates.isLoading ? undefined : 'caret-down' }>
+      <Button info
+        loading={templates.isLoading}
+        iconAfter={ templates.isLoading ? undefined : 'caret-down' } >
         Create New Sample
       </Button>
 
     return (
-      <div className='Samples'>
+      <section className='Samples vbox'>
 
         <div className='row'>
           <Dropdown trigger={newSampleButton}>
@@ -60,11 +65,13 @@ class Samples extends React.Component {
 
         <div className='Samples__table bordered'>
           <div className='Samples__header Sample'>
-            <div>Name</div>
-            <div>&nbsp;</div>
+            <div className='Sample__name'>Name</div>
+            <div className='fill'>&nbsp;</div>
+            <div className='Sample__created'>Created</div>
+            <div className='Sample__notes'>Notes</div>
           </div>
           {
-            Object.values(data).map(sample =>
+            samples.map(sample =>
               <Sample
                 key={sample.id}
                 sample={sample}
@@ -73,9 +80,15 @@ class Samples extends React.Component {
               />
             )
           }
+          {
+            samples.length === 0 &&
+              <div className='Sample empty text-muted'>
+                No sample to display here.
+              </div>
+          }
         </div>
 
-      </div>
+      </section>
     )
   }
 }

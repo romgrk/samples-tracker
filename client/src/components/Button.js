@@ -1,21 +1,42 @@
 import React from 'react'
 import pure from 'recompose/pure'
+import classname from 'classname'
 
 import Icon from './Icon'
 import Spinner from './Spinner'
 
 
 function Button(props) {
-  const { className, type, children, icon, iconAfter, onClick } = props
-  const buttonClassName = [
-    'Button',
+  const {
+    className,
     type,
-    has(props, 'flat') ? 'flat' : undefined,
-    className
-  ].join(' ').trim()
+    size,
+    loading,
+    disabled,
+    children,
+    icon,
+    iconAfter,
+    onClick
+  } = props
 
-  const loading  = has(props, 'loading')
-  const disabled = has(props, 'disabled')
+  const buttonClassName = classname(
+    'Button',
+    className,
+    {
+      'flat': props.flat,
+      'small': props.small,
+      'large': props.large,
+      'info': props.info,
+      'success': props.success,
+      'warning': props.warning,
+      'error': props.error,
+      'muted': props.muted,
+      'subtle': props.subtle,
+      'highlight': props.highlight,
+      [type]: type !== undefined,
+      [size]: size !== undefined,
+    }
+  )
 
   return (
     <button className={buttonClassName}
@@ -31,12 +52,6 @@ function Button(props) {
       { iconAfter !== undefined && <Icon name={iconAfter} /> }
     </button>
   )
-}
-
-function has(props, name) {
-  if (((name in props) && props[name] === undefined) || props[name] === true)
-    return true
-  return false
 }
 
 export default pure(Button)
