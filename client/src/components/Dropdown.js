@@ -68,7 +68,7 @@ class Dropdown extends React.Component {
   }
 
   render() {
-    const { className, value, loading, children, ...rest } = this.props
+    const { className, value, loading, trigger  } = this.props
     const { open } = this.state
 
     const dropdownClassName = classname(
@@ -80,15 +80,21 @@ class Dropdown extends React.Component {
         'with-icons': this.props.icons,
       })
 
-    const trigger =
+    const button =
       React.cloneElement(
-        rest.trigger || <Button flat icon='caret-down' />,
+        trigger || <Button flat icon='caret-down' />,
         { onClick: this.toggle }
       )
 
+    const children = this.props.children.map(child =>
+      React.cloneElement(
+        child,
+        { onClick: (ev) => { this.close(); child.props.onClick(ev)} }
+      )
+    )
     return (
       <div className={dropdownClassName} ref={this.onRef}>
-        { trigger }
+        { button }
         <div className='Dropdown__content'>
           { children }
         </div>
