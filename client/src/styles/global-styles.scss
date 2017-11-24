@@ -476,6 +476,9 @@ h1 {
 section.Settings {
   padding: (4 * $padding) (6 * $padding);
 }
+section.Templates {
+  padding: (2 * $padding) 0;
+}
 
 $step-width: 40px;
 

@@ -2,6 +2,7 @@
 @import './_mixins.scss';
 
 .Badge {
+  white-space: nowrap;
   padding: 0 $padding;
   border-radius: 15px;
   font-size: 0.8em;
