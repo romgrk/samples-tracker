@@ -85,7 +85,7 @@ CREATE TABLE template_steps (
     unique (template_id, index)
 );
 
-INSERT INTO templates (name) VALUES ('Experiments');
+INSERT INTO templates (name) VALUES ('experiment');
 INSERT INTO template_steps (template_id, index, name, "completionFn") VALUES
     (1, 0, 'Extract', NULL),
     (1, 1, 'Pack', NULL),
@@ -93,7 +93,7 @@ INSERT INTO template_steps (template_id, index, name, "completionFn") VALUES
     (1, 3, 'Compute', NULL),
     (1, 4, 'Report', NULL)
 ;
-INSERT INTO templates (name) VALUES ('Requests');
+INSERT INTO templates (name) VALUES ('request');
 INSERT INTO template_steps (template_id, index, name, "completionFn") VALUES
     (2, 0, 'Write', NULL),
     (2, 1, 'Review', NULL),
