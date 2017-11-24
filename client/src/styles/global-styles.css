@@ -302,9 +302,9 @@ input.label.editable {
   color: var(--color);
   border: 1px solid var(--light-border-color);
   border-radius: 2px;
-  height: 25px;
-  min-width: 25px;
-  padding: 0 2px;
+  height: 30px;
+  min-width: 30px;
+  padding: 0 var(--padding);
   cursor: pointer;
   transition: box-shadow .25s;
 }
@@ -316,6 +316,9 @@ input.label.editable {
 .Button:focus {
   outline: none;
   box-shadow: 0 0 0 1px var(--focus-color);
+}
+.Button > .Icon:not(:first-child):last-child {
+  margin-left: var(--padding);
 }
 
 .Button.flat {
@@ -347,21 +350,20 @@ input.label.editable {
 .Dropdown {
   /*position: relative;*/
 }
-.Dropdown.open .Button {
+.Dropdown.open > .Button {
   border: 1px solid var(--light-border-color);
-  border-bottom: none;
+  border-bottom: 1px solid transparent;;
   background-color: var(--dark-bg-color);
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
 }
-.Dropdown.open .Dropdown__content {
+.Dropdown.open > .Dropdown__content {
   display: block;
 }
 .Dropdown__content {
   display: none;
   position: absolute;
-  /*top: 100%;*/
-  /*left: 0;*/
+  /* top & left set by tether */
   min-width: 200px;
   padding: calc(2 * var(--padding) - 2px) 0;
   border: 1px solid var(--light-border-color);
@@ -371,31 +373,34 @@ input.label.editable {
   box-shadow: 1px 2px 6px 1px rgba(0, 0, 0, 0.3);
   cursor: default;
 }
-.Dropdown__content .item {
+.Dropdown__content > .item {
   position: relative;
   display: flex;
   width: 100%;
   align-items: center;
   height: 30px;
+  padding: 0 calc(2 * var(--padding));
+}
+.Dropdown.with-icons .Dropdown__content > .item {
   padding: 0 calc(2 * var(--padding)) 0 calc(6 * var(--padding));
 }
-.Dropdown__content .item[disabled] {
+.Dropdown__content > .item[disabled] {
   color: var(--text-color-muted);
 }
-.Dropdown__content .item:not([disabled]):hover {
+.Dropdown__content > .item:not([disabled]):hover {
   background-color: var(--focus-color);
   color: #fff;
 }
-.Dropdown__content .item .Icon {
+.Dropdown__content > .item > .Icon {
   position: absolute;
   color: var(--color);
   width: calc(2 * var(--padding));
   left: calc(2 * var(--padding));
 }
-.Dropdown__content .item[disabled] .Icon {
+.Dropdown__content > .item[disabled] > .Icon {
   color: var(--text-color-disabled);
 }
-.Dropdown__content .group {
+.Dropdown__content > .group {
   position: relative;
   display: flex;
   width: 100%;
@@ -405,7 +410,7 @@ input.label.editable {
   color: var(--color);
   font-weight: bold;
 }
-.Dropdown__content .separator {
+.Dropdown__content > .separator {
   width: 100%;
   height: calc(2 * var(--padding));
   margin-bottom: calc(2 * var(--padding));
@@ -441,6 +446,7 @@ h1 {
 .text-warning   { color: var(--text-color-warning); }
 .text-error     { color: var(--text-color-error); }
 .text-info      { color: var(--text-color-info); }
+.text-subtle    { color: var(--text-color-subtle); }
 
 
 .EditableList__value {
@@ -522,12 +528,14 @@ section.Settings {
 
 .Samples__table {
   width: 100%;
+  color: var(--table-color);
   background-color: var(--table-bg-color);
 }
 .Samples__header > div {
   border-top: 1px solid var(--table-border-color);
   border-bottom: 1px solid var(--table-border-color);
   line-height: calc(var(--line-height) - 2px);
+  font-weight: bold;
 }
 .Samples__row:nth-child(2n + 1) { /* skip header */
   background-color: var(--table-bg-alt-color);
