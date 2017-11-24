@@ -18,6 +18,16 @@ client.connect((err) => {
   query(fs.readFileSync('./tables.sql').toString())
 })
 
+const NOW = `to_char (now()::timestamp at time zone 'UTC', 'YYYY-MM-DD"T"HH24:MI:SS"Z"')`
+
+module.exports = {
+  client,
+  query,
+  selectOne,
+  selectAll,
+  insert,
+  NOW,
+}
 
 /**
  * Turns 'SELECT * FROM users WHERE id = @id', { id: 42 }
@@ -77,5 +87,3 @@ function insert(q, params, field = 'id') {
   return query(q + ` RETURNING ${field}`, params).then(result =>
     result.rows.length > 0 ? result.rows[0][field] : undefined)
 }
-
-module.exports = { client, query, selectOne, selectAll, insert }

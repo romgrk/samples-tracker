@@ -53,7 +53,7 @@ function create(entry, file) {
         @sampleId,
         @stepIndex,
         @userId,
-        now(),
+        ${db.NOW},
         @description
       )`, entry)
     .then(row =>

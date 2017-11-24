@@ -39,7 +39,10 @@ function isThisYear(date) {
   return date.getFullYear() === new Date().getFullYear()
 }
 
-export default function humanReadableTime(date) {
+export default function humanReadableTime(date, empty = '') {
+  if (date === null)
+    return empty
+
   if (!(date instanceof Date))
     date = new Date(date)
 

@@ -50,7 +50,7 @@ function update(sample) {
         SET name = @name
           , tags = @tags
           , notes = @notes
-          , modified = now()
+          , modified = CURRENT_TIMESTAMP
       WHERE id = @id`,
       { ...sample, tags: JSON.stringify(sample.tags) }
     ),
@@ -61,7 +61,7 @@ function update(sample) {
 function complete(id) {
   return db.query(`
     UPDATE samples
-       SET completed = now()
+       SET completed = CURRENT_TIMESTAMP
      WHERE id = @id`, { id })
 }
 
@@ -72,7 +72,7 @@ function create(sample) {
         @name,
         @tags,
         @notes,
-        now()
+        CURRENT_TIMESTAMP
       )`,
     { ...sample, tags: JSON.stringify(sample.tags) }
   )

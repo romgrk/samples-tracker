@@ -35,13 +35,13 @@ CREATE TABLE users (
 );
 
 CREATE TABLE samples (
-    id          serial  primary key,
-    name        text    not null,
-    tags        jsonb   not null,
-    notes       text        null,
-    created     date    not null,
-    modified    date        null,
-    completed   date        null
+    id          serial    primary key,
+    name        text      not null,
+    tags        jsonb     not null,
+    notes       text          null,
+    created     timestamp not null,
+    modified    timestamp     null,
+    completed   timestamp     null
 );
 
 CREATE TABLE steps (
@@ -118,12 +118,12 @@ INSERT INTO completion_functions (name, code) VALUES (
 
 
 CREATE TABLE history (
-    id          serial  primary key,
-    sample_id   integer not null,
-    step_index  integer     null,
-    user_id     integer not null,
-    date        date    not null,
-    description jsonb   not null
+    id          serial    primary key,
+    sample_id   integer   not null,
+    step_index  integer       null,
+    user_id     integer   not null,
+    date        timestamp not null,
+    description jsonb     not null
 );
 
 

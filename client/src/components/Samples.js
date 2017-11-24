@@ -68,6 +68,7 @@ class Samples extends React.Component {
             <div className='Sample__name'>Name</div>
             <div className='fill'>&nbsp;</div>
             <div className='Sample__created'>Created</div>
+            <div className='Sample__modified'>Modified</div>
             <div className='Sample__notes'>Notes</div>
           </div>
           {

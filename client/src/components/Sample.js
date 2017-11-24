@@ -75,8 +75,11 @@ class Sample extends React.Component {
           )
         }
         <div className='Sample__fill' />
-        <div className='Sample__created line'>
+        <div className='Sample__created line text-center'>
           <small>{ humanReadableTime(sample.created) }</small>
+        </div>
+        <div className='Sample__modified line text-center'>
+          <small>{ humanReadableTime(sample.modified) }</small>
         </div>
         <div className='Sample__notes'>
           <EditableLabel small

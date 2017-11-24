@@ -59,6 +59,9 @@ html, body {
 .vcenter>* {
   flex: 1 1;
 }
+.text-center {
+  text-align: center;
+}
 
 
 .row {
@@ -513,8 +516,9 @@ $step-width: 40px;
   background-color: var(--table-bg-color);
   border-left: 1px solid var(--table-border-color);
 }
-.Samples__header {
+.Samples__header.Sample {
   border-top: 1px solid var(--table-border-color);
+  height: 25px;
 }
 .Samples__header > div {
   line-height: calc(var(--line-height) - 2px);
@@ -530,6 +534,7 @@ $step-width: 40px;
   display: flex;
   flex-direction: row;
   align-items: stretch;
+  height: 25px;
 }
 .Sample.empty {
   font-size: 2.5em;
@@ -556,11 +561,12 @@ $step-width: 40px;
 }
 .Sample__created {
   width: 100px;
-  @include vcenter;
+}
+.Sample__modified {
+  width: 100px;
 }
 .Sample__notes {
-  width: 300px;
-  @include vcenter;
+  width: 200px;
 }
 
 .Step {
