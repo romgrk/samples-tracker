@@ -25,7 +25,6 @@ render(
   document.getElementById('root')
 )
 
-console.log(settings)
 
 store.dispatch(samples.fetch())
 store.dispatch(settings.fetch())
