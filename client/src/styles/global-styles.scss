@@ -549,7 +549,9 @@ section.Settings {
   padding: 0 5px;
 }
 .Samples__row > div:first-child {
-  flex: 0 0 100px;
+  width: 200px;
+  flex: 0 0 auto;
+  padding: 0 calc(2 * var(--padding));
 }
 .Samples__row > div:not(:first-child) {
   min-width: 40px;
@@ -591,14 +593,14 @@ section.Settings {
 .Template__info .Spinner {
   flex: 0 0 auto;
 }
-.Steps {
+.Template .Steps {
   display: flex;
   flex-direction: row;
   width: 100%;
   overflow: auto;
   padding: calc(var(--padding) - 1px);
 }
-.Step {
+.Template .Step {
   height: calc(8 * var(--padding));
   padding: calc(var(--padding) - 1px);
   min-width: 100px;
@@ -606,13 +608,13 @@ section.Settings {
   border-radius: 2px;
   cursor: pointer;
 }
-.Step:not(:last-child) {
+.Template .Step:not(:last-child) {
   margin-right: var(--padding);
 }
-.Step.add:hover {
+.Template .Step.add:hover {
   background-color: var(--hover-light-bg-color);
 }
-.Step .Dropdown {
+.Template .Step .Dropdown {
   /* width: 30px; */
   flex: 0 0 auto;
 }
