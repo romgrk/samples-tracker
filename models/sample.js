@@ -24,12 +24,23 @@ const columns = `
   , completed
 `
 
+function addSteps(sample) {
+  return Step.findBySampleId(sample.id)
+    .then(steps =>
+      (sample.steps = steps, sample)
+    )
+}
+
 function findAll() {
   return db.selectAll(`SELECT ${columns} FROM samples`)
+    .then(samples =>
+      Promise.all(samples.map(addSteps))
+    )
 }
 
 function findById(id) {
   return db.selectOne(`SELECT ${columns} FROM samples WHERE id = @id`, { id })
+    .then(addSteps)
 }
 
 function update(sample) {
@@ -42,7 +53,7 @@ function update(sample) {
           , modified = now()
       WHERE id = @id`, sample),
   ].concat(sample.steps.map(step => Step.update(step))))
-  .then(() => findById(step.id))
+  .then(() => findById(sample.id))
 }
 
 function complete(id) {

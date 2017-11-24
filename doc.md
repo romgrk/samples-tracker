@@ -3,19 +3,36 @@
 ```javascript
 const template = {
   name: 'name',
-  notes: 'Hello',
-  tags: ['experiment'],
+  steps: [
+    {
+      name: 'Step 1',
+      completionFn: null,
+    },
+    {
+      name: 'Step 2',
+      completionFn: 1,
+    }
+  ]
+}
+```
+
+# Sample
+```javascript
+const sample = {
+  name: 'name',
+  notes: '',
+  tags: ['Template-Name'],
   steps: [
     {
       name: 'Step 1',
       status: 'NOT_DONE',
-      notes: 'World',
+      notes: '',
       completionFn: null,
     },
     {
       name: 'Step 2',
       status: 'NOT_DONE',
-      notes: 'World',
+      notes: '',
       completionFn: 1,
     }
   ]
