@@ -20,7 +20,7 @@ function Spinner(props) {
     size,
     className,
     {
-      hidden: !props.visible,
+      hidden: props.visible === false,
     }
   )
 
