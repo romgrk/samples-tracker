@@ -77,6 +77,7 @@ class Dropdown extends React.Component {
       this.id,
       {
         open: open,
+        'with-icons': this.props.icons,
       })
 
     const trigger =

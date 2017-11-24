@@ -6,7 +6,7 @@ import Spinner from './Spinner'
 
 
 function Button(props) {
-  const { className, type, children, icon, onClick } = props
+  const { className, type, children, icon, iconAfter, onClick } = props
   const buttonClassName = [
     'Button',
     type,
@@ -23,11 +23,12 @@ function Button(props) {
       disabled={loading || disabled}
     >
       { icon !== undefined && <Icon name={icon} /> }
-      { children }
+      <span>{ children }</span>
       {
         loading &&
           <Spinner />
       }
+      { iconAfter !== undefined && <Icon name={iconAfter} /> }
     </button>
   )
 }

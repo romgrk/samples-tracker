@@ -11,14 +11,15 @@ function Label(props) {
     className,
     {
       [`text-${type}`] : type !== undefined,
-      'small': has(props, 'small'),
-      'large': has(props, 'large'),
-      'text-info': has(props, 'info'),
-      'text-success': has(props, 'success'),
-      'text-warning': has(props, 'warning'),
-      'text-error': has(props, 'error'),
-      'text-muted': has(props, 'muted'),
-      'text-highlight': has(props, 'highlight'),
+      'small': props.small,
+      'large': props.large,
+      'text-info': props.info,
+      'text-success': props.success,
+      'text-warning': props.warning,
+      'text-error': props.error,
+      'text-muted': props.muted,
+      'text-subtle': props.subtle,
+      'text-highlight': props.highlight,
     }
   )
 
@@ -28,12 +29,5 @@ function Label(props) {
     </div>
   )
 }
-
-function has(props, name) {
-  if (((name in props) && props[name] === undefined) || props[name] === true)
-    return true
-  return false
-}
-
 
 export default pure(Label)
