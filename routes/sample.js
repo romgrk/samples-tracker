@@ -18,9 +18,9 @@ router.get('/get/:id', (req, res, next) => {
   .catch(errorHandler(res))
 })
 
-/* POST delete sample */
-router.use('/delete/:id', (req, res, next) => {
-  Sample.delete(req.params.id)
+/* POST create sample */
+router.use('/create', (req, res, next) => {
+  Sample.create(req.body)
   .then(dataHandler(res))
   .catch(errorHandler(res))
 })
@@ -28,6 +28,13 @@ router.use('/delete/:id', (req, res, next) => {
 /* POST update sample */
 router.use('/update/:id', (req, res, next) => {
   Sample.update({ ...req.body, id: req.params.id })
+  .then(dataHandler(res))
+  .catch(errorHandler(res))
+})
+
+/* POST delete sample */
+router.use('/delete/:id', (req, res, next) => {
+  Sample.delete(req.params.id)
   .then(dataHandler(res))
   .catch(errorHandler(res))
 })

@@ -51,7 +51,9 @@ function update(sample) {
           , tags = @tags
           , notes = @notes
           , modified = now()
-      WHERE id = @id`, sample),
+      WHERE id = @id`,
+      { ...sample, tags: JSON.stringify(sample.tags) }
+    ),
   ].concat(sample.steps.map(step => Step.update(step))))
   .then(() => findById(sample.id))
 }
@@ -71,10 +73,12 @@ function create(sample) {
         @tags,
         @notes,
         now()
-      )`, sample)
-  .then(row =>
-    Promise.all(sample.steps.map(step =>
-      Step.create(row.id, step)))
+      )`,
+    { ...sample, tags: JSON.stringify(sample.tags) }
+  )
+  .then(sampleId =>
+    Step.createMany(sampleId, sample.steps)
+      .then(() => findById(sampleId))
   )
 }
 

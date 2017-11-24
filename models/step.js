@@ -12,6 +12,7 @@ module.exports = {
   update,
   updateStatus,
   create,
+  createMany,
 }
 
 const columns = `
@@ -57,17 +58,21 @@ function updateStatus(id, status) {
      WHERE id = @id`, { id, status })
 }
 
-function create(sampleId, steps) {
+function create(sampleId, index, step) {
+  return db.insert(`INSERT INTO steps (sample_id, index, status, name, notes, "completionFn")
+    VALUES (
+      @sampleId,
+      @index,
+      @status,
+      @name,
+      @notes,
+      @completionFn
+    )`, { ...step, sampleId, index })
+}
+
+function createMany(sampleId, steps) {
   return Promise.all(steps.map((step, index) =>
-    db.insert(`INSERT INTO steps (sample_id, index, status, name, notes, completionFn)
-      VALUES (
-        @sampleId,
-        @index,
-        @status,
-        @name,
-        @notes,
-        @completionFn
-      )`, { ...step, sampleId, index })
+    create(sampleId, index, step)
   ))
 }
 
