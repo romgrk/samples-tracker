@@ -25,6 +25,13 @@ router.use('/update/:id', (req, res, next) => {
   .catch(errorHandler(res))
 })
 
+/* POST run function */
+router.use('/run/:id', (req, res, next) => {
+  Completion.runById(req.params.id, req.body)
+  .then(dataHandler(res))
+  .catch(errorHandler(res))
+})
+
 /* POST update function */
 router.use('/delete/:id', (req, res, next) => {
   Completion.delete(req.params.id)

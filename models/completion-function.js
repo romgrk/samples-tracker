@@ -3,6 +3,7 @@
  */
 
 
+const vm = require('vm')
 const db = require('../database.js')
 
 module.exports = {
@@ -10,6 +11,7 @@ module.exports = {
   findById,
   update,
   create,
+  runById,
 }
 
 function findAll() {
@@ -17,7 +19,7 @@ function findAll() {
 }
 
 function findById(id) {
-  return db.selectOne('SELECT * FROM completion_functions WHERE id = @id', { id }).then(addSteps)
+  return db.selectOne('SELECT * FROM completion_functions WHERE id = @id', { id })
 }
 
 function update(completion) {
@@ -34,6 +36,12 @@ function create(completion) {
     INSERT INTO completion_functions
                 (name, code)
          VALUES (@name, @code)`, completion)
+}
+
+function runById(id, context) {
+  return findById(id).then(completion =>
+    vm.runInContext(`(${completion.code})(step, sample, user)`, vm.createContext(context))
+  )
 }
 
 module.exports.delete = function(id) {
