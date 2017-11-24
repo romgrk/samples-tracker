@@ -7,19 +7,27 @@ const initialState = {
 export default function ui(state = initialState, action) {
   if (action.error === true) {
     console.error(action.payload)
-    return { ...state, notifications: state.notifications.concat({ type: 'error', message: action.payload.message }) }
+    return {
+      ...state,
+      notifications: state.notifications.concat({
+        type: 'error',
+        message: action.payload.message,
+        stack: action.payload.stack,
+      })
+    }
   }
   switch (action.type) {
     case SHOW_NOTIFICATION:
       return { ...state, notifications: state.notifications.concat(action.payload) }
     case SHOW.INFO:
-      return { ...state, notifications: state.notifications.concat({ type: 'info', message: action.payload }) }
+      return { ...state, notifications: state.notifications.concat({ type: 'info', ...action.payload }) }
     case SHOW.SUCCESS:
-      return { ...state, notifications: state.notifications.concat({ type: 'success', message: action.payload }) }
+      return { ...state, notifications: state.notifications.concat({ type: 'success', ...action.payload }) }
     case SHOW.WARNING:
-      return { ...state, notifications: state.notifications.concat({ type: 'warning', message: action.payload }) }
+      return { ...state, notifications: state.notifications.concat({ type: 'warning', ...action.payload }) }
     case SHOW.ERROR:
-      return { ...state, notifications: state.notifications.concat({ type: 'error', message: action.payload }) }
+      debugger
+      return { ...state, notifications: state.notifications.concat({ type: 'error', ...action.payload }) }
     default:
       return state
   }

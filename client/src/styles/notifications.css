@@ -66,7 +66,7 @@
 }
 .Notification .meta,
 .Notification .close,
-.Notification .detail,
+.Notification .details,
 .Notification .stack-toggle,
 .Notification .stack-container {
   display: none;
@@ -75,7 +75,7 @@
 .Notification.has-description .meta,
 .Notification.has-buttons .meta,
 .Notification.has-close .close,
-.Notification.has-detail .detail,
+.Notification.has-details .details,
 .Notification.has-stack .stack-toggle,
 .Notification.has-stack .stack-container {
   display: block;
@@ -131,32 +131,32 @@
 .Notification .close:before {
   margin: 0;
 }
-.Notification.has-detail {
+.Notification.has-details {
   width: 450px;
 }
-.Notification .detail {
+.Notification .details {
   font-size: .8em;
   background-color: rgba(255, 255, 255, 0.3);
   background-clip: padding-box;
   max-height: 500px;
   overflow-y: auto;
 }
-.Notification .detail .line {
+.Notification .details .line {
   font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
 }
-.Notification .detail .stack-toggle {
+.Notification .details .stack-toggle {
   margin-top: 10px;
 }
-.Notification .detail .stack-toggle  .before {
+.Notification .details .stack-toggle  .before {
   margin: 0;
 }
-.Notification .detail .detail-content .line {
+.Notification .details .details-content .line {
   white-space: pre-wrap;
 }
-.Notification .detail .stack-container {
+.Notification .details .stack-container {
   margin-top: 10px;
 }
-.Notification .detail .stack-container .line {
+.Notification .details .stack-container .line {
   white-space: pre;
 }
 .Notification .description {

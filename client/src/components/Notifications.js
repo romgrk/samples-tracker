@@ -16,7 +16,7 @@ import Button from './Button'
  */
 
 const animationDelay = 500
-const notificationDelay = 5 * 1000
+const notificationDelay = 10 * 1000
 
 class Notifications extends React.Component {
   static propTypes = {
@@ -77,7 +77,9 @@ class Notifications extends React.Component {
           shownItems.map((item, i) => {
             const className = 'Notification has-close '
               + (item.notification.type || '') + ' '
-              + (item.info.closing ? 'remove' : '')
+              + (item.info.closing ? 'remove ' : ' ')
+              + (item.notification.details !== undefined ? 'has-details' : '') + ' '
+              + (item.notification.stack !== undefined ? 'has-stack' : '') + ' '
 
             return (
               <div className={className}>
@@ -91,6 +93,22 @@ class Notifications extends React.Component {
                   <div className='message item'>
                   {
                     item.notification.message
+                  }
+                  </div>
+                  <div className='details item'>
+                  {
+                    item.notification.details
+                  }
+                  </div>
+                  <div className='stack-container item'>
+                  {
+                    item.notification.stack.slice(1, 5).map(line =>
+                      <div className='line'>{ line }</div>
+                    )
+                  }
+                  {
+                    item.notification.stack.length > 5 &&
+                      <div className='line'>...</div>
                   }
                   </div>
                 </div>
