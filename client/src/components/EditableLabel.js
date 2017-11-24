@@ -32,7 +32,16 @@ class EditableLabel extends React.Component {
   }
 
   render() {
-    const { value, className, children, type, size, ...rest } = this.props
+    const {
+      value,
+      className,
+      children,
+      onEnter,
+      small,
+      type,
+      size,
+      ...rest
+    } = this.props
     const { editing } = this.state
 
     const labelClassName = [

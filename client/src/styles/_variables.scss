@@ -28,26 +28,39 @@ $light-accent-color: #a6cbff;
 $dark-accent-color: #003580;
 $selection-color: rgba(255, 255, 255, 0.2);
 
-$text-color: var(--color);
+$text-color:         $color;
+$text-color-normal:  #d7dae0;
 $text-color-info:    rgb(100, 148, 237);
 $text-color-success: rgb(115, 201, 144);
 $text-color-warning: rgb(226, 192, 141);
 $text-color-error:   rgb(255, 99, 71);
 $text-color-muted: rgba(157, 165, 180, 0.4);
-$text-color-selected: #fff;
-$text-color-highlight:  #ddd;
-
 $text-color-subtle: rgba(157, 165, 180, 0.1);
+$text-color-highlight:  #ddd;
+$text-color-selected: #fff;
 
+$bg-color-normal:  #3e4451;
 $bg-color-info:    rgb(15, 130, 230);
 $bg-color-success: rgb(43, 161, 67);
 $bg-color-warning: rgb(173, 124, 11);
 $bg-color-error:   rgb(209, 59, 46);
+$bg-color-muted:   transparent;
+$bg-color-subtle:  transparent;
+$bg-color-highlight: transparent;
+$bg-color-selected: transparent;
 
 $bg-light-color-info:    #7ebef7;
 $bg-light-color-success: #72da87;
 $bg-light-color-warning: #f3bf44;
 $bg-light-color-error:   #e89d96;
+
+$colors: (
+  normal: (text: $text-color-normal, bg: $bg-color-normal),
+  info: (text: $text-color-info, bg: $bg-color-info),
+  success: (text: $text-color-success, bg: $bg-color-success),
+  warning: (text: $text-color-warning, bg: $bg-color-warning),
+  error: (text: $text-color-error, bg: $bg-color-error),
+);
 
 $table-color: #bdc4cd;
 $table-bg-color: #2d2d2d;
@@ -62,56 +75,3 @@ $notification-size: 45px;
 $vertical-step: 5px;
 $line-height: 25px;
 
-html, body {
-  --color: $color;
-  --light-color: $light-color;
-  --bg-color: $bg-color;
-  --border-color: $border-color;
-  --dark-bg-color: $dark-bg-color;
-  --hover-color: $hover-color;
-  --hover-bg-color: $hover-bg-color;
-  --hover-light-bg-color: $hover-light-bg-color;
-  --active-bg-color: $active-bg-color;
-  --light-border-color: $light-border-color;
-  --checkbox-border-color: $checkbox-border-color;
-  --dark-border-color: $dark-border-color;
-
-  --focus-color: $focus-color;
-  --accent-color: $accent-color;
-  --light-accent-color: $light-accent-color;
-  --dark-accent-color: $dark-accent-color;
-  --selection-color: $selection-color;
-
-  --text-color: $text-color;
-  --text-color-info:    $text-color-info;
-  --text-color-success: $text-color-success;
-  --text-color-warning: $text-color-warning;
-  --text-color-error:   $text-color-error;
-  --text-color-muted: $text-color-muted;
-  --text-color-selected: $text-color-selected;
-  --text-color-highlight:  $text-color-highlight;
-  --text-color-subtle: $text-color-subtle;
-
-  --bg-color-info:    $bg-color-info;
-  --bg-color-success: $bg-color-success;
-  --bg-color-warning: $bg-color-warning;
-  --bg-color-error:   $bg-color-error;
-
-  --bg-light-color-info:    $bg-light-color-info;
-  --bg-light-color-success: $bg-light-color-success;
-  --bg-light-color-warning: $bg-light-color-warning;
-  --bg-light-color-error:   $bg-light-color-error;
-
-  --table-color: $table-color;
-  --table-bg-color: $table-bg-color;
-  --table-bg-alt-color: $table-bg-alt-color;
-  --table-border-color: $table-border-color;
-
-  --padding: $padding;
-
-  --sidebar-size: $sidebar-size;
-  --notification-size: $notification-size;
-
-  --vertical-step: $vertical-step;
-  --line-height: $line-height;
-}

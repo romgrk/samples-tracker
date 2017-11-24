@@ -103,7 +103,7 @@ export default defaultExport
 defaultExport.Item = function Item({ icon, children, ...rest }) {
   return (
     <button className='item' { ...rest }>
-      { icon && <Icon name={icon} /> }
+      { icon && <Icon name={icon} className='menu' /> }
       { children }
     </button>
   )

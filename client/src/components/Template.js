@@ -120,7 +120,7 @@ class Template extends React.Component {
         <div className='Steps'>
           {
             steps.map((step, i) =>
-              <div className='Step center' key={step.id}>
+              <div className='TemplateStep center' key={step.id}>
                 <EditableLabel
                   value={step.name}
                   onEnter={value => this.setStepName(i, value)}
@@ -130,7 +130,7 @@ class Template extends React.Component {
                       <span className='text-info'> *</span>
                   }
                 </EditableLabel>
-                <Dropdown trigger={<Button flat icon='ellipsis-v' />}>
+                <Dropdown trigger={<Button flat icon='ellipsis-v' />} icons>
                   <Dropdown.Item icon='trash' onClick={() => this.deleteStep(i)}>
                     Delete
                   </Dropdown.Item>
@@ -147,7 +147,7 @@ class Template extends React.Component {
               </div>
             )
           }
-          <button className='Step add center' onClick={this.addStep}>
+          <button className='TemplateStep add center' onClick={this.addStep}>
             <Icon name='plus' />
           </button>
         </div>

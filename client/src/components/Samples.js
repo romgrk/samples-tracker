@@ -3,9 +3,14 @@ import PropTypes from 'prop-types'
 import pure from 'recompose/pure'
 import styled from 'styled-components'
 
+import { getNewSample } from '../models'
+import STATUS from '../constants/status'
 import Button from './Button'
+import Dropdown from './Dropdown'
+import Icon from './Icon'
 import Input from './Input'
 import Label from './Label'
+import Sample from './Sample'
 import Spinner from './Spinner'
 import EditableLabel from './EditableLabel'
 
@@ -14,51 +19,62 @@ class Samples extends React.Component {
   constructor(props) {
     super()
 
-    const { data, data: { name, steps } } = props
-
-    this.state = {
-      data: {
-        ...data,
-        name: name || '',
-        steps: steps || [],
-      },
-    }
+    this.state = { }
   }
 
-  componentWillReceiveProps(props) {
-    const { data } = props
-    this.setState({ data })
-  }
-
-  setName = name => {
-    const data = { ...this.state.data, name }
-    this.setState({ data })
-    this.props.onChange(data.id, data)
+  createNewSample = (template) => {
+    const sample = getNewSample(template)
+    this.props.onCreate(sample)
   }
 
   render() {
-    const { isLoading, onChange, onCreate, onError } = this.props
-    const { editing } = this.state
-    const { name, steps } = this.state.data
+    const {
+      isLoading,
+      data,
+      templates,
+      onChange,
+      onCreate,
+      onDelete,
+      onError
+    } = this.props
+
+    const newSampleButton =
+      <Button loading={templates.isLoading} iconAfter={ templates.isLoading ? undefined : 'caret-down' }>
+        Create New Sample
+      </Button>
 
     return (
       <div className='Samples'>
-        <div className='Template__info vcenter'>
-          <EditableLabel onEnter={this.setName} value={name} />
-          {
-            isLoading &&
-              <Spinner />
-          }
+
+        <div className='row'>
+          <Dropdown trigger={newSampleButton}>
+            {
+              templates.data.map(template =>
+                <Dropdown.Item key={template.id} onClick={() => this.createNewSample(template)}>
+                  { template.name }
+                </Dropdown.Item>
+              )
+            }
+          </Dropdown>
         </div>
-        <div className='Steps'>
+
+        <div className='Samples__table bordered'>
+          <div className='Samples__header Sample'>
+            <div>Name</div>
+            <div>&nbsp;</div>
+          </div>
           {
-            [].map(step =>
-              <div className='Step center'>
-                <Label small>{ step.name }</Label>
-              </div>
+            Object.values(data).map(sample =>
+              <Sample
+                key={sample.id}
+                sample={sample}
+                onChange={onChange}
+                onDelete={onDelete}
+              />
             )
           }
         </div>
+
       </div>
     )
   }

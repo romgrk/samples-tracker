@@ -11,12 +11,13 @@ const samples = {
     (res, id, data) => ({ id, data }),
     (err, id, data) => ({ id, data })),
   create: createFetchActions(SAMPLES.CREATE, requests.samples.create,
-    undefined,
+    (data) => ({ data }),
     (res, data) => ({ id: res.id, data: res }),
     (err, data) => ({ data })),
   delete: createFetchActions(SAMPLES.DELETE, requests.samples.delete,
-    undefined,
+    (data) => ({ data }),
     (res, id, data) => ({ id, data }),
     (err, id, data) => ({ id, data })),
 }
+
 export default samples

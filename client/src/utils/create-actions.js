@@ -39,8 +39,10 @@ export function createModelActions(namespace, fns) {
 }
 
 export function createFetchActions(namespace, fn, contraMapFn, mapFn, errorMapFn) {
-  if (fn === undefined)
+  if (fn === undefined) {
+    console.warn('Received undefined function for namespace:', namespace)
     return undefined
+  }
   const action = createFetchFunction(fn, contraMapFn, mapFn, errorMapFn)
   action.request = createAction(namespace.REQUEST, contraMapFn)
   action.receive = createAction(namespace.RECEIVE, undefined, mapFn)

@@ -1,24 +1,28 @@
 import React from 'react'
 import pure from 'recompose/pure'
+import classname from 'classname'
 
 function Spinner(props) {
   let { className, size = 'tiny', ...rest } = props
 
-  if (has(props, 'tiny'))
+  if (props.tiny)
     size = 'tiny'
-  if (has(props, 'small'))
+  if (props.small)
     size = 'small'
-  if (has(props, 'medium'))
+  if (props.medium)
     size = 'medium'
-  if (has(props, 'large'))
+  if (props.large)
     size = 'large'
 
-  const spinnerClassName = [
+  const spinnerClassName = classname(
     'Spinner',
     `loading-spinner-${size}`,
     size,
-    className
-  ].join(' ').trim()
+    className,
+    {
+      hidden: !props.visible,
+    }
+  )
 
   return (
     <span className={spinnerClassName} { ...rest } />

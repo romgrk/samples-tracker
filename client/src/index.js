@@ -7,8 +7,10 @@ import Routes from './routes'
 import registerServiceWorker from './utils/registerServiceWorker'
 
 import 'font-awesome/css/font-awesome.min.css'
+import './styles/export-variables.css'
 import './styles/reset.css'
 import './styles/spinner.css'
+import './styles/badges.css'
 import './styles/notifications.css'
 import './styles/global-styles.css'
 

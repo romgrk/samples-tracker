@@ -38,7 +38,7 @@ export default function templates(state = initialState, action) {
     case TEMPLATES.UPDATE.REQUEST:
       return set(lensPath(['data', action.payload.id, 'isLoading']), true, state)
     case TEMPLATES.UPDATE.RECEIVE:
-      return set(lensPath(['data', action.meta.id]), { isLoading: false, data: action.meta.data }, state)
+      return set(lensPath(['data', action.meta.id]), { isLoading: false, data: action.payload }, state)
     case TEMPLATES.UPDATE.ERROR:
       return set(lensPath(['data', action.meta.id, 'isLoading']), false, state)
 

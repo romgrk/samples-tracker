@@ -18,6 +18,11 @@
     transform: rotateZ(360deg);
   }
 }
+
+.Spinner.hidden {
+  opacity: 0;
+}
+
 .loading-spinner-tiny {
   position: relative;
   display: inline-block;

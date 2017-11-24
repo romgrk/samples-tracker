@@ -13,11 +13,13 @@ import toLoadable from '../utils/to-loadable'
 
 const initialState = {
   isLoading: false,
+  isCreating: false,
   data: {}
 }
 
 export default function samples(state = initialState, action) {
   switch (action.type) {
+
     case SAMPLES.FETCH.REQUEST:
       return { ...state, isLoading: true }
     case SAMPLES.FETCH.RECEIVE:

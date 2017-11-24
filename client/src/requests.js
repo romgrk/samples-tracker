@@ -24,6 +24,7 @@ export const users = {
 export const samples = {
   list: () => GET('/sample/list'),
   get: (id) => GET(`/sample/get/${id}`),
+  create: (data) => POST(`/sample/create`, data),
   update: (id, data) => POST(`/sample/update/${id}`, data),
   delete: (id) => POST(`/sample/delete/${id}`),
 }
@@ -80,9 +81,15 @@ function fetchAPI(url, params, options = {}) {
     if (data.ok)
       return Promise.resolve(data.data)
     else
-      return Promise.reject(new Error(data.message))
+      return Promise.reject(createError(data))
   })
 }
 
 function GET(url, params)  { return fetchAPI(url, params, { method: 'get' }) }
 function POST(url, params) { return fetchAPI(url, params, { method: 'post' }) }
+
+function createError(data) {
+  const e = new Error(data.message)
+  e.stack = data.stack
+  return e
+}

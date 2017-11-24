@@ -1,4 +1,5 @@
 @import './_variables.scss';
+@import './_mixins.scss';
 
 html, body {
   width: 100%;
@@ -36,7 +37,6 @@ html, body {
   box-shadow: inset 0 0 6px rgba(0,0,0,.2);
 }
 
-
 .vbox {
   display: flex;
   flex-direction: column;
@@ -46,23 +46,20 @@ html, body {
   flex-direction: row;
 }
 .center {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  @include center;
 }
 .hcenter {
-  display: flex;
-  justify-content: center;
+  @include hcenter;
 }
 .vcenter {
-  display: flex;
-  align-items: center;
+  @include vcenter;
 }
 .center>*,
 .hcenter>*,
 .vcenter>* {
   flex: 1 1;
 }
+
 
 .row {
   display: flex;
@@ -129,7 +126,6 @@ input.label.editable {
   background-color: transparent;
   border: none;
   padding: 0;
-  width: 0;
 }
 
 
@@ -294,9 +290,13 @@ input.label.editable {
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
 }
+.Popup.open,
+.Tooltip.visible,
 .Dropdown.open > .Dropdown__content {
   display: block;
 }
+.Popup,
+.Tooltip,
 .Dropdown__content {
   display: none;
   position: absolute;
@@ -310,6 +310,14 @@ input.label.editable {
   box-shadow: 1px 2px 6px 1px rgba(0, 0, 0, 0.3);
   cursor: default;
 }
+.Tooltip {
+  pointer-events: none;
+  padding: 0 $padding;
+  height: 30px;
+  line-height: 30px;
+  min-width: unset;
+}
+.Popup > .item ,
 .Dropdown__content > .item {
   position: relative;
   display: flex;
@@ -318,25 +326,31 @@ input.label.editable {
   height: 30px;
   padding: 0 calc(2 * var(--padding));
 }
+.Popup.with-icons > .item ,
 .Dropdown.with-icons .Dropdown__content > .item {
   padding: 0 calc(2 * var(--padding)) 0 calc(6 * var(--padding));
 }
+.Popup > .item[disabled],
 .Dropdown__content > .item[disabled] {
   color: var(--text-color-muted);
 }
+.Popup > .item:not([disabled]):hover,
 .Dropdown__content > .item:not([disabled]):hover {
   background-color: var(--focus-color);
   color: #fff;
 }
-.Dropdown__content > .item > .Icon {
+.Popup > .item > .Icon.menu,
+.Dropdown__content > .item > .Icon.menu {
   position: absolute;
   color: var(--color);
   width: calc(2 * var(--padding));
   left: calc(2 * var(--padding));
 }
-.Dropdown__content > .item[disabled] > .Icon {
+.Popup > .item[disabled] > .Icon.menu,
+.Dropdown__content > .item[disabled] > .Icon.menu {
   color: var(--text-color-disabled);
 }
+.Popup > .group ,
 .Dropdown__content > .group {
   position: relative;
   display: flex;
@@ -347,6 +361,7 @@ input.label.editable {
   color: var(--color);
   font-weight: bold;
 }
+.Popup > .separator ,
 .Dropdown__content > .separator {
   width: 100%;
   height: calc(2 * var(--padding));
@@ -463,6 +478,8 @@ section.Settings {
   padding: 0 calc(6 * var(--padding));
 }
 
+$step-width: 40px;
+
 .Samples__table {
   width: 100%;
   color: var(--table-color);
@@ -482,24 +499,44 @@ section.Settings {
   flex-direction: row;
   align-items: stretch;
 }
-.Sample > div {
+.Sample > * {
   padding: 0 5px;
 }
-.Sample > div:first-child {
+.Sample > *:first-child {
   width: 200px;
   flex: 0 0 auto;
   padding: 0 calc(2 * var(--padding));
 }
-.Sample > div:not(:first-child) {
-  min-width: 40px;
+.Sample > *:not(:first-child) {
+  min-width: $step-width;
   display: flex;
   justify-content: center;
   align-items: center;
   border-left: 1px solid var(--table-border-color);
 }
-.Sample > div:last-child {
-  flex: 1 1 40px;
+.Sample > *:last-child {
+  flex: 1 1 $step-width;
 }
+.Sample__name {
+  @include vcenter;
+}
+
+.Step {
+  transition: all .25s;
+}
+.Step:hover {
+  background-color: $hover-light-bg-color;
+}
+.Step__menu {
+  position: absolute;
+  min-width: $step-width;
+  width: auto;
+  padding: 0;
+}
+.Step__menu > .item {
+  justify-content: center;
+}
+
 
 
 .Template {
@@ -537,7 +574,7 @@ section.Settings {
   overflow: auto;
   padding: calc(var(--padding) - 1px);
 }
-.Template .Step {
+.TemplateStep {
   height: calc(8 * var(--padding));
   padding: calc(var(--padding) - 1px);
   min-width: 100px;
@@ -545,13 +582,15 @@ section.Settings {
   border-radius: 2px;
   cursor: pointer;
 }
-.Template .Step:not(:last-child) {
+.TemplateStep:not(:last-child) {
   margin-right: var(--padding);
 }
-.Template .Step.add:hover {
+.TemplateStep.add:hover {
   background-color: var(--hover-light-bg-color);
 }
-.Template .Step .Dropdown {
-  /* width: 30px; */
+.TemplateStep input.label.editable {
+  width: 0;
+}
+.TemplateStep .Dropdown {
   flex: 0 0 auto;
 }

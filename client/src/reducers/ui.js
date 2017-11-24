@@ -12,7 +12,7 @@ export default function ui(state = initialState, action) {
       notifications: state.notifications.concat({
         type: 'error',
         message: action.payload.message,
-        stack: action.payload.stack,
+        stack: Array.isArray(action.payload.stack) ? action.payload.stack : action.payload.stack.split('\n'),
       })
     }
   }
