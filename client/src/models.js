@@ -4,7 +4,7 @@
 
 
 export const getNewTemplate = () => ({
-  name: 'new-semplate',
+  name: 'new-template',
   notes: '',
   tags: [],
   steps: []
