@@ -1,70 +1,6 @@
-
-/*
-#292929 --darker-bg
-#2E2E2E --chrome
-#303030 --sidebar?
-#3D3D3D --app-bg
-
-#888888
-#5B5B5B
-#909090
-
-*/
+@import './_variables.scss';
 
 html, body {
-  --color: #909090;
-  --light-color: #ccc;
-  --bg-color: #3D3D3D;
-  --border-color: #2E2E2E;
-  --dark-bg-color: #292929;
-  --hover-color: #ddd;
-  --hover-bg-color: #353535;
-  --hover-light-bg-color: rgba(255, 255, 255, 0.05);
-  --active-bg-color: rgba(255, 255, 255, 0.025);
-  --light-border-color: rgba(255,255,255, 0.1);
-  --checkbox-border-color: #888888;
-  --dark-border-color: #181818;
-
-  --focus-color: #0078cf;
-  --accent-color: #599eff;
-  --light-accent-color: #a6cbff;
-  --dark-accent-color: #003580;
-  --selection-color: rgba(255, 255, 255, 0.2);
-
-  --text-color: var(--color);
-  --text-color-info:    rgb(100, 148, 237);
-  --text-color-success: rgb(115, 201, 144);
-  --text-color-warning: rgb(226, 192, 141);
-  --text-color-error:   rgb(255, 99, 71);
-  --text-color-muted: rgba(157, 165, 180, 0.4);
-  --text-color-selected: #fff;
-  --text-color-highlight:  #ddd;
-
-  --text-color-subtle: rgba(157, 165, 180, 0.1);
-
-  --bg-color-info:    rgb(15, 130, 230);
-  --bg-color-success: rgb(43, 161, 67);
-  --bg-color-warning: rgb(173, 124, 11);
-  --bg-color-error:   rgb(209, 59, 46);
-
-  --bg-light-color-info:    #7ebef7;
-  --bg-light-color-success: #72da87;
-  --bg-light-color-warning: #f3bf44;
-  --bg-light-color-error:   #e89d96;
-
-  --table-color: #bdc4cd;
-  --table-bg-color: #2d2d2d;
-  --table-bg-alt-color: #313131;
-  --table-border-color: #414141;
-
-  --padding: 5px;
-
-  --sidebar-size: 40px;
-  --notification-size: 45px;
-
-  --vertical-step: 5px;
-  --line-height: 25px;
-
   width: 100%;
   height: 100%;
   overflow: hidden;
@@ -157,7 +93,8 @@ html, body {
   font-weight: bold;
 }
 .label.small {
-  font-size: 10px;
+  font-size: 12px;
+  line-height: 25px;
 }
 .label.large {
   font-size: 18px;
@@ -218,7 +155,7 @@ input.label.editable {
   padding-left: 5px;
   cursor: pointer;
 }
-.input-checkbox {
+.Checkbox {
   vertical-align: middle;
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -232,14 +169,14 @@ input.label.editable {
   box-shadow: 0 0 0 1px var(--checkbox-border-color);
   transition: background-color 0.16s cubic-bezier(0.5, 0.15, 0.2, 1);
 }
-.input-checkbox:focus {
+.Checkbox:focus {
   outline: 0;
 }
-.input-checkbox:active {
+.Checkbox:active {
   background-color: #0f82e6;
 }
-.input-checkbox:before,
-.input-checkbox:after {
+.Checkbox:before,
+.Checkbox:after {
   content: "";
   position: absolute;
   top: 12px;
@@ -251,46 +188,46 @@ input.label.editable {
   opacity: 0;
   transition: transform 0.1s cubic-bezier(0.5, 0.15, 0.2, 1), opacity 0.1s cubic-bezier(0.5, 0.15, 0.2, 1);
 }
-.input-checkbox:before {
+.Checkbox:before {
   width: 5.28px;
   transform: translate3d(0, 0, 0) rotate(225deg) scale(0);
 }
-.input-checkbox:after {
+.Checkbox:after {
   width: 10.56px;
   margin: -1px;
   transform: translate3d(0, 0, 0) rotate(-45deg) scale(0);
   transition-delay: .05s;
 }
-.input-checkbox:checked {
+.Checkbox:checked {
   background-color: #568af2;
   box-shadow: 0 0 0 1px var(--border-color);
 }
-.input-checkbox:checked:active {
+.Checkbox:checked:active {
   background-color: #3f444d;
 }
-.input-checkbox:checked:before {
+.Checkbox:checked:before {
   opacity: 1;
   transform: translate3d(0, 0, 0) rotate(225deg) scale(1);
   transition-delay: .05s;
 }
-.input-checkbox:checked:after {
+.Checkbox:checked:after {
   opacity: 1;
   transform: translate3d(0, 0, 0) rotate(-45deg) scale(1);
   transition-delay: 0;
 }
-.input-checkbox:indeterminate {
+.Checkbox:indeterminate {
   background-color: #0f82e6;
 }
-.input-checkbox:indeterminate:active {
+.Checkbox:indeterminate:active {
   background-color: #3f444d;
 }
-.input-checkbox:indeterminate:after {
+.Checkbox:indeterminate:after {
   opacity: 1;
   transform: translate3d(-2.24px, -4px, 0) rotate(0deg) scale(1);
   transition-delay: 0;
 }
 .input-label .input-radio,
-.input-label .input-checkbox,
+.input-label .Checkbox,
 .input-label .input-toggle {
   margin-top: -0.25em;
   margin-right: 0.3em;
@@ -537,30 +474,30 @@ section.Settings {
   line-height: calc(var(--line-height) - 2px);
   font-weight: bold;
 }
-.Samples__row:nth-child(2n + 1) { /* skip header */
+.Sample:nth-child(2n + 1) { /* skip header */
   background-color: var(--table-bg-alt-color);
 }
-.Samples__row {
+.Sample {
   display: flex;
   flex-direction: row;
   align-items: stretch;
 }
-.Samples__row > div {
+.Sample > div {
   padding: 0 5px;
 }
-.Samples__row > div:first-child {
+.Sample > div:first-child {
   width: 200px;
   flex: 0 0 auto;
   padding: 0 calc(2 * var(--padding));
 }
-.Samples__row > div:not(:first-child) {
+.Sample > div:not(:first-child) {
   min-width: 40px;
   display: flex;
   justify-content: center;
   align-items: center;
   border-left: 1px solid var(--table-border-color);
 }
-.Samples__row > div:last-child {
+.Sample > div:last-child {
   flex: 1 1 40px;
 }
 
