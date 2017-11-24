@@ -28,7 +28,7 @@ class Dropdown extends React.Component {
   }
 
   componentWillUnmount() {
-    dropdowns.filter(x => x !== this)
+    dropdowns.splice(dropdowns.findIndex(x => x === this), 1)
   }
 
   onDocumentClick(ev) {
