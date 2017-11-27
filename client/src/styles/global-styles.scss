@@ -346,7 +346,6 @@ input.label.editable {
 
 
 .Dropdown {
-  /*position: relative;*/
 }
 .Dropdown.open > .Button {
   border: 1px solid var(--light-border-color);
@@ -356,14 +355,16 @@ input.label.editable {
   border-bottom-right-radius: 0;
 }
 .Popup.open,
-.Tooltip.visible,
-.Dropdown.open > .Dropdown__content {
+.Tooltip.visible {
   display: block;
 }
 .Popup,
-.Tooltip,
-.Dropdown__content {
+.Tooltip {
   display: none;
+}
+.Popup,
+.Tooltip,
+.Dropdown__inner {
   position: absolute;
   /* top & left set by tether */
   min-width: 200px;
@@ -375,6 +376,17 @@ input.label.editable {
   box-shadow: 1px 2px 6px 1px rgba(0, 0, 0, 0.3);
   cursor: default;
 }
+.Dropdown__inner {
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: all .25s;
+  pointer-events: none;
+}
+.Dropdown.open .Dropdown__inner {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: unset;
+}
 .Tooltip {
   pointer-events: none;
   padding: 0 $padding;
@@ -383,7 +395,7 @@ input.label.editable {
   min-width: unset;
 }
 .Popup > .item ,
-.Dropdown__content > .item {
+.Dropdown__inner > .item {
   position: relative;
   display: flex;
   width: 100%;
@@ -392,31 +404,31 @@ input.label.editable {
   padding: 0 calc(2 * var(--padding));
 }
 .Popup.with-icons > .item ,
-.Dropdown.with-icons .Dropdown__content > .item {
+.Dropdown.with-icons .Dropdown__inner > .item {
   padding: 0 calc(2 * var(--padding)) 0 (6 * $padding);
 }
 .Popup > .item[disabled],
-.Dropdown__content > .item[disabled] {
+.Dropdown__inner > .item[disabled] {
   color: var(--text-color-muted);
 }
 .Popup > .item:not([disabled]):hover,
-.Dropdown__content > .item:not([disabled]):hover {
+.Dropdown__inner > .item:not([disabled]):hover {
   background-color: var(--focus-color);
   color: #fff;
 }
 .Popup > .item > .Icon.menu,
-.Dropdown__content > .item > .Icon.menu {
+.Dropdown__inner > .item > .Icon.menu {
   position: absolute;
   color: var(--color);
   width: calc(2 * var(--padding));
   left: calc(2 * var(--padding));
 }
 .Popup > .item[disabled] > .Icon.menu,
-.Dropdown__content > .item[disabled] > .Icon.menu {
+.Dropdown__inner > .item[disabled] > .Icon.menu {
   color: var(--text-color-disabled);
 }
 .Popup > .group ,
-.Dropdown__content > .group {
+.Dropdown__inner > .group {
   position: relative;
   display: flex;
   width: 100%;
@@ -427,7 +439,7 @@ input.label.editable {
   font-weight: bold;
 }
 .Popup > .separator ,
-.Dropdown__content > .separator {
+.Dropdown__inner > .separator {
   width: 100%;
   height: calc(2 * var(--padding));
   margin-bottom: calc(2 * var(--padding));

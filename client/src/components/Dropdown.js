@@ -97,7 +97,9 @@ class Dropdown extends React.Component {
       <div className={dropdownClassName} ref={this.onRef}>
         { button }
         <div className='Dropdown__content'>
-          { children }
+          <div className='Dropdown__inner'>
+            { children }
+          </div>
         </div>
       </div>
     )
