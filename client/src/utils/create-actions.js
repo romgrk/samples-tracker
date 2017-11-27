@@ -56,8 +56,11 @@ export function createFetchFunction(fn) {
 
       dispatch(self.request(...args))
 
-      fn(...args)
-      .then(result => dispatch(self.receive(result, ...args)))
+      return fn(...args)
+      .then(result => (
+        dispatch(self.receive(result, ...args)),
+        result
+      ))
       .catch(err =>   dispatch(self.error(err, ...args)))
     }
   }
