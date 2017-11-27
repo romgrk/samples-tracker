@@ -113,10 +113,6 @@ export const DECLARATIONS = `
      * Note that sample.steps[stepIndex] === step
      */
     steps: Array<Step>
-    /**
-     * Files attached to this samples
-     */
-    files: Array<File>
   }
 
   /**
