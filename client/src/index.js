@@ -14,6 +14,7 @@ import './styles/badges.css'
 import './styles/notifications.css'
 import './styles/global-styles.css'
 
+import completionFunctions from './actions/completion-functions'
 import samples from './actions/samples'
 import settings from './actions/settings'
 import templates from './actions/templates'
@@ -28,6 +29,7 @@ render(
 )
 
 
+store.dispatch(completionFunctions.fetch())
 store.dispatch(samples.fetch())
 store.dispatch(settings.fetch())
 store.dispatch(templates.fetch())

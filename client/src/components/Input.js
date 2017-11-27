@@ -21,7 +21,7 @@ class Input extends React.Component {
   }
 
   render() {
-    const { className, value, loading, ...rest } = this.props
+    const { className, value, loading, onEnter, ...rest } = this.props
     const inputClassName = 'Input' + (className ? ' ' + className : '')
     return (
       <div>

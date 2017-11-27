@@ -63,6 +63,12 @@ html, body {
   text-align: center;
 }
 
+.inline {
+  display: inline-block;
+}
+.block {
+  display: block;
+}
 
 .row {
   display: flex;
@@ -105,7 +111,7 @@ html, body {
 .label.large {
   font-size: 18px;
 }
-.label.editable {
+.label.editable.full {
   width: 100%;
 }
 div.label.editable {
@@ -140,6 +146,42 @@ input.label.editable {
 }
 
 
+.list {
+  min-width: 200px;
+}
+.list > .group {
+  position: relative;
+  display: flex;
+  width: 100%;
+  align-items: center;
+  height: 30px;
+  padding: 0 calc(2 * var(--padding));
+  color: var(--color);
+  font-weight: bold;
+}
+.list > .item {
+  display: block;
+  color: $text-color-highlight;
+  padding: 0 calc(2 * var(--padding));
+}
+.list > a.item:not(.disabled) {
+  transition: all .25s;
+  cursor: pointer;
+}
+.list > a.item:not(.disabled):hover {
+  background-color: $hover-light-bg-color;
+}
+.list > .item.active:not(.disabled),
+.list > .item.active:not(.disabled):hover {
+  color: white;
+  background-color: $focus-color;
+}
+.list > .separator {
+  width: 100%;
+  height: calc(2 * var(--padding));
+  margin-bottom: calc(2 * var(--padding));
+  border-bottom: 1px solid var(--light-border-color);
+}
 
 .Input {
   color: var(--light-color);
@@ -243,7 +285,7 @@ input.label.editable {
 .Button {
   font-weight: bold;
   background-color: transparent;
-  color: var(--color);
+  color: $color;
   border: 1px solid var(--light-border-color);
   border-radius: 2px;
   height: 30px;
@@ -476,6 +518,7 @@ h1 {
   justify-content: center;
   cursor: pointer;
   user-select: none;
+  transition: all .25s;
 }
 .Sidebar__item:hover, .Sidebar__item.active:hover {
   background-color: var(--hover-bg-color);
@@ -496,6 +539,9 @@ h1 {
   flex: 1 1;
 }
 
+section {
+  flex: 1 1;
+}
 section.Settings {
   padding: (4 * $padding) (6 * $padding);
 }
@@ -503,7 +549,6 @@ section.Templates {
   padding: (2 * $padding) 0;
 }
 section.Samples {
-  flex: 1 1;
 }
 
 
@@ -644,4 +689,33 @@ $step-width: 40px;
 }
 .TemplateStep .Dropdown {
   flex: 0 0 auto;
+}
+
+
+.CompletionFunctions__list {
+  border-left: 1px solid $bg-color;
+  background-color: $dark-bg-color;
+}
+.CompletionFunctions__list > .item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.CompletionFunctions__list > .item > .content {
+  flex: 1 1;
+}
+.CompletionFunctions__list > .item > .delete-icon {
+  padding: $padding;
+  border-radius: 2px;
+  opacity: 0;
+  transition: all .25s;
+}
+.CompletionFunctions__list > .item:hover > .delete-icon {
+  opacity: 1;
+}
+.CompletionFunctions__list > .item > .delete-icon:hover {
+  background-color: $hover-light-bg-color;
+}
+.CompletionFunctions__editor {
+  flex: 1 1;
 }

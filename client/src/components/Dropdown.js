@@ -86,12 +86,13 @@ class Dropdown extends React.Component {
         { onClick: this.toggle }
       )
 
-    const children = this.props.children.map(child =>
+    const children = React.Children.map(this.props.children, child =>
       React.cloneElement(
         child,
         { onClick: (ev) => { this.close(); child.props.onClick(ev)} }
       )
     )
+
     return (
       <div className={dropdownClassName} ref={this.onRef}>
         { button }

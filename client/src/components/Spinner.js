@@ -15,7 +15,7 @@ function Spinner(props) {
     size = 'large'
 
   const spinnerClassName = classname(
-    'Spinner',
+    'Spinner Icon',
     `loading-spinner-${size}`,
     size,
     className,

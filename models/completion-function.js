@@ -29,6 +29,7 @@ function update(completion) {
          , code = @code
      WHERE id = @id`,
     completion)
+  .then(() => findById(completion.id))
 }
 
 function create(completion) {
@@ -36,6 +37,7 @@ function create(completion) {
     INSERT INTO completion_functions
                 (name, code)
          VALUES (@name, @code)`, completion)
+  .then(id => findById(id))
 }
 
 function runById(id, context) {
@@ -46,4 +48,5 @@ function runById(id, context) {
 
 module.exports.delete = function(id) {
   return db.query('DELETE FROM completion_functions WHERE id = @id', { id })
+    .then(() => id)
 }

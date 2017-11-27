@@ -20,7 +20,7 @@ class EditableLabel extends React.Component {
       ev.preventDefault()
       this.accept(ev)
     }
-    if (ev.which === 27 /* Escape */ || ev.which === 20 /* CapsLock */) {
+    if (ev.which === 27 /* Escape */) {
       ev.preventDefault()
       this.setNotEditing()
     }

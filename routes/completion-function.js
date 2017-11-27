@@ -25,6 +25,13 @@ router.use('/update/:id', (req, res, next) => {
   .catch(errorHandler(res))
 })
 
+/* POST create function */
+router.use('/create', (req, res, next) => {
+  Completion.create(req.body)
+  .then(dataHandler(res))
+  .catch(errorHandler(res))
+})
+
 /* POST run function */
 router.use('/run/:id', (req, res, next) => {
   Completion.runById(req.params.id, req.body)

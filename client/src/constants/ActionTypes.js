@@ -16,3 +16,5 @@ export const USERS     = createModelConstants('USERS')
 export const SAMPLES   = createModelConstants('SAMPLES')
 // Templates
 export const TEMPLATES = createModelConstants('TEMPLATES')
+// Completion Functions
+export const COMPLETION_FUNCTIONS = createModelConstants('COMPLETION_FUNCTIONS')

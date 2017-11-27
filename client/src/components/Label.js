@@ -13,6 +13,7 @@ function Label(props) {
       [`text-${type}`] : type !== undefined,
       'small': props.small,
       'large': props.large,
+      'inline': props.inline,
       'text-info': props.info,
       'text-success': props.success,
       'text-warning': props.warning,

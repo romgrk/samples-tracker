@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import pure from 'recompose/pure'
 import { set, lensPath } from 'ramda'
+import { withRouter } from 'react-router'
 
 import Button from './Button'
 import Dropdown from './Dropdown'
@@ -65,6 +66,11 @@ class Template extends React.Component {
     this.update(data)
   }
 
+  setStepCompletion = (i, completionFn) => {
+    const data = set(lensPath(['steps', i, 'completionFn']), completionFn,  this.state.data)
+    this.update(data)
+  }
+
   addStep = () => {
     const data = { ...this.state.data, steps:
       this.state.data.steps.concat({
@@ -95,11 +101,11 @@ class Template extends React.Component {
   }
 
   createNewFunction = () => {
-    throw new Error('unimplemented')
+    this.props.history.push('/completions/new')
   }
 
   render() {
-    const { template, onChange, onCreate, onError } = this.props
+    const { template, completionFunctions, onChange, onCreate, onError } = this.props
     const { data: { name, steps } } = this.state
 
     const isLoading = template ? template.isLoading : false
@@ -138,9 +144,23 @@ class Template extends React.Component {
                   <Dropdown.Group>
                     Set completion function
                   </Dropdown.Group>
+                  <Dropdown.Item
+                    icon={ step.completionFn === null ? 'dot-circle-o' : 'circle-o'}
+                    onClick={() => this.setStepCompletion(i, null)}
+                  >
+                    <em>None</em>
+                  </Dropdown.Item>
                   {
+                    completionFunctions.map(completion =>
+                      <Dropdown.Item
+                        icon={ step.completionFn === completion.id ? 'dot-circle-o' : 'circle-o'}
+                        onClick={() => this.setStepCompletion(i, completion.id)}
+                      >
+                        { completion.name }
+                      </Dropdown.Item>
+                    )
                   }
-                  <Dropdown.Item icon='plus' onClick={this.createNewFunction} disabled>
+                  <Dropdown.Item icon='plus' onClick={this.createNewFunction}>
                     Create new
                   </Dropdown.Item>
                 </Dropdown>
@@ -156,4 +176,4 @@ class Template extends React.Component {
   }
 }
 
-export default pure(Template)
+export default withRouter(pure(Template))

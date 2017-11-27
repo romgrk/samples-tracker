@@ -53,6 +53,7 @@ export const history = {
 export const completionFunctions = {
   list: () => GET('/completion-function/list'),
   get: (id) => GET(`/completion-function/get/${id}`),
+  create: (data) => POST(`/completion-function/create`, data),
   update: (id, data) => POST(`/completion-function/update/${id}`, data),
   delete: (id) => POST(`/completion-function/delete/${id}`),
 }

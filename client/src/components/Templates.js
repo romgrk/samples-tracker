@@ -10,7 +10,16 @@ import Label from './Label'
 import Template from './Template'
 
 
-function Templates({ isLoading, isCreating, data, onChange, onDelete, onCreate, onError }) {
+function Templates({
+  isLoading,
+  isCreating,
+  data,
+  completionFunctions,
+  onChange,
+  onDelete,
+  onCreate,
+  onError
+}) {
 
   const templates = Object.values(data)
 
@@ -27,6 +36,7 @@ function Templates({ isLoading, isCreating, data, onChange, onDelete, onCreate, 
             onChange={onChange}
             onDelete={onDelete}
             template={template}
+            completionFunctions={completionFunctions}
           />
         )
       }
