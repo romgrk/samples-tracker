@@ -29,9 +29,11 @@ class CompletionFunctions extends React.Component {
         this.createFunction()
       }
       else {
-        this.setState({
-          selectedFunction: props.data[props.selectedId]
-        })
+        setTimeout(() =>
+          this.setState({
+            selectedFunction: props.data[props.selectedId]
+          })
+        , 10)
       }
     }
   }
