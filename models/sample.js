@@ -5,6 +5,7 @@
 
 const db = require('../database.js')
 const Step = require('./step')
+const File = require('./file')
 
 module.exports = {
   findAll,
@@ -24,23 +25,34 @@ const columns = `
   , completed
 `
 
-function addSteps(sample) {
-  return Step.findBySampleId(sample.id)
-    .then(steps =>
-      (sample.steps = steps, sample)
+function addDetails(sample) {
+  return Promise.all([
+    Step.findBySampleId(sample.id),
+    File.findBySampleId(sample.id)
+  ])
+  .then(([steps, files]) => {
+
+    console.log(files)
+    files.forEach(file =>
+      steps[file.stepIndex].files.push(file)
     )
+
+    sample.steps = steps
+
+    return sample
+  })
 }
 
 function findAll() {
   return db.selectAll(`SELECT ${columns} FROM samples`)
     .then(samples =>
-      Promise.all(samples.map(addSteps))
+      Promise.all(samples.map(addDetails))
     )
 }
 
 function findById(id) {
   return db.selectOne(`SELECT ${columns} FROM samples WHERE id = @id`, { id })
-    .then(addSteps)
+    .then(addDetails)
 }
 
 function update(sample) {

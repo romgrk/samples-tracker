@@ -21,6 +21,7 @@ const columns = `
   , status
   , notes
   , "completionFn"
+  , '[]'::json as "files"
 `
 
 function findAll() {

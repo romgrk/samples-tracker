@@ -36,7 +36,7 @@ function findById(id) {
 }
 
 function findBySampleId(sampleId) {
-  return db.selectOne(`
+  return db.selectAll(`
     SELECT ${columns}
       FROM files
      WHERE sample_id = @sampleId`, { sampleId })
