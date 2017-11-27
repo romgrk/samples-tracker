@@ -25,16 +25,16 @@ router.use('/create', (req, res, next) => {
   .catch(errorHandler(res))
 })
 
-/* POST delete template */
-router.use('/delete/:id', (req, res, next) => {
-  Template.delete(req.params.id)
+/* POST update template */
+router.use('/update/:id', (req, res, next) => {
+  Template.update({ ...req.body, id: req.params.id })
   .then(dataHandler(res))
   .catch(errorHandler(res))
 })
 
-/* POST update template */
-router.use('/update/:id', (req, res, next) => {
-  Template.update({ ...req.body, id: req.params.id })
+/* POST delete template */
+router.use('/delete/:id', (req, res, next) => {
+  Template.delete(req.params.id)
   .then(dataHandler(res))
   .catch(errorHandler(res))
 })
