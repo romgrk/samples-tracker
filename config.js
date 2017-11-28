@@ -16,4 +16,12 @@ module.exports = {
     },
     callbackURL:  'http://localhost:3001/auth/google/callback',
   },
+  nodemailer: {
+    host: 'smtp.ethereal.email',
+    port: 587,
+    auth: {
+      user: 'vc3itkexjy6wyoyk@ethereal.email',
+      pass: 'EtwzQjNeqycqtrpywc'
+    }
+  }
 }
