@@ -14,6 +14,7 @@ function Templates({
   isLoading,
   isCreating,
   data,
+  settings,
   completionFunctions,
   onChange,
   onDelete,
@@ -33,6 +34,7 @@ function Templates({
         templates.map(template =>
           <Template
             key={template.id}
+            settings={settings}
             onChange={onChange}
             onDelete={onDelete}
             template={template}

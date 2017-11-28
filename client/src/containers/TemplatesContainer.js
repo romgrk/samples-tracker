@@ -15,6 +15,7 @@ class TemplatesContainer extends React.Component {
         isLoading={this.props.templates.isLoading}
         isCreating={this.props.templates.isCreating}
         data={this.props.templates.data}
+        settings={this.props.settings}
         completionFunctions={this.props.completionFunctions}
         onCreate={this.props.create}
         onChange={this.props.update}
@@ -28,6 +29,7 @@ class TemplatesContainer extends React.Component {
 const mapStateToProps = createStructuredSelector({
   templates: createSelector(state => state.templates, state => state),
   completionFunctions: createSelector(state => Object.values(fromLoadable(state.completionFunctions.data)), state => state),
+  settings: createSelector(state => fromLoadable(state.settings.data), state => state),
 })
 
 function mapDispatchToProps(dispatch) {

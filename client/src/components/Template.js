@@ -4,6 +4,7 @@ import pure from 'recompose/pure'
 import { set, lensPath } from 'ramda'
 import { withRouter } from 'react-router'
 
+import { getNewTemplateStep } from '../models'
 import Button from './Button'
 import Dropdown from './Dropdown'
 import Icon from './Icon'
@@ -73,12 +74,7 @@ class Template extends React.Component {
 
   addStep = () => {
     const data = { ...this.state.data, steps:
-      this.state.data.steps.concat({
-        name: 'New Step',
-        status: 'NOT_DONE',
-        notes: '',
-        completionFn: null,
-      })
+      this.state.data.steps.concat(getNewTemplateStep(this.props.settings.alertDelay))
     }
     this.focusLastStep = true
     this.update(data)

@@ -3,18 +3,17 @@
  */
 
 import unindent from './utils/unindent'
+import Status from './constants/status'
 
 export const getNewTemplate = () => ({
   name: 'new-template',
-  notes: '',
   tags: [],
   steps: []
 })
 
-export const getNewStep = () => ({
+export const getNewTemplateStep = (alertDelay) => ({
   name: 'new-step',
-  status: 'NOT_DONE',
-  notes: '',
+  alertDelay: alertDelay,
   completionFn: null,
 })
 
@@ -24,8 +23,9 @@ export const getNewSample = (template) => ({
   tags: [template.name],
   steps: template.steps.map(step => ({
     name: step.name,
-    status: 'NOT_DONE',
+    status: Status.NOT_DONE,
     notes: '',
+    alertDelay: step.alertDelay,
     completionFn: step.completionFn,
   }))
 })
