@@ -4,6 +4,7 @@
 
 
 const vm = require('vm')
+const { rejectMessage } = require('../helpers/promise')
 const db = require('../database.js')
 
 module.exports = {
@@ -42,8 +43,9 @@ function create(completion) {
 
 function runById(id, context) {
   return findById(id).then(completion =>
-    vm.runInContext(`(${completion.code})(step, sample, user)`, vm.createContext(context))
+    vm.runInContext(`(${completion.code})(sample.steps[index], sample, user, index)`, vm.createContext(context))
   )
+  .then(result => result === true ? Promise.resolve() : rejectMessage(result))
 }
 
 module.exports.delete = function(id) {

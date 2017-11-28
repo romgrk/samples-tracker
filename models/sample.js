@@ -3,14 +3,17 @@
  */
 
 
+const { rejectMessage } = require('../helpers/promise')
 const db = require('../database.js')
 const Step = require('./step')
 const File = require('./file')
+const Completion = require('./completion-function')
 
 module.exports = {
   findAll,
   findById,
   update,
+  updateStepStatus,
   complete,
   create,
 }
@@ -68,6 +71,36 @@ function update(sample) {
     ),
   ].concat(sample.steps.map(step => Step.update(step))))
   .then(() => findById(sample.id))
+}
+
+function updateStepStatus(id, index, status, user) {
+  return findById(id)
+    .then(sample => {
+      const step = sample.steps[index]
+      const context = {
+        sample,
+        index,
+        user,
+      }
+
+      if (status === 'DONE') {
+        if (!sample.steps.slice(0, index).every(step => step.status === 'DONE'))
+          return rejectMessage(`Can't complete step before completing those before.`)
+
+        if (step.completionFn !== null)
+          return Completion.runById(step.completionFn, context)
+            .then(() => Step.updateStatus(step.id, status))
+            .then(() => index === sample.steps.length - 1 ? complete(id) : undefined)
+      }
+
+      if (status !== 'DONE') {
+        if (sample.steps.slice(index + 1).some(step => step.status === 'DONE'))
+          return rejectMessage(`Can't switch status back to ${status} because some step after is already completed.`)
+      }
+
+      return Step.updateStatus(step.id, status)
+    })
+    .then(() => status)
 }
 
 function complete(id) {
