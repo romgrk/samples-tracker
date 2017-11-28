@@ -144,7 +144,7 @@ class CompletionFunctions extends React.Component {
               }
               {
                 selectedFunction === undefined &&
-                <Label>No completion function selected</Label>
+                <Label muted>No completion function selected</Label>
               }
             </div>
 

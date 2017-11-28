@@ -3,24 +3,38 @@ import pure from 'recompose/pure'
 import classname from 'classname'
 
 function Label(props) {
-  const { children, className, type, size, ...rest } = props
+  const {
+    children,
+    className,
+    inline,
+    size,
+    small,
+    large,
+    info,
+    success,
+    warning,
+    error,
+    muted,
+    subtle,
+    highlight,
+    ...rest
+  } = props
 
   const labelClassName = classname(
     'label',
     size,
     className,
     {
-      [`text-${type}`] : type !== undefined,
-      'small': props.small,
-      'large': props.large,
-      'inline': props.inline,
-      'text-info': props.info,
-      'text-success': props.success,
-      'text-warning': props.warning,
-      'text-error': props.error,
-      'text-muted': props.muted,
-      'text-subtle': props.subtle,
-      'text-highlight': props.highlight,
+      'small': small,
+      'large': large,
+      'inline': inline,
+      'text-info': info,
+      'text-success': success,
+      'text-warning': warning,
+      'text-error': error,
+      'text-muted': muted,
+      'text-subtle': subtle,
+      'text-highlight': highlight,
     }
   )
 
