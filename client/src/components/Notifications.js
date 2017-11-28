@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import cuid from 'cuid'
 
 import { isOlderThan, MINUTES } from '../utils/time'
 import Icon from './Icon'
@@ -37,7 +38,7 @@ class Notifications extends React.Component {
 
   get(notification) {
     if (!this.infos.has(notification)) {
-      this.infos.set(notification, { closed: false, closing: false, creation: new Date() })
+      this.infos.set(notification, { closed: false, closing: false, creation: new Date(), id: cuid() })
       setTimeout(() => this.close(notification), notificationDelay)
     }
     return this.infos.get(notification)
@@ -82,7 +83,7 @@ class Notifications extends React.Component {
               + (item.notification.stack !== undefined ? 'has-stack' : '') + ' '
 
             return (
-              <div className={className}>
+              <div key={item.id} className={className}>
                 <div className='before'>
                   {
                     item.notification.icon &&
