@@ -1,7 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import pure from 'recompose/pure'
-import styled from 'styled-components'
 import { withRouter } from 'react-router'
 
 import { getNewCompletionFunction } from '../models'
@@ -9,7 +7,6 @@ import Button from './Button'
 import EditableLabel from './EditableLabel'
 import Editor from './Editor'
 import Icon from './Icon'
-import Input from './Input'
 import Label from './Label'
 import Spinner from './Spinner'
 
@@ -39,7 +36,7 @@ class CompletionFunctions extends React.Component {
   }
 
   update(selectedFunction) {
-    this.setState({ selectedFunction })
+    this.setState({ isLoading: true, data: selectedFunction })
     this.props.onChange(selectedFunction.id, selectedFunction)
   }
 
