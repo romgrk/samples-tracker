@@ -7,13 +7,16 @@ import cuid from 'cuid'
 import Button from './Button'
 import Icon from './Icon'
 
-const dropdowns = []
+const modalContainer = document.createElement('div')
+const modalComponents = []
 
 document.addEventListener('click', ev => {
-  dropdowns.forEach(d => d.onDocumentClick(ev))
+  modalComponents.forEach(d => d.onDocumentClick(ev))
 })
 
-class Dropdown extends React.Component {
+
+
+class Modal extends React.Component {
   constructor(props) {
     super(props)
     this.id = cuid()
@@ -23,39 +26,16 @@ class Dropdown extends React.Component {
   }
 
   componentDidMount() {
-    dropdowns.push(this)
+    modalComponents.push(this)
   }
 
   componentWillUnmount() {
-    dropdowns.splice(dropdowns.findIndex(x => x === this), 1)
+    modalComponents.splice(modalComponents.findIndex(x => x === this), 1)
   }
 
   onDocumentClick(ev) {
     if (!this.element.contains(ev.target))
       this.close()
-  }
-
-  onRef = ref => {
-    if (ref === null) {
-      return
-    }
-    if (this.tether) {
-      this.tether.destroy()
-    }
-
-    this.element = ref
-    this.tether = new Tether({
-      element: `.${this.id} > .Dropdown__content`,
-      target: `.${this.id} > :first-child`,
-      attachment:       'top left',
-      targetAttachment: 'bottom left',
-      constraints: [
-        {
-          to: 'window',
-          attachment: 'together'
-        }
-      ]
-    })
   }
 
   close = () => {
@@ -67,36 +47,22 @@ class Dropdown extends React.Component {
   }
 
   render() {
-    const { className, value, loading, trigger  } = this.props
+    const { className  } = this.props
     const { open } = this.state
 
-    const dropdownClassName = classname(
-      'Dropdown',
+    const modalClassName = classname(
+      'Modal',
       className,
-      this.id,
       {
         open: open,
         'with-icons': this.props.icons,
       })
 
-    const button =
-      React.cloneElement(
-        trigger || <Button flat icon='caret-down' />,
-        { onClick: this.toggle }
-      )
-
-    const children = React.Children.map(this.props.children, child =>
-      React.cloneElement(
-        child,
-        { onClick: (ev) => { this.close(); child.props.onClick(ev)} }
-      )
-    )
-
     return (
-      <div className={dropdownClassName} ref={this.onRef}>
+      <div id={this.id} className={modalClassName} ref={this.onRef}>
         { button }
-        <div className='Dropdown__content'>
-          <div className='Dropdown__inner'>
+        <div className='Modal__content'>
+          <div className='Modal__inner'>
             { children }
           </div>
         </div>
@@ -105,7 +71,7 @@ class Dropdown extends React.Component {
   }
 }
 
-const defaultExport = pure(Dropdown)
+const defaultExport = pure(Modal)
 export default defaultExport
 
 defaultExport.Item = function Item({ icon, children, ...rest }) {

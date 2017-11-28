@@ -1,0 +1,29 @@
+@import './_variables.scss';
+@import './_mixins.scss';
+
+.Modal {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.Modal::before {
+  content: '';
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.35);
+  width: 100%;
+  height: 100%;
+}
+
+.Modal__content {
+  background: var(--bg-color);
+  border: 1px solid var(--light-border-color);
+  padding: 10px;
+  border-radius: 2px;
+  z-index: 2;
+  min-height: 40%;
+  min-width: 40%;
+}
