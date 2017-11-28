@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import pure from 'recompose/pure'
-import styled from 'styled-components'
+import classname from 'classname'
 
 import humanReadableTime from '../utils/human-readable-time'
 import STATUS from '../constants/status'
@@ -59,9 +59,14 @@ class Sample extends React.Component {
   render() {
     const { isLoading } = this.props.sample
     const sample = this.state.data
+    const isOverdue = sample.steps.some(step => step.isOverdue)
+
+    const className = classname('Sample', {
+      'overdue': isOverdue,
+    })
 
     return (
-      <div className='Sample'>
+      <div className={className}>
         <div className='Sample__name'>
           <EditableLabel small
             value={sample.name}

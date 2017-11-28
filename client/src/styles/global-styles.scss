@@ -593,6 +593,9 @@ $step-width: 40px;
   align-items: stretch;
   height: 25px;
 }
+.Sample.overdue {
+  background-color: rgba($bg-light-color-warning, 0.15);
+}
 .Sample.empty {
   font-size: 2.5em;
   font-weight: bold;

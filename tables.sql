@@ -90,7 +90,7 @@ CREATE TABLE template_steps (
 
 INSERT INTO templates (name) VALUES ('experiment');
 INSERT INTO template_steps (template_id, index, name, "alertDelay", "completionFn") VALUES
-    (1, 0, 'Extract', '1 minute', NULL),
+    (1, 0, 'Extract', '1 second', NULL),
     (1, 1, 'Pack',    '2 weeks', NULL),
     (1, 2, 'Analyze', '2 weeks', 1),
     (1, 3, 'Compute', '2 weeks', NULL),
