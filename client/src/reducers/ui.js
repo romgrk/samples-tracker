@@ -7,12 +7,18 @@ const initialState = {
 export default function ui(state = initialState, action) {
   if (action.error === true) {
     console.error(action.payload)
+
+    const stack =
+      action.payload.stack === undefined ? undefined :
+      Array.isArray(action.payload.stack) ? action.payload.stack :
+                  action.payload.stack.split('\n')
     return {
       ...state,
       notifications: state.notifications.concat({
         type: 'error',
-        message: action.payload.message,
-        stack: Array.isArray(action.payload.stack) ? action.payload.stack : action.payload.stack.split('\n'),
+        message: action.payload.message.replace(/^Error: /, ''),
+        //details: stack.join('\n'),
+        //stack: stack,
       })
     }
   }
