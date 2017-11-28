@@ -35,7 +35,6 @@ function addDetails(sample) {
   ])
   .then(([steps, files]) => {
 
-    console.log(files)
     files.forEach(file =>
       steps[file.stepIndex].files.push(file)
     )
