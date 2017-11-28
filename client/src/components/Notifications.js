@@ -83,7 +83,7 @@ class Notifications extends React.Component {
               + (item.notification.stack !== undefined ? 'has-stack' : '') + ' '
 
             return (
-              <div key={item.id} className={className}>
+              <div key={item.info.id} className={className}>
                 <div className='before'>
                   {
                     item.notification.icon &&
