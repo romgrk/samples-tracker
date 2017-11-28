@@ -21,10 +21,11 @@ export const getNewSample = (template) => ({
   name: 'new-sample',
   notes: '',
   tags: [template.name],
-  steps: template.steps.map(step => ({
+  steps: template.steps.map((step, i) => ({
     name: step.name,
-    status: Status.NOT_DONE,
+    status: i !== 0 ? Status.NOT_DONE : Status.IN_PROGRESS,
     notes: '',
+    started: i !== 0 ? null : new Date().toISOString(),
     alertDelay: step.alertDelay,
     completionFn: step.completionFn,
   }))

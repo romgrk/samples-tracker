@@ -23,7 +23,7 @@ CREATE TABLE settings (
     value jsonb      not null
 );
 INSERT INTO settings VALUES
-    ('alertDelay', '1209600000'), -- 14 days, in milliseconds
+    ('alertDelay', '"2 weeks"'), -- postgres interval
     ('whitelist',  '["rom7011@gmail.com"]') -- users allowed to login/signup
 ;
 
@@ -45,13 +45,15 @@ CREATE TABLE samples (
 );
 
 CREATE TABLE steps (
-    id             serial  primary key,
-    index          integer not null,
-    sample_id      integer not null,
-    status         Status  not null,
-    name           text    not null,
-    notes          text        null,
-    "completionFn" integer     null
+    id             serial    primary key,
+    index          integer   not null,
+    sample_id      integer   not null,
+    status         Status    not null,
+    name           text      not null,
+    notes          text          null,
+    started        timestamp     null,
+    "alertDelay"   interval  not null,
+    "completionFn" integer       null
 );
 
 /* CREATE TABLE sample_comments (
@@ -77,31 +79,32 @@ CREATE TABLE templates (
     name        text    not null
 );
 CREATE TABLE template_steps (
-    id             serial  primary key,
-    template_id    integer not null,
-    index          integer not null,
-    name           text    not null,
-    "completionFn" integer     null,
+    id             serial   primary key,
+    template_id    integer  not null,
+    index          integer  not null,
+    name           text     not null,
+    "alertDelay"   interval not null,
+    "completionFn" integer      null,
     unique (template_id, index)
 );
 
 INSERT INTO templates (name) VALUES ('experiment');
-INSERT INTO template_steps (template_id, index, name, "completionFn") VALUES
-    (1, 0, 'Extract', NULL),
-    (1, 1, 'Pack', NULL),
-    (1, 2, 'Analyze', 1),
-    (1, 3, 'Compute', NULL),
-    (1, 4, 'Report', NULL)
+INSERT INTO template_steps (template_id, index, name, "alertDelay", "completionFn") VALUES
+    (1, 0, 'Extract', '1 minute', NULL),
+    (1, 1, 'Pack',    '2 weeks', NULL),
+    (1, 2, 'Analyze', '2 weeks', 1),
+    (1, 3, 'Compute', '2 weeks', NULL),
+    (1, 4, 'Report',  '2 weeks', NULL)
 ;
 INSERT INTO templates (name) VALUES ('request');
-INSERT INTO template_steps (template_id, index, name, "completionFn") VALUES
-    (2, 0, 'Write', NULL),
-    (2, 1, 'Review', NULL),
-    (2, 2, 'Send', 1),
-    (2, 3, 'Response', NULL),
-    (2, 4, 'Read', NULL),
-    (2, 5, 'Archive', NULL),
-    (2, 6, 'Sleep', NULL)
+INSERT INTO template_steps (template_id, index, name, "alertDelay", "completionFn") VALUES
+    (2, 0, 'Write',    '2 weeks', NULL),
+    (2, 1, 'Review',   '2 weeks', NULL),
+    (2, 2, 'Send',     '2 weeks', 1),
+    (2, 3, 'Response', '2 weeks', NULL),
+    (2, 4, 'Read',     '2 weeks', NULL),
+    (2, 5, 'Archive',  '2 weeks', NULL),
+    (2, 6, 'Sleep',    '2 weeks', NULL)
 ;
 
 CREATE TABLE completion_functions (

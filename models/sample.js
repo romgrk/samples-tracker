@@ -75,31 +75,70 @@ function update(sample) {
 function updateStepStatus(id, index, status, user) {
   return findById(id)
     .then(sample => {
-      const step = sample.steps[index]
-      const context = {
-        sample,
-        index,
-        user,
-      }
+      const step     = sample.steps[index]
+      const nextStep = sample.steps[index + 1]
+      const previousSteps = sample.steps.slice(0, index)
+      const nextSteps     = sample.steps.slice(index + 1)
 
-      if (status === 'DONE') {
-        if (!sample.steps.slice(0, index).every(step => step.status === 'DONE'))
-          return rejectMessage(`Can't complete step before completing those before.`)
+      return Promise.resolve()
+      /*
+       * First part, we need to check wether or not we authorize the
+       * step to have it's value changed:
+       */
+      .then(() => {
+        if (status === 'DONE') {
 
-        if (step.completionFn !== null)
-          return Completion.runById(step.completionFn, context)
-            .then(() => Step.updateStatus(step.id, status))
-            .then(() => index === sample.steps.length - 1 ? complete(id) : undefined)
-      }
+          if (!previousSteps.every(step => step.status === 'DONE'))
+            return rejectMessage(`Can't complete step before completing those before.`)
 
-      if (status !== 'DONE') {
-        if (sample.steps.slice(index + 1).some(step => step.status === 'DONE'))
-          return rejectMessage(`Can't switch status back to ${status} because some step after is already completed.`)
-      }
+          if (step.completionFn !== null) {
+            const context = {
+              sample,
+              index,
+              user,
+            }
 
-      return Step.updateStatus(step.id, status)
+            return Completion.runById(step.completionFn, context)
+          }
+        }
+        else if (step.status === 'IN_PROGRESS' && status === 'NOT_DONE') {
+          return rejectMessage(`Step will stay in progress.`)
+        }
+        else /* if (status !== 'DONE' && step.status !== 'IN_PROGRESS') */ {
+          if (nextSteps.some(step => step.status === 'DONE'))
+            return rejectMessage(`Can't switch status back to ${status} because some step after is already completed.`)
+        }
+
+        return true
+      })
+      /*
+       * Second part, we update the step value (if authorized) and update
+       * the next step status if applicable:
+       */
+      .then(() => {
+        const actions = []
+        actions.push(Step.updateStatus(step.id, status, null))
+
+        if (status === 'DONE') {
+
+          if (nextSteps.length === 0)
+            actions.push(Step.complete(sample.id))
+
+          if (nextStep !== undefined && nextStep.status === 'NOT_DONE')
+            actions.push(Step.updateStatus(nextStep.id, 'IN_PROGRESS', new Date()))
+        }
+        else {
+          if (nextStep !== undefined && nextStep.status === 'IN_PROGRESS')
+            actions.push(Step.updateStatus(nextStep.id, 'NOT_DONE', null))
+
+          if (previousSteps.every(step => step.status === 'DONE') && status === 'NOT_DONE')
+            actions.push(Step.updateStatus(step.id, 'IN_PROGRESS', new Date()))
+        }
+
+        return Promise.all(actions)
+      })
     })
-    .then(() => status)
+    .then(() => findById(id))
 }
 
 function complete(id) {

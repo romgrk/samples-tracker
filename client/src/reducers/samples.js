@@ -58,10 +58,7 @@ export default function samples(state = initialState, action) {
       return set(lensPath(['data', action.payload.id]), { isLoading: true, data: { ...sample, steps } }, state)
     }
     case SAMPLES.UPDATE_STEP_STATUS.RECEIVE: {
-      const sample = state.data[action.meta.id].data
-      const steps = [ ...sample.steps ]
-      steps[action.meta.index].status = action.payload
-      return set(lensPath(['data', action.meta.id]), { isLoading: false, data: { ...sample, steps } }, state)
+      return set(lensPath(['data', action.meta.id]), { isLoading: false, data: action.payload }, state)
     }
     case SAMPLES.UPDATE_STEP_STATUS.ERROR: {
       const sample = state.data[action.meta.id].data

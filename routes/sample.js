@@ -34,7 +34,12 @@ router.use('/update/:id', (req, res, next) => {
 
 /* POST complete sample step */
 router.use('/update-step-status/:id/:index/:value', (req, res, next) => {
-  Sample.updateStepStatus(req.params.id, req.params.index, req.params.value, req.user)
+  Sample.updateStepStatus(
+    req.params.id,
+    Number(req.params.index),
+    req.params.value,
+    req.user
+  )
   .then(dataHandler(res))
   .catch(errorHandler(res))
 })

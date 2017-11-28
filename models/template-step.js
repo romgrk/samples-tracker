@@ -18,6 +18,7 @@ const columns = `
     id
   , template_id as "templateId"
   , name
+  , "alertDelay"::text
   , "completionFn"
 `
 
@@ -50,26 +51,29 @@ function update(step) {
 }
 
 function create(step) {
-  return db.query(`INSERT INTO template_steps (template_id, index, name, "completionFn")
+  return db.query(`INSERT INTO template_steps (template_id, index, name, "alertDelay", "completionFn")
     VALUES (
       @templateId,
       @index,
       @name,
+      @alertDelay,
       @completionFn
     )`, step)
 }
 
 function updateOrCreate(step) {
-  return db.query(`INSERT INTO template_steps (template_id, index, name, "completionFn")
+  return db.query(`INSERT INTO template_steps (template_id, index, name, "alertDelay", "completionFn")
     VALUES (
       @templateId,
       @index,
       @name,
+      @alertDelay,
       @completionFn
     )
     ON CONFLICT (template_id, index) DO
     UPDATE
        SET name = @name
+         , "alertDelay" = @alertDelay
          , "completionFn" = @completionFn
   `, step)
 }

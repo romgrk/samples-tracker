@@ -8,6 +8,4 @@ export default {
   IN_PROGRESS: 'IN_PROGRESS',
   ERROR:       'ERROR',
   ON_HOLD:     'ON_HOLD',
-  // Not a real status:
-  IS_LOADING:     'IS_LOADING',
 }

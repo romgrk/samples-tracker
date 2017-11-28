@@ -130,7 +130,10 @@ class Step extends React.Component {
         >
           {
             Object.values(STATUS)
-            .filter(status => status !== step.status && status !== STATUS.IS_LOADING)
+            .filter(status =>
+              status !== step.status
+              && status !== STATUS.IN_PROGRESS
+            )
             .map((status, i) =>
               <button key={i} className='item' onClick={() => this.setStatus(status)}>
                 <StatusIcon name={status} />

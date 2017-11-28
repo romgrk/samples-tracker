@@ -20,7 +20,10 @@ const columns = `
   , name
   , status
   , notes
+  , started
+  , "alertDelay"::text
   , "completionFn"
+  , started + "alertDelay" < CURRENT_TIMESTAMP as "isOverdue"
   , '[]'::json as "files"
 `
 
@@ -52,21 +55,25 @@ function update(step) {
      WHERE id = @id`, step)
 }
 
-function updateStatus(id, status) {
+function updateStatus(id, status, started = null) {
   return db.query(`
     UPDATE steps
        SET status = @status
-     WHERE id = @id`, { id, status })
+         , started = @started
+     WHERE id = @id
+  `, { id, status, started })
 }
 
 function create(sampleId, index, step) {
-  return db.insert(`INSERT INTO steps (sample_id, index, status, name, notes, "completionFn")
+  return db.insert(`INSERT INTO steps (sample_id, index, status, name, notes, started, "alertDelay", "completionFn")
     VALUES (
       @sampleId,
       @index,
       @status,
       @name,
       @notes,
+      @started,
+      @alertDelay,
       @completionFn
     )`, { ...step, sampleId, index })
 }
