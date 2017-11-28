@@ -54,6 +54,11 @@ class Step extends React.Component {
   onContextMenu = (ev) => {
     ev.preventDefault()
     this.setContextMenuOpen(true)
+
+    steps.forEach(component => {
+      if (component !== this)
+        component.setContextMenuOpen(false)
+    })
   }
 
   onRef = (ref) => {
