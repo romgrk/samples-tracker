@@ -84,12 +84,6 @@ class Step extends React.Component {
     })
   }
 
-  attachTooltip() {
-    if (!this.element || !this.tooltip)
-      return
-    this.tooltip.attach(this.element)
-  }
-
   setStatus = (status) => {
     this.props.onChangeStatus(status)
     this.setContextMenuOpen(false)
