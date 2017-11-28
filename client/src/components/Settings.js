@@ -19,14 +19,17 @@ class Settings extends React.Component {
   constructor(props) {
     super(props)
 
-    this.state = {
+    this.state = Object.assign({
       alertDelay: {},
       whitelist: {},
-    }
-    this.componentWillReceiveProps(props)
+    }, this.parseProps(props))
   }
 
   componentWillReceiveProps(props) {
+    this.setState(this.parseProps(props))
+  }
+
+  parseProps(props) {
     const { data } = props
 
     const state = {}
@@ -41,7 +44,7 @@ class Settings extends React.Component {
       }
     })
 
-    this.setState(state)
+    return state
   }
 
   changeData = (which, value) => {
