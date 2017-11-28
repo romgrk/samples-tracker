@@ -1,5 +1,4 @@
 import { SETTINGS } from 'constants/ActionTypes'
-import { createAction } from 'redux-actions'
 
 import { createFetchActions } from '../utils/create-actions'
 import * as requests from '../requests'
