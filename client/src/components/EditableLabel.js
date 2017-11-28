@@ -1,5 +1,6 @@
 import React from 'react'
 import pure from 'recompose/pure'
+import classname from 'classname'
 
 import Icon from './Icon'
 
@@ -46,24 +47,38 @@ class EditableLabel extends React.Component {
       className,
       children,
       onEnter,
-      small,
-      type,
+      inline,
       size,
+      small,
+      large,
+      info,
+      success,
+      warning,
+      error,
+      muted,
+      subtle,
+      highlight,
       ...rest
     } = this.props
     const { editing } = this.state
 
-    const labelClassName = [
+    const labelClassName = classname(
       'label editable vcenter',
-      type ? `text-${type}` : '',
-      has(this.props, 'small') ? 'small' : undefined,
-      has(this.props, 'info') ? 'text-info' : undefined,
-      has(this.props, 'success') ? 'text-success' : undefined,
-      has(this.props, 'warning') ? 'text-warning' : undefined,
-      has(this.props, 'error') ? 'text-error' : undefined,
       size,
-      className
-    ].join(' ').trim()
+      className,
+      {
+        'small': small,
+        'large': large,
+        'inline': inline,
+        'text-info': info,
+        'text-success': success,
+        'text-warning': warning,
+        'text-error': error,
+        'text-muted': muted,
+        'text-subtle': subtle,
+        'text-highlight': highlight,
+      }
+    )
 
     const labelProps = {}
 
