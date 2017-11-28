@@ -40,7 +40,8 @@ class Editor extends React.Component {
     this.editor = editor
     this.monaco = monaco
 
-    editor.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyCode.Enter, this.onCtrlEnter)
+    editor.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyCode.Enter, this.onSave)
+    editor.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyCode.KEY_S, this.onSave)
   }
 
   editorWillMount = (monaco) => {
@@ -68,7 +69,7 @@ class Editor extends React.Component {
     return this.editor.getModel().getValue()
   }
 
-  onCtrlEnter = (ev) => {
+  onSave = (ev) => {
     this.props.onSave && this.props.onSave(this.getValue(), ev)
   }
 
