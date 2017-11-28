@@ -10,7 +10,7 @@ import TemplatesContainer from '../containers/TemplatesContainer'
 
 const items = [
   { type: 'item', icon: 'cogs',  path: '/settings',  title: 'Settings' },
-  { type: 'item', icon: 'flask', path: '/samples',   title: 'Samples' },
+  { type: 'item', icon: 'flask', path: '/samples',   title: 'Samples', showTitle: false },
   { type: 'item', icon: 'list',  path: '/templates', title: 'Templates' },
   { type: 'item', icon: 'code',  path: '/completions', title: 'Completion Functions', showTitle: false },
   { type: 'fill'},
