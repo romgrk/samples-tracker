@@ -4,8 +4,6 @@
 
 import { createAction } from 'redux-actions'
 
-const I = x => x
-
 
 export function createModelConstants(namespace) {
   return {
@@ -57,10 +55,10 @@ export function createFetchFunction(fn) {
       dispatch(self.request(...args))
 
       return fn(...args)
-      .then(result => (
-        dispatch(self.receive(result, ...args)),
-        result
-      ))
+      .then(result => {
+        dispatch(self.receive(result, ...args))
+        return result
+      })
       .catch(err =>   dispatch(self.error(err, ...args)))
     }
   }
