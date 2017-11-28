@@ -20,7 +20,6 @@ class Sidebar extends React.Component {
     const {
       index,
       items,
-      onChange
     } = this.props
 
     return (
