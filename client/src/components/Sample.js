@@ -42,6 +42,10 @@ class Sample extends React.Component {
     this.update(data)
   }
 
+  updateStepStatus(index, status) {
+    this.props.onChangeStatus(this.state.data.id, index, status)
+  }
+
   setName = (name) => {
     const data = { ...this.state.data, name }
     this.update(data)
@@ -71,6 +75,7 @@ class Sample extends React.Component {
             <Step key={index}
               step={step}
               onChange={data => this.updateStep(index, data)}
+              onChangeStatus={status => this.updateStepStatus(index, status)}
             />
           )
         }

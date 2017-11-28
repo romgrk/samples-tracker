@@ -3,7 +3,23 @@ import pure from 'recompose/pure'
 import classname from 'classname'
 
 function Badge(props) {
-  const { children, className, type, size, ...rest } = props
+  const {
+    children,
+    className,
+    type,
+    size,
+    small,
+    large,
+    info,
+    success,
+    warning,
+    error,
+    muted,
+    subtle,
+    highlight,
+    spin,
+    ...rest
+  } = props
 
   const badgeClassName = classname(
     'Badge',
@@ -11,15 +27,15 @@ function Badge(props) {
     type,
     className,
     {
-      'small': props.small,
-      'large': props.large,
-      'info': props.info,
-      'success': props.success,
-      'warning': props.warning,
-      'error': props.error,
-      'muted': props.muted,
-      'subtle': props.subtle,
-      'highlight': props.highlight,
+      'small': small,
+      'large': large,
+      'info': info,
+      'success': success,
+      'warning': warning,
+      'error': error,
+      'muted': muted,
+      'subtle': subtle,
+      'highlight': highlight,
     }
   )
 

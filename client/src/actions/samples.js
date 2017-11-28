@@ -9,7 +9,7 @@ const samples = {
     (id, data) => ({ id, data }),
     (res, id, data) => ({ id, data }),
     (err, id, data) => ({ id, data })),
-  updateStepStatus: createFetchActions(SAMPLES.UPDATE, requests.samples.updateStepStatus,
+  updateStepStatus: createFetchActions(SAMPLES.UPDATE_STEP_STATUS, requests.samples.updateStepStatus,
     (id, index, value) => ({ id, index, value }),
     (res, id, index, value) => ({ id, index, value }),
     (err, id, index, value) => ({ id, index, value })),

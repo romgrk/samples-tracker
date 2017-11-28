@@ -33,6 +33,7 @@ class Samples extends React.Component {
       data,
       templates,
       onChange,
+      onChangeStatus,
       onCreate,
       onDelete,
       onError
@@ -74,9 +75,10 @@ class Samples extends React.Component {
           {
             samples.map(sample =>
               <Sample
-                key={sample.id}
+                key={sample.data.id}
                 sample={sample}
                 onChange={onChange}
+                onChangeStatus={onChangeStatus}
                 onDelete={onDelete}
               />
             )

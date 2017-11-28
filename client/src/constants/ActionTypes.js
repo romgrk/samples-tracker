@@ -13,7 +13,7 @@ export const SETTINGS  = createModelConstants('SETTINGS')
 // Users
 export const USERS     = createModelConstants('USERS')
 // Samples
-export const SAMPLES   = createModelConstants('SAMPLES')
+export const SAMPLES   = createModelConstants('SAMPLES', [ 'UPDATE_STEP_STATUS' ])
 // Templates
 export const TEMPLATES = createModelConstants('TEMPLATES')
 // Completion Functions

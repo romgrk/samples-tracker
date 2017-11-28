@@ -104,8 +104,7 @@ class Step extends React.Component {
   }
 
   setStatus = (status) => {
-    const step = { ...this.props.step, status }
-    this.props.onChange(step)
+    this.props.onChangeStatus(status)
     this.setContextMenuOpen(false)
   }
 
@@ -120,7 +119,7 @@ class Step extends React.Component {
         ref={this.onRef}
       >
         <Tooltip ref={this.onRefTooltip} position='top'>
-          { step.name } - <small>{ step.status }</small>
+          { step.name } - <small>{ step.status.isLoading ? 'updating...' : step.status }</small>
         </Tooltip>
 
         <StatusIcon name={step.status} />
@@ -131,9 +130,9 @@ class Step extends React.Component {
         >
           {
             Object.values(STATUS)
-            .filter(status => status !== step.status)
-            .map(status =>
-              <button className='item' onClick={() => this.setStatus(status)}>
+            .filter(status => status !== step.status && status !== STATUS.IS_LOADING)
+            .map((status, i) =>
+              <button key={i} className='item' onClick={() => this.setStatus(status)}>
                 <StatusIcon name={status} />
               </button>
             )

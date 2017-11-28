@@ -17,6 +17,7 @@ class SamplesContainer extends React.Component {
         templates={this.props.templates}
         onCreate={this.props.create}
         onChange={this.props.update}
+        onChangeStatus={this.props.updateStepStatus}
         onDelete={this.props.delete}
         onError={this.props.showError}
       />

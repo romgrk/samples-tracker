@@ -26,6 +26,7 @@ export const samples = {
   get: (id) => GET(`/sample/get/${id}`),
   create: (data) => POST(`/sample/create`, data),
   update: (id, data) => POST(`/sample/update/${id}`, data),
+  updateStepStatus: (id, index, status) => POST(`/sample/update-step-status/${id}/${index}/${status}`),
   delete: (id) => POST(`/sample/delete/${id}`),
 }
 

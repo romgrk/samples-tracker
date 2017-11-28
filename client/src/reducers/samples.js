@@ -7,8 +7,9 @@ import {
   assoc,
   dissoc
 } from 'ramda'
-import { SAMPLES } from 'constants/ActionTypes'
 
+import Status from '../constants/status'
+import { SAMPLES } from '../constants/ActionTypes'
 import toLoadable from '../utils/to-loadable'
 
 const initialState = {
@@ -41,6 +42,34 @@ export default function samples(state = initialState, action) {
       return set(lensPath(['data', action.meta.id]), { isLoading: false, data: action.payload }, state)
     case SAMPLES.UPDATE.ERROR:
       return set(lensPath(['data', action.meta.id, 'isLoading']), false, state)
+
+    case SAMPLES.UPDATE_STEP_STATUS.REQUEST: {
+      const sample = state.data[action.payload.id].data
+      const steps = [ ...sample.steps ]
+      const step = steps[action.payload.index]
+      steps[action.payload.index] = {
+        ...step,
+        status: {
+          isLoading: true,
+          previousValue: step.status,
+          nextValue: action.payload.value,
+        }
+      }
+      return set(lensPath(['data', action.payload.id]), { isLoading: true, data: { ...sample, steps } }, state)
+    }
+    case SAMPLES.UPDATE_STEP_STATUS.RECEIVE: {
+      const sample = state.data[action.meta.id].data
+      const steps = [ ...sample.steps ]
+      steps[action.meta.index].status = action.payload
+      return set(lensPath(['data', action.meta.id]), { isLoading: false, data: { ...sample, steps } }, state)
+    }
+    case SAMPLES.UPDATE_STEP_STATUS.ERROR: {
+      const sample = state.data[action.meta.id].data
+      const steps = [ ...sample.steps ]
+      const step = steps[action.meta.index]
+      steps[action.meta.index] = { ...step, status: step.status.previousValue }
+      return set(lensPath(['data', action.meta.id]), { isLoading: false, data: { ...sample, steps } }, state)
+    }
 
     case SAMPLES.DELETE.REQUEST:
       return set(lensPath(['data', action.payload.id, 'isLoading']), true, state)

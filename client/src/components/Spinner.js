@@ -3,16 +3,16 @@ import pure from 'recompose/pure'
 import classname from 'classname'
 
 function Spinner(props) {
-  let { className, size = 'tiny', ...rest } = props
-
-  if (props.tiny)
-    size = 'tiny'
-  if (props.small)
-    size = 'small'
-  if (props.medium)
-    size = 'medium'
-  if (props.large)
-    size = 'large'
+  let {
+    className,
+    size = 'tiny',
+    tiny,
+    small,
+    medium,
+    large,
+    visible,
+    ...rest
+  } = props
 
   const spinnerClassName = classname(
     'Spinner Icon',
@@ -20,7 +20,11 @@ function Spinner(props) {
     size,
     className,
     {
-      hidden: props.visible === false,
+      hidden: visible === false,
+      tiny,
+      small,
+      medium,
+      large,
     }
   )
 

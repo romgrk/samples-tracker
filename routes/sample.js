@@ -32,6 +32,13 @@ router.use('/update/:id', (req, res, next) => {
   .catch(errorHandler(res))
 })
 
+/* POST complete sample step */
+router.use('/update-step-status/:id/:index/:value', (req, res, next) => {
+  Sample.updateStepStatus(req.params.id, req.params.index, req.params.value, req.user)
+  .then(dataHandler(res))
+  .catch(errorHandler(res))
+})
+
 /* POST delete sample */
 router.use('/delete/:id', (req, res, next) => {
   Sample.delete(req.params.id)
