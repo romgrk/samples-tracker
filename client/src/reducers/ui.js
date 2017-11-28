@@ -32,7 +32,6 @@ export default function ui(state = initialState, action) {
     case SHOW.WARNING:
       return { ...state, notifications: state.notifications.concat({ type: 'warning', ...action.payload }) }
     case SHOW.ERROR:
-      debugger
       return { ...state, notifications: state.notifications.concat({ type: 'error', ...action.payload }) }
     default:
       return state

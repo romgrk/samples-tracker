@@ -196,7 +196,10 @@ input.label.editable {
 .Input:active,
 .Input:focus {
   outline: none;
-  box-shadow: 0 0 0 1px var(--focus-color);
+  box-shadow: 0 0 0 1px $focus-color;
+}
+.Input.error {
+  box-shadow: 0 0 0 1px $bg-color-error;
 }
 
 .input-label {
@@ -301,7 +304,7 @@ input.label.editable {
 .Button:active,
 .Button:focus {
   outline: none;
-  box-shadow: 0 0 0 1px var(--focus-color);
+  box-shadow: 0 0 0 1px $focus-color;
 }
 .Button > .Icon:not(:first-child):last-child {
   margin-left: var(--padding);
@@ -322,7 +325,7 @@ input.label.editable {
 .Button.flat:active,
 .Button.flat:focus {
   outline: none;
-  box-shadow: 0 0 0 1px var(--focus-color);
+  box-shadow: 0 0 0 1px $focus-color;
 }
 
 @each $level, $values in $colors {
@@ -413,7 +416,7 @@ input.label.editable {
 }
 .Popup > .item:not([disabled]):hover,
 .Dropdown__inner > .item:not([disabled]):hover {
-  background-color: var(--focus-color);
+  background-color: $focus-color;
   color: #fff;
 }
 .Popup > .item > .Icon.menu,

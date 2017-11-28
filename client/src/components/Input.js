@@ -1,5 +1,6 @@
 import React from 'react'
 import pure from 'recompose/pure'
+import classname from 'classname'
 
 import has from '../utils/has'
 
@@ -21,8 +22,23 @@ class Input extends React.Component {
   }
 
   render() {
-    const { className, value, loading, onEnter, ...rest } = this.props
-    const inputClassName = 'Input' + (className ? ' ' + className : '')
+    const {
+      className,
+      value,
+      loading,
+      hasError,
+      onEnter,
+      ...rest
+    } = this.props
+
+    const inputClassName = classname(
+      'Input',
+      className,
+      {
+        error: hasError,
+      }
+    )
+
     return (
       <div>
         <input type='text'
