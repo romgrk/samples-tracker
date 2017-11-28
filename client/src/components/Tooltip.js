@@ -11,6 +11,7 @@ class Tooltip extends React.Component {
   constructor(props) {
     super(props)
 
+    this.id = cuid()
     this.state = {
       visible: false,
     }
@@ -24,17 +25,16 @@ class Tooltip extends React.Component {
     this.setState({ visible: false })
   }
 
-  bind() {
-    if (!this.element || !this.target) {
-      return
-    }
+  onRef = ref => {
+    if (ref === null)
+      return;
 
-    this.unbind()
-    this.target.addEventListener('mouseover', this.onMouseOver)
-    this.target.addEventListener('mouseout', this.onMouseOut)
+    if (this.tether)
+      this.tether.destroy()
 
+    this.target = ref
     this.tether = new Tether({
-      element: this.element,
+      element: `#${this.id}`,
       target: this.target,
       ...getPosition(this.props.position),
       constraints: [
@@ -46,31 +46,15 @@ class Tooltip extends React.Component {
     })
   }
 
-  unbind() {
-    if (this.tether)
-      this.tether.destroy()
-
-    if (this.target) {
-      this.target.removeEventListener('mouseover', this.onMouseOver)
-      this.target.removeEventListener('mouseout', this.onMouseOut)
-    }
-  }
-
-  attach(target) {
-    this.target = target
-    this.bind()
-  }
-
-  onRef = ref => {
-    if (ref === null)
-      return
-
-    this.element = ref
-    this.bind()
-  }
-
   render() {
-    const { className, value, loading, children, ...rest } = this.props
+    const {
+      className,
+      value,
+      loading,
+      children,
+      content,
+      ...rest
+    } = this.props
 
     const tooltipClassName = classname(
       'Tooltip',
@@ -80,11 +64,21 @@ class Tooltip extends React.Component {
       }
     )
 
-    return (
-      <div className={tooltipClassName} ref={this.onRef}>
-        { children }
+    const child = children
+    const childChildren = [...child.props.children]
+    childChildren.push(
+      <div id={this.id} className={tooltipClassName}>
+        { content }
       </div>
     )
+
+    return React.cloneElement(child, {
+      ref: this.onRef,
+      onMouseOver: this.onMouseOver,
+      onMouseOut: this.onMouseOut,
+      style: Object.assign(child.props.style || {}, { position: 'relative' })
+    }, childChildren)
+
   }
 }
 

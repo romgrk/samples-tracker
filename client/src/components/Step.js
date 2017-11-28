@@ -61,15 +61,6 @@ class Step extends React.Component {
     })
   }
 
-  onRef = (ref) => {
-    if (ref === null) {
-      return
-    }
-
-    this.element = ref
-    this.attachTooltip()
-  }
-
   onRefPopup = (ref) => {
     if (ref === null) {
       return
@@ -93,15 +84,6 @@ class Step extends React.Component {
     })
   }
 
-  onRefTooltip = (ref) => {
-    if (ref === null) {
-      return
-    }
-
-    this.tooltip = ref
-    this.attachTooltip()
-  }
-
   attachTooltip() {
     if (!this.element || !this.tooltip)
       return
@@ -117,36 +99,39 @@ class Step extends React.Component {
     const { step } = this.props
     const { contextMenuOpen } = this.state
 
+    const tooltip = (
+      <span>
+        { step.name } - <small>{ step.status.isLoading ? 'updating...' : step.status }</small>
+      </span>
+    )
+
     return (
-      <button id={this.id}
-        className='Step block'
-        onContextMenu={this.onContextMenu}
-        ref={this.onRef}
-      >
-        <Tooltip ref={this.onRefTooltip} position='top'>
-          { step.name } - <small>{ step.status.isLoading ? 'updating...' : step.status }</small>
-        </Tooltip>
-
-        <StatusIcon name={step.status} />
-
-        <div
-          className={'Step__menu Popup' + (contextMenuOpen ? ' open' : '')}
-          ref={this.onRefPopup}
+      <Tooltip position='top' content={tooltip}>
+        <button id={this.id}
+          className='Step block'
+          onContextMenu={this.onContextMenu}
         >
-          {
-            Object.values(STATUS)
-            .filter(status =>
-              status !== step.status
-              && status !== STATUS.IN_PROGRESS
-            )
-            .map((status, i) =>
-              <button key={i} className='item' onClick={() => this.setStatus(status)}>
-                <StatusIcon name={status} />
-              </button>
-            )
-          }
-        </div>
-      </button>
+          <StatusIcon name={step.status} />
+
+          <div
+            className={'Step__menu Popup' + (contextMenuOpen ? ' open' : '')}
+            ref={this.onRefPopup}
+          >
+            {
+              Object.values(STATUS)
+              .filter(status =>
+                status !== step.status
+                && status !== STATUS.IN_PROGRESS
+              )
+              .map((status, i) =>
+                <button key={i} className='item' onClick={() => this.setStatus(status)}>
+                  <StatusIcon name={status} />
+                </button>
+              )
+            }
+          </div>
+        </button>
+      </Tooltip>
     )
   }
 }
