@@ -103,11 +103,13 @@ class Notifications extends React.Component {
                   </div>
                   <div className='stack-container item'>
                   {
+                    item.notification.stack !== undefined &&
                     item.notification.stack.slice(1, 5).map(line =>
                       <div className='line'>{ line }</div>
                     )
                   }
                   {
+                    item.notification.stack !== undefined &&
                     item.notification.stack.length > 5 &&
                       <div className='line'>...</div>
                   }
