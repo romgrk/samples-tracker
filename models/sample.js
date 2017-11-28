@@ -12,6 +12,7 @@ const Completion = require('./completion-function')
 module.exports = {
   findAll,
   findById,
+  setModified,
   update,
   updateStepStatus,
   complete,
@@ -55,6 +56,14 @@ function findAll() {
 function findById(id) {
   return db.selectOne(`SELECT ${columns} FROM samples WHERE id = @id`, { id })
     .then(addDetails)
+}
+
+function setModified(id) {
+  return db.query(`
+    UPDATE samples
+       SET modified = CURRENT_TIMESTAMP
+     WHERE id = @id`,
+    { id })
 }
 
 function update(sample) {
@@ -134,6 +143,8 @@ function updateStepStatus(id, index, status, user) {
           if (previousSteps.every(step => step.status === 'DONE') && status === 'NOT_DONE')
             actions.push(Step.updateStatus(step.id, 'IN_PROGRESS', new Date()))
         }
+
+        actions.push(setModified(id))
 
         return Promise.all(actions)
       })
