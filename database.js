@@ -4,6 +4,7 @@
 
 const fs = require('fs')
 const pg = require('pg')
+const { rejectMessage } = require('./helpers/promise')
 
 /*
  * Setup SQL connection
@@ -76,7 +77,12 @@ function query(q, params) {
 }
 
 function selectOne(q, params, field) {
-  return query(q, params).then(result => field ? result.rows[0][field] : result.rows[0])
+  return query(q, params).then(result =>
+    result.rows.length === 0 ?
+      rejectMessage(`Couldnt find record in query ${q} with params ${JSON.stringify(params)}`) :
+    field ?
+      result.rows[0][field] :
+      result.rows[0])
 }
 
 function selectAll(q, params, field) {
