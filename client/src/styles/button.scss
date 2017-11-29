@@ -1,0 +1,68 @@
+@import './_variables.scss';
+@import './_mixins.scss';
+
+.Button {
+  font-weight: bold;
+  background-color: transparent;
+  color: $color;
+  border: 1px solid var(--light-border-color);
+  border-radius: 2px;
+  height: 30px;
+  min-width: 30px;
+  padding: 0 var(--padding);
+  cursor: pointer;
+  transition: all .15s;
+}
+.Button:hover {
+  color: var(--hover-color);
+  background-color: var(--hover-bg-color);
+}
+.Button:active,
+.Button:focus {
+  outline: none;
+  box-shadow: 0 0 0 1px $focus-color;
+}
+.Button > .Icon:not(:first-child):last-child {
+  margin-left: var(--padding);
+}
+
+.Button.flat {
+  background-color: transparent;
+  color: var(--color);
+  border: none;
+  height: 25px;
+  min-width: 25px;
+  padding: 0 2px;
+}
+.Button.flat:hover {
+  color: var(--hover-color);
+  background-color: var(--hover-bg-color);
+}
+.Button.flat:active,
+.Button.flat:focus {
+  outline: none;
+  box-shadow: 0 0 0 1px $focus-color;
+}
+
+.Button.round {
+  border-radius: 50%;
+}
+
+@each $level, $values in $colors {
+  .Button.#{$level} {
+    color: #fff;
+    background-color: map-get($values, bg);
+  }
+  .Button.#{$level}:hover {
+    color: #fff;
+    background-color: lighten(map-get($values, bg), 5%);
+  }
+  .Button.#{$level}:active {
+    color: #fff;
+    background-color: darken(map-get($values, bg), 4%);
+  }
+  .Button.#{$level}[disabled] {
+    color: #bbb;
+    background-color: mix(grey, map-get($values, bg), 50%);
+  }
+}

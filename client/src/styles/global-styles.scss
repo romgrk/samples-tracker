@@ -77,6 +77,7 @@ html, body {
 }
 .row > * {
   flex: 0 0 auto;
+  margin-right: $padding;
 }
 .fill {
   flex: 1 1;
@@ -90,7 +91,7 @@ html, body {
 
 .title {
   margin-right: var(--padding);
-  font-family: Roboto, Ubuntu, Arial, sans-serif;
+  font-family: Ubuntu, Roboto, Arial, sans-serif;
   font-size: 14px;
   line-height: 30px;
   font-weight: bold;
@@ -99,7 +100,7 @@ html, body {
 }
 
 .label {
-  font-family: Roboto, Ubuntu, Arial, sans-serif;
+  font-family: Ubuntu, Roboto, Arial, sans-serif;
   font-size: 12px;
   line-height: 30px;
   font-weight: bold;
@@ -117,6 +118,7 @@ html, body {
 div.label.editable {
   transition: all .25s;
   cursor: pointer;
+  text-transform: none;
 }
 div.label.editable:hover {
   background-color: var(--hover-light-bg-color);
@@ -144,6 +146,68 @@ input.label.editable {
   border: none;
   padding: 0;
 }
+
+.text {
+  --line-height: 20px;
+  font-family: Ubuntu, Roboto, Arial, sans-serif;
+  font-size: 12px;
+  line-height: var(--line-height);
+  font-weight: normal;
+}
+.text.small {
+  font-size: 12px;
+  line-height: 25px;
+}
+.text.large {
+  font-size: 18px;
+}
+.text.editable {
+  position: relative;
+  width: 100%;
+  min-height: calc(3 * var(--line-height));
+}
+div.text.editable {
+  transition: all .25s;
+  cursor: pointer;
+  text-transform: none;
+  white-space: pre;
+}
+div.text.editable:hover {
+  background-color: var(--hover-light-bg-color);
+}
+div.text.editable > div {
+  flex: 1;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+div.text.editable > .Icon {
+  position: absolute;
+  top: -1px;
+  right: $padding;
+  margin: var(--padding);
+  height: 100%;
+  opacity: 0;
+  color: #ddd;
+  transition: opacity .25s;
+  flex: 0 0;
+}
+div.text.editable:hover > .Icon {
+  opacity: 1;
+}
+textarea.text.editable {
+  color: inherit;
+  background-color: transparent;
+  border: none;
+  border-radius: 2px;
+  padding: 0;
+  transition: box-shadow .25s;
+}
+textarea.text.editable:active,
+textarea.text.editable:focus {
+  outline: none;
+  box-shadow: 0 0 0 1px $focus-color;
+}
+
 
 
 .list {
@@ -184,8 +248,11 @@ input.label.editable {
 }
 
 .Input {
+  display: inline-block;
+}
+.Input__element {
   color: var(--light-color);
-  background-color: var(--dark-bg-color);
+  background-color: rgba(0, 0, 0, 0.3); //var(--dark-bg-color);
   outline: none;
   border: 1px solid var(--dark-border-color);
   border-radius: 2px;
@@ -193,14 +260,21 @@ input.label.editable {
   height: 30px;
   transition: box-shadow .25s;
 }
-.Input:active,
-.Input:focus {
+.Input__element:active,
+.Input__element:focus {
   outline: none;
   box-shadow: 0 0 0 1px $focus-color;
 }
-.Input.error {
+.Input.error .Input__element {
   box-shadow: 0 0 0 1px $bg-color-error;
 }
+.Input.badge .Input__element {
+  border-radius: 15px;
+  height: 25px;
+  width: 100px;
+  font-size: 11.2px;
+}
+
 
 .input-label {
   position: relative;
@@ -285,67 +359,6 @@ input.label.editable {
   margin-right: 0.3em;
 }
 
-.Button {
-  font-weight: bold;
-  background-color: transparent;
-  color: $color;
-  border: 1px solid var(--light-border-color);
-  border-radius: 2px;
-  height: 30px;
-  min-width: 30px;
-  padding: 0 var(--padding);
-  cursor: pointer;
-  transition: all .15s;
-}
-.Button:hover {
-  color: var(--hover-color);
-  background-color: var(--hover-bg-color);
-}
-.Button:active,
-.Button:focus {
-  outline: none;
-  box-shadow: 0 0 0 1px $focus-color;
-}
-.Button > .Icon:not(:first-child):last-child {
-  margin-left: var(--padding);
-}
-
-.Button.flat {
-  background-color: transparent;
-  color: var(--color);
-  border: none;
-  height: 25px;
-  min-width: 25px;
-  padding: 0 2px;
-}
-.Button.flat:hover {
-  color: var(--hover-color);
-  background-color: var(--hover-bg-color);
-}
-.Button.flat:active,
-.Button.flat:focus {
-  outline: none;
-  box-shadow: 0 0 0 1px $focus-color;
-}
-
-@each $level, $values in $colors {
-  .Button.#{$level} {
-    color: #fff;
-    background-color: map-get($values, bg);
-  }
-  .Button.#{$level}:hover {
-    color: #fff;
-    background-color: lighten(map-get($values, bg), 5%);
-  }
-  .Button.#{$level}:active {
-    color: #fff;
-    background-color: darken(map-get($values, bg), 4%);
-  }
-  .Button.#{$level}[disabled] {
-    color: #bbb;
-    background-color: mix(grey, map-get($values, bg), 50%);
-  }
-}
 
 
 .Dropdown {
@@ -597,14 +610,24 @@ $step-width: 40px;
   align-items: stretch;
   height: 25px;
 }
+.Sample:not(.Samples__header) {
+  cursor: pointer;
+  &:hover {
+    background-color: $hover-light-bg-color;
+  }
+}
 .Sample.overdue {
   background-color: rgba($bg-light-color-warning, 0.15);
 }
-.Sample.empty {
+.Sample__empty {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
   font-size: 2.5em;
   font-weight: bold;
   padding: 5em 0;
   justify-content: center;
+  user-select: none;
 }
 .Sample > * {
   padding: 0 5px;
@@ -651,6 +674,44 @@ $step-width: 40px;
 .Step__menu > .item {
   justify-content: center;
 }
+
+
+.SampleModal__badges {
+  margin-bottom: 2 * $padding;
+}
+.SampleModal__badges > * {
+  margin-right: $padding;
+}
+
+.SampleModal__stepsSubmodal {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  transition: all .25s ease-in-out;
+  transform: translateY(40px);
+}
+.Modal.open .SampleModal__stepsSubmodal {
+  transform: translateY(0);
+}
+.SampleModal__step {
+  background: $dark-bg-color;
+  border-bottom-right-radius: 2px;
+  border-bottom-left-radius: 2px;
+
+  padding: 2 * $padding;
+
+  min-height: 200px;
+  width: 500px;
+
+  box-shadow: 0px 20px 16px 0px rgba(0, 0, 0, 0.3);
+
+  margin-right: 2 * $padding;
+  // .Modal:not(.open)
+  transition: all .25s;
+  //transform: translateY(-20px);
+}
+
+
 
 
 
@@ -738,3 +799,5 @@ $step-width: 40px;
 .CompletionFunctions__editor {
   flex: 1 1;
 }
+
+

@@ -8,14 +8,27 @@
   font-size: 0.8em;
   font-weight: bold;
   max-height: 80%;
+  user-select: none;
   color: $text-color-normal;
   background-color: $bg-color-normal;
-  @include vcenter;
+  --color: $bg-color-normal;
+
+  display: inline-flex;
+  align-items: center;
+}
+.Badge > .Button {
+  color: inherit;
+  transform: scale(0.6);
+}
+.Badge > .Button:hover {
+  color: var(--color);
+  background-color: rgba(white, 0.6);;
 }
 
 @each $level, $values in $colors {
   .Badge.#{$level} {
     color: #fff;
     background-color: map-get($values, bg);
+    --color: map-get($values, bg);
   }
 }
