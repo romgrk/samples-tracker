@@ -484,6 +484,7 @@ textarea.text.editable:focus {
 
 table {
   font-size: inherit;
+  border-spacing: 0;
 }
 
 tr, td, th {
@@ -520,6 +521,27 @@ abbr {
   color: $text-color-highlight;
 }
 
+
+.drop-zone {
+  position: relative;
+}
+.drop-zone::after {
+  position: absolute;
+  content: '';
+  width: 100%;
+  height: 100%;
+  border-radius: 5px;
+  --border: 3px;
+  top: calc(-1 * var(--border));
+  left: calc(-1 * var(--border));
+  pointer-events: none;
+}
+.drop-zone.active::after {
+  border: var(--border) dashed $focus-color;
+}
+.drop-zone.over::after {
+  border: var(--border) dashed lighten($focus-color, 40%);
+}
 
 
 #root {
@@ -683,6 +705,7 @@ $step-width: 40px;
   justify-content: center;
   align-items: center;
   transition: all .25s;
+  cursor: pointer;
 }
 .Step:hover {
   background-color: $hover-light-bg-color;

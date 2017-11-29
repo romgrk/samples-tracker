@@ -1,12 +1,14 @@
 import React from 'react'
 import pure from 'recompose/pure'
 import { withRouter } from 'react-router'
+import classname from 'classname'
 
 import humanReadableTime from '../utils/human-readable-time'
 import Status from '../constants/status'
 import Badge from './Badge'
 import Button from './Button'
 import Dropdown from './Dropdown'
+import DropZone from './DropZone'
 import EditableLabel from './EditableLabel'
 import EditableText from './EditableText'
 import Icon from './Icon'
@@ -181,79 +183,96 @@ class SampleModal extends React.Component {
                 <div className='StepsModal__content hbox' style={contentStyle(stepIndex, stepWidth)}>
                   {
                     sample.data.steps.map((step, stepIndex) =>
-                      <div className='StepsModal__step'>
-                        <Label highlight>
-                          { step.name }
-                        </Label>
+                      <DropZone>
+                        {
+                          ({ dragOver, dragOverDocument }) =>
 
-                        <table className='StepsModal__status'>
-                          <tbody>
-                            <tr>
-                              <td>
-                                <StatusIcon name={step.status} /> <Text>{ step.status }</Text>
-                              </td>
-                              <td>
-                                { step.status === Status.IN_PROGRESS &&
-                                    <Text>&nbsp;&nbsp; Since:</Text>
-                                }
-                              </td>
-                              <td>
-                                {
-                                  step.status === Status.IN_PROGRESS &&
-                                    <Time>{ step.started }</Time>
-                                } {
-                                  step.status === Status.IN_PROGRESS &&
-                                    <Button small onClick={() => this.setStepStarted(stepIndex)}>Reset</Button>
-                                }
-                              </td>
-                            </tr>
+                          <div
+                            className={ classname('StepsModal__step', 'drop-zone', {
+                              over: dragOver,
+                              active: dragOverDocument,
+                            }) }
+                            >
+                              <Label highlight>
+                                { step.name }
+                              </Label>
 
-                            <tr>
-                              <td></td>
-                              <td>
-                                {
-                                  step.isOverdue &&
-                                    <Icon name='warning' warning />
-                                } {
-                                  step.isOverdue &&
-                                    <Text>Overdue since:</Text>
-                                }
-                                {
-                                  step.isOverdue === false &&
-                                    <Text>Will be overdue at:</Text>
-                                }
-                              </td>
-                              <td>
-                                {
-                                  step.isOverdue &&
-                                    <Time>{ step.overdueAt }</Time>
-                                }
-                                {
-                                  step.isOverdue === false &&
-                                    <Time>{ step.overdueAt }</Time>
-                                }
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
+                              <table className='StepsModal__status'>
+                                <tbody>
+                                  <tr>
+                                    <td>
+                                      <StatusIcon name={step.status} /> <Text>{ step.status }</Text>
+                                    </td>
+                                    <td>
+                                      { step.status === Status.IN_PROGRESS &&
+                                          <Text>&nbsp;&nbsp; Since:</Text>
+                                      }
+                                    </td>
+                                    <td>
+                                      {
+                                        step.status === Status.IN_PROGRESS &&
+                                          <Time>{ step.started }</Time>
+                                      } {
+                                        step.status === Status.IN_PROGRESS &&
+                                          <Button small onClick={() => this.setStepStarted(stepIndex)}>Reset</Button>
+                                      }
+                                    </td>
+                                  </tr>
 
-                        <div className='row'>
-                          <Label>Alert delay</Label>
-                          <IntervalInput
-                            defaultValue={step.alertDelay}
-                            onAccept={(alertDelay) => this.setAlertDelay(stepIndex, alertDelay)}
-                          />
-                        </div>
+                                  <tr>
+                                    <td></td>
+                                    <td>
+                                      {
+                                        step.isOverdue &&
+                                          <Icon name='warning' warning />
+                                      } {
+                                        step.isOverdue &&
+                                          <Text>Overdue since:</Text>
+                                      }
+                                      {
+                                        step.isOverdue === false &&
+                                          <Text>Will be overdue at:</Text>
+                                      }
+                                    </td>
+                                    <td>
+                                      {
+                                        step.isOverdue &&
+                                          <Time>{ step.overdueAt }</Time>
+                                      }
+                                      {
+                                        step.isOverdue === false &&
+                                          <Time>{ step.overdueAt }</Time>
+                                      }
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </table>
 
-                        <div className='row'>
-                          <EditableText
-                            placeHolder='Enter step notes...'
-                            value={step.notes}
-                            onEnter={(notes) => this.setStepNotes(stepIndex, notes)}
-                          />
-                        </div>
+                              <div className='row'>
+                                <Label>Alert delay</Label>
+                                <IntervalInput
+                                  defaultValue={step.alertDelay}
+                                  onAccept={(alertDelay) => this.setAlertDelay(stepIndex, alertDelay)}
+                                />
+                              </div>
 
-                      </div>
+                              <div className='row'>
+                                <EditableText
+                                  placeHolder='Enter step notes...'
+                                  value={step.notes}
+                                  onEnter={(notes) => this.setStepNotes(stepIndex, notes)}
+                                />
+                              </div>
+
+                              <div className='row'>
+                                <Title>
+                                  Files
+                                </Title>
+                              </div>
+
+                            </div>
+                        }
+                      </DropZone>
                     )
                   }
                 </div>
