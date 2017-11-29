@@ -37,7 +37,9 @@ class EditableLabel extends React.Component {
     this.setState({ editing: false })
   }
 
-  setEditing = () => {
+  setEditing = (ev) => {
+    if (ev)
+      ev.stopPropagation()
     this.setState({ editing: true })
   }
 
