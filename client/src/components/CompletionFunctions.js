@@ -126,7 +126,7 @@ class CompletionFunctions extends React.Component {
           }
           <div className='separator' />
           <div className='item'>
-            <Button type='info' onClick={this.createFunction} loading={isCreating}>
+            <Button info onClick={this.createFunction} loading={isCreating}>
               Create
             </Button>
           </div>

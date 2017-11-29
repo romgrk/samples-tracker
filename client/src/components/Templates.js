@@ -54,7 +54,7 @@ function Templates({
       }
 
       <div className='row hcenter'>
-        <Button type='info' onClick={onClickCreate} loading={isCreating}>
+        <Button info onClick={onClickCreate} loading={isCreating}>
           Create
         </Button>
 
