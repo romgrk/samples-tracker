@@ -32,6 +32,7 @@ class IntervalInput extends React.Component {
 
   onChange = (value) => {
     this.setState({ value })
+    this.props.onChange && this.props.onChange(value)
   }
 
   render() {

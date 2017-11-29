@@ -33,6 +33,8 @@ class Input extends React.Component {
       className,
       value,
       loading,
+      autoSelect,
+      clearOnEnter,
       hasError,
       onEnter,
       ...rest

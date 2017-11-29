@@ -77,8 +77,12 @@ class SampleModal extends React.Component {
       this.props.history.push(`/samples/${this.state.id}/${stepIndex}`)
   }
 
-  update(data) {
+  update = (data = this.state.sample.data) => {
     this.props.onChange(data.id, data)
+  }
+
+  setData = (data) => {
+    this.setState({ sample: { ...this.state.sample, data }})
   }
 
   removeTag(tag) {
@@ -110,7 +114,7 @@ class SampleModal extends React.Component {
     const steps = [ ...data.steps ]
     steps[stepIndex] = { ...steps[stepIndex], alertDelay }
     const newData = { ...data, steps }
-    this.update(newData)
+    this.setData(newData)
   }
 
   setStepNotes = (stepIndex, notes) => {
@@ -183,7 +187,7 @@ class SampleModal extends React.Component {
                 <div className='StepsModal__content hbox' style={contentStyle(stepIndex, stepWidth)}>
                   {
                     sample.data.steps.map((step, stepIndex) =>
-                      <DropZone>
+                      <DropZone key={ `${sample.id}:${stepIndex}`}>
                         {
                           ({ dragOver, dragOverDocument }) =>
 
@@ -251,8 +255,9 @@ class SampleModal extends React.Component {
                               <div className='row'>
                                 <Label>Alert delay</Label>
                                 <IntervalInput
-                                  defaultValue={step.alertDelay}
-                                  onAccept={(alertDelay) => this.setAlertDelay(stepIndex, alertDelay)}
+                                  value={step.alertDelay}
+                                  onChange={(alertDelay) => this.setAlertDelay(stepIndex, alertDelay)}
+                                  onAccept={this.update}
                                 />
                               </div>
 
