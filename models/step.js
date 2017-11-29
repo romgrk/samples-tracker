@@ -24,6 +24,7 @@ const columns = `
   , "alertDelay"::text
   , "completionFn"
   , started + "alertDelay" < CURRENT_TIMESTAMP as "isOverdue"
+  , started + "alertDelay" as "overdueAt"
   , '[]'::json as "files"
 `
 
