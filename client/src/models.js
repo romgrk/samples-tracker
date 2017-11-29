@@ -49,7 +49,7 @@ export const getNewCompletionFunction = () => ({
       if (user.email === 'john@gmail.com' || user.name === 'John John')
         return "John can't close this step."
 
-      if (! /#\\d{6)/.test(sample.notes))
+      if (! /#\\d{6}/.test(sample.notes))
         return "Sample notes don't contain the sample ID. Please indicate it before completing this step."
 
       // If all is good
