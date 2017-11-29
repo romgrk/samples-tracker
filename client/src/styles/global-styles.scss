@@ -82,6 +82,9 @@ html, body {
 .fill {
   flex: 1 1;
 }
+.static {
+  flex: 0 0 auto;
+}
 
 .line {
   white-space: nowrap;
@@ -107,7 +110,8 @@ html, body {
 }
 .label.small {
   font-size: 12px;
-  line-height: 25px;
+  line-height: 20px;
+  height: 20px;
 }
 .label.large {
   font-size: 18px;
@@ -265,6 +269,19 @@ textarea.text.editable:focus {
   outline: none;
   box-shadow: 0 0 0 1px $focus-color;
 }
+.Input.small {
+  line-height: 20px;
+}
+.Input.small .Input__element {
+  font-size: 12px;
+  height: 20px;
+}
+.Input.large {
+  line-height: 40px;
+}
+.Input.large .Input__element {
+  height: 40px;
+}
 .Input.error .Input__element {
   box-shadow: 0 0 0 1px $bg-color-error;
 }
@@ -377,6 +394,7 @@ textarea.text.editable:focus {
 .Popup,
 .Tooltip {
   display: none;
+  z-index: 100;
 }
 .Popup,
 .Tooltip,
@@ -483,6 +501,10 @@ h1 {
   color: var(--light-color);
 }
 
+abbr {
+  text-decoration: none;
+  border-bottom: 1px solid rgba(white, 0.2);
+}
 
 .text-highlight { color: var(--text-color-highlight); }
 .text-success   { color: var(--text-color-success); }
@@ -683,32 +705,66 @@ $step-width: 40px;
   margin-right: $padding;
 }
 
-.SampleModal__stepsSubmodal {
+.StepsModal {
   position: absolute;
   top: 100%;
   left: 0;
+  width: 100%;
   transition: all .25s ease-in-out;
   transform: translateY(40px);
 }
-.Modal.open .SampleModal__stepsSubmodal {
+.Modal.open .StepsModal {
   transform: translateY(0);
 }
-.SampleModal__step {
+.StepsModal__content {
+  width: max-content;
+  transition: all .5s ease-in-out;
+}
+.StepsModal__left,
+.StepsModal__right {
+  position: absolute;
+  z-index: 3;
+  top: 75px;
+  background-color: rgba(white, 0.2);
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  &[disabled] {
+    opacity: 0.6;
+  }
+  &:not([disabled]):hover {
+    background-color: rgba(white, 0.4);
+  }
+}
+.StepsModal__left {
+  padding-right: 8px;
+  left: -30px;
+}
+.StepsModal__right {
+  padding-left: 8px;
+  right: -30px;
+}
+.StepsModal__step {
   background: $dark-bg-color;
   border-bottom-right-radius: 2px;
   border-bottom-left-radius: 2px;
+  box-shadow: 0px 20px 16px 0px rgba(0, 0, 0, 0.3);
 
   padding: 2 * $padding;
 
   min-height: 200px;
-  width: 500px;
+  width: 600px;
+  margin-right: 100px;
 
-  box-shadow: 0px 20px 16px 0px rgba(0, 0, 0, 0.3);
-
-  margin-right: 2 * $padding;
   // .Modal:not(.open)
   transition: all .25s;
   //transform: translateY(-20px);
+}
+.StepsModal__status td {
+  padding: 0 2 * $padding;
+}
+.StepsModal__status td:nth-child(2) {
+  text-align: right;
 }
 
 

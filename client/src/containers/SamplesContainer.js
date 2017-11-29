@@ -15,6 +15,8 @@ class SamplesContainer extends React.Component {
         isLoading={this.props.samples.isLoading}
         data={this.props.samples.data}
         templates={this.props.templates}
+        selectedId={this.props.match.params.id ? Number(this.props.match.params.id) : undefined}
+        selectedStepIndex={this.props.match.params.stepIndex ? Number(this.props.match.params.stepIndex) : undefined}
         onCreate={this.props.create}
         onChange={this.props.update}
         onChangeStatus={this.props.updateStepStatus}

@@ -36,7 +36,7 @@ class Tooltip extends React.Component {
     this.tether = new Tether({
       element: `#${this.id}`,
       target: this.target,
-      ...getPosition(this.props.position),
+      ...getPosition(this.props.position, this.props.offset),
       constraints: [
         {
           to: 'window',
@@ -82,18 +82,19 @@ class Tooltip extends React.Component {
   }
 }
 
-function getPosition(position = 'top') {
+function getPosition(position = 'top', offset = '0 0') {
   if (position === 'top')
     return {
       attachment:       'bottom left',
       targetAttachment: 'top left',
-      offset: '30px 0px',
+      offset: offset,
     }
 
   if (position === 'bottom')
     return {
       attachment:       'top left',
       targetAttachment: 'bottom left',
+      offset: offset,
     }
 }
 

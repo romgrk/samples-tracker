@@ -8,7 +8,6 @@ GRANT ALL ON SCHEMA public TO postgres;
 GRANT ALL ON SCHEMA public TO public;
 
 
-
 CREATE TYPE Status AS ENUM (
     'NOT_DONE',
     'DONE',

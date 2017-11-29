@@ -4,6 +4,7 @@ import pure from 'recompose/pure'
 import styled from 'styled-components'
 import Tether from 'tether'
 import cuid from 'cuid'
+import { withRouter } from 'react-router'
 
 import STATUS from '../constants/status'
 import Badge from './Badge'
@@ -49,6 +50,11 @@ class Step extends React.Component {
 
   setContextMenuOpen(contextMenuOpen) {
     this.setState({ contextMenuOpen })
+  }
+
+  onClick = (ev) => {
+    ev.stopPropagation()
+    this.props.history.push(`/samples/${this.props.sampleId}/${this.props.index}`)
   }
 
   onContextMenu = (ev) => {
@@ -100,10 +106,11 @@ class Step extends React.Component {
     )
 
     return (
-      <Tooltip position='top' content={tooltip}>
+      <Tooltip position='top' offset='30px 0' content={tooltip}>
         <button id={this.id}
           className='Step block'
           onContextMenu={this.onContextMenu}
+          onClick={this.onClick}
         >
           <StatusIcon name={step.status} />
 
@@ -130,4 +137,4 @@ class Step extends React.Component {
   }
 }
 
-export default pure(Step)
+export default withRouter(pure(Step))

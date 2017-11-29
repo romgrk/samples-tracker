@@ -8,10 +8,30 @@ import Input from './Input'
 class IntervalInput extends React.Component {
   constructor(props) {
     super(props)
+    this.state = {
+      value: props.defaultValue || '',
+    }
+  }
+
+  componentWillReceiveProps(props) {
+    if (props.defaultValue !== this.props.defaultValue)
+      this.setState({ value: props.defaultValue })
   }
 
   onAccept = (ev) => {
-    this.props.onAccept()
+    if (this.props.value) {
+      this.props.onAccept()
+    }
+    else {
+      if (Interval.isValid(this.state.value))
+        this.props.onAccept && this.props.onAccept(this.state.value)
+      else
+        this.props.onError && this.props.onError(this.state.value)
+    }
+  }
+
+  onChange = (value) => {
+    this.setState({ value })
   }
 
   render() {
@@ -23,6 +43,7 @@ class IntervalInput extends React.Component {
     } = this.props
 
     const inputClassName = classname('IntervalInput', className)
+    const hasError = !Interval.isValid(value ? value : this.state.value)
 
     return (
       <Input
@@ -30,7 +51,8 @@ class IntervalInput extends React.Component {
         autoSelect
         className={inputClassName}
         value={value}
-        hasError={!Interval.isValid(value)}
+        hasError={hasError}
+        onChange={this.onChange}
         onEnter={this.onAccept}
         onBlur={this.onAccept}
       />

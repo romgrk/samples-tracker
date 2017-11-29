@@ -52,6 +52,8 @@ function update(step) {
        SET name = @name
          , notes = @notes
          , status = @status
+         , started = @started
+         , "alertDelay" = @alertDelay
          , "completionFn" = @completionFn
      WHERE id = @id`, step)
 }

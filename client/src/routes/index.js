@@ -50,7 +50,7 @@ function Routes() {
           <Switch>
             <Route exact path='/' render={() => <div>Index</div>} />
             <Route path='/settings' component={SettingsContainer} />
-            <Route path='/samples' component={SamplesContainer} />
+            <Route path='/samples/:id?/:stepIndex?' component={SamplesContainer} />
             <Route path='/templates' component={TemplatesContainer} />
             <Route path='/completions/:id?' component={CompletionFunctionsContainer} />
           </Switch>

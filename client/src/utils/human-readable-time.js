@@ -29,10 +29,18 @@ function isYesterday(date) {
   return date.toDateString() === yesterday.toDateString()
 }
 
+function isTomorrow(date) {
+  const yesterday = new Date()
+  yesterday.setDate(yesterday.getDate() + 1)
+  return date.toDateString() === yesterday.toDateString()
+}
+
 function isThisWeek(date) {
-  const sixDaysAgo = new Date()
-  sixDaysAgo.setDate(sixDaysAgo.getDate() - 6)
-  return date > sixDaysAgo
+  const fourDaysAgo = new Date()
+  fourDaysAgo.setDate(fourDaysAgo.getDate() - 4)
+  const fourDays = new Date()
+  fourDays.setDate(fourDays.getDate() + 4)
+  return (date > fourDaysAgo && date < fourDays)
 }
 
 function isThisYear(date) {
@@ -51,6 +59,9 @@ export default function humanReadableTime(date, empty = '') {
 
   if (isYesterday(date))
     return 'Yesterday at ' + asTime(date)
+
+  if (isTomorrow(date))
+    return 'Tomorrow at ' + asTime(date)
 
   if (isThisWeek(date))
     return asWeekDay(date) + ' at ' + asTime(date)

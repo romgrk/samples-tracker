@@ -2,7 +2,7 @@
  * postgres-interval.js
  */
 
-const pattern = /^ *(\d+) *((?:year|month|mon|week|day|hour|min|minute|second|sec)s?) */
+const pattern = /^(?:(?: *(\d+) *((?:year|month|mon|week|day|hour|min|minute|second|sec)s?) *)|(?: *(\d\d):(\d\d):(\d\d) *))/
 
 function tokenize(input) {
   const tokens = []
@@ -10,10 +10,19 @@ function tokenize(input) {
   let rest = input
   do {
     const match = rest.match(pattern)
+
     if (match === null)
       return undefined
-    tokens.push({ value: match[1], unit: match[2] })
+
+    if (match[0] && match[1]) {
+      tokens.push({ value: match[1], unit: match[2] })
+    } else {
+      tokens.push({ value: match[2], unit: 'hours' })
+      tokens.push({ value: match[3], unit: 'minutes' })
+      tokens.push({ value: match[4], unit: 'seconds' })
+    }
     rest = rest.slice(match[0].length)
+
   } while(rest.length > 0)
 
   return tokens

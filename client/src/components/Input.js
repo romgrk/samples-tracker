@@ -5,13 +5,20 @@ import classname from 'classname'
 import has from '../utils/has'
 
 class Input extends React.Component {
+
+  accept(ev) {
+    this.props.onEnter && this.props.onEnter(ev.target.value, ev)
+    if (this.props.clearOnEnter)
+      ev.target.value = ''
+  }
+
   onChange = (ev) => {
     this.props.onChange && this.props.onChange(ev.target.value, ev)
   }
 
   onKeyDown = (ev) => {
     if (ev.which === 13 /* Enter */) {
-      this.props.onEnter && this.props.onEnter(ev.target.value, ev)
+      this.accept(ev)
     }
   }
 
@@ -40,10 +47,10 @@ class Input extends React.Component {
     )
 
     return (
-      <div>
+      <div className={inputClassName}>
         <input type='text'
           { ...rest }
-          className={inputClassName}
+          className='Input__element'
           value={value}
           onChange={this.onChange}
           onKeyDown={this.props.onKeyDown || this.onKeyDown}
