@@ -131,7 +131,7 @@ function updateStepStatus(id, index, status, user) {
         if (status === 'DONE') {
 
           if (nextSteps.length === 0)
-            actions.push(Step.complete(sample.id))
+            actions.push(complete(sample.id))
 
           if (nextStep !== undefined && nextStep.status === 'NOT_DONE')
             actions.push(Step.updateStatus(nextStep.id, 'IN_PROGRESS', new Date()))
@@ -142,6 +142,9 @@ function updateStepStatus(id, index, status, user) {
 
           if (previousSteps.every(step => step.status === 'DONE') && status === 'NOT_DONE')
             actions.push(Step.updateStatus(step.id, 'IN_PROGRESS', new Date()))
+
+          if (step.status === 'DONE' && nextSteps.length === 0 && sample.completed)
+            actions.push(complete(sample.id, false))
         }
 
         actions.push(setModified(id))
@@ -152,10 +155,10 @@ function updateStepStatus(id, index, status, user) {
     .then(() => findById(id))
 }
 
-function complete(id) {
+function complete(id, completed = true) {
   return db.query(`
     UPDATE samples
-       SET completed = CURRENT_TIMESTAMP
+       SET completed = ${ completed ? 'CURRENT_TIMESTAMP' : 'NULL' }
      WHERE id = @id`, { id })
 }
 
