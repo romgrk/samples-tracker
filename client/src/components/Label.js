@@ -39,9 +39,9 @@ function Label(props) {
   )
 
   return (
-    <div className={labelClassName} { ...rest }>
+    <label className={labelClassName} { ...rest }>
       { children }
-    </div>
+    </label>
   )
 }
 
