@@ -23,5 +23,9 @@ module.exports = {
       user: 'vc3itkexjy6wyoyk@ethereal.email',
       pass: 'EtwzQjNeqycqtrpywc'
     }
-  }
+  },
+  alertEmail: {
+    interval: 1 * 60 * 1000,
+    from: 'romain.gregoire@mcgill.ca',
+  },
 }

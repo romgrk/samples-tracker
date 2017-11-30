@@ -9,8 +9,10 @@ module.exports = {
   findAll,
   findById,
   findBySampleId,
+  findOverdue,
   update,
   updateStatus,
+  updateAlerted,
   create,
   createMany,
 }
@@ -46,6 +48,15 @@ function findBySampleId(sampleId) {
     , { sampleId })
 }
 
+function findOverdue() {
+  return db.selectAll(`
+    SELECT ${columns}, sample_id as "sampleId"
+      FROM steps
+     WHERE started + "alertDelay" < CURRENT_TIMESTAMP
+           AND alerted IS NULL
+  `)
+}
+
 function update(step) {
   return db.query(`
     UPDATE steps
@@ -65,6 +76,13 @@ function updateStatus(id, status, started = null) {
          , started = @started
      WHERE id = @id
   `, { id, status, started })
+}
+
+function updateAlerted(id) {
+  return db.query(`
+    UPDATE steps
+       SET alerted = CURRENT_TIMESTAMP
+     WHERE id = @id`, { id })
 }
 
 function create(sampleId, index, step) {

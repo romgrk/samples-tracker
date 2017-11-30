@@ -10,7 +10,14 @@ const flash = require('connect-flash')
 
 const config = require('./config.js')
 const passport = require('./passport.js')
+const mail = require('./mail')
 
+
+// Setup interval for checking overdue steps
+const interval = setInterval(mail.processOverdueSteps, config.alertEmail.interval)
+
+
+// Setup application
 const app = express()
 
 // view engine setup
@@ -83,7 +90,6 @@ function isLoggedIn(req, res, next) {
     return next()
   res.redirect('/')
 }
-
 
 
 app.use('/', defaultRoute)

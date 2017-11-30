@@ -22,8 +22,9 @@ CREATE TABLE settings (
     value jsonb      not null
 );
 INSERT INTO settings VALUES
-    ('alertDelay', '"2 weeks"'), -- postgres interval
-    ('whitelist',  '["rom7011@gmail.com"]') -- users allowed to login/signup
+    ('alertDelay', '"2 weeks"'),                -- postgres interval
+    ('alertEmails',  '["rom7011@gmail.com"]'),  -- emails alerted when step is overdue
+    ('whitelist',  '["rom7011@gmail.com"]')     -- users allowed to login/signup
 ;
 
 CREATE TABLE users (
@@ -51,6 +52,7 @@ CREATE TABLE steps (
     name           text      not null,
     notes          text          null,
     started        timestamp     null,
+    alerted        timestamp     null,
     "alertDelay"   interval  not null,
     "completionFn" integer       null
 );
