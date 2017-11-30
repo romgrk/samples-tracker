@@ -3,12 +3,8 @@
  */
 
 
-const fs = require('fs')
 const path = require('path')
-const { promisify } = require('util')
-const readFile = promisify(fs.readFile)
-const writeFile = promisify(fs.writeFile)
-const unlink = promisify(fs.unlink)
+const { readFile, writeFile, unlink, copyFile } = require('../helpers/fs-promise.js')
 const db = require('../database.js')
 const config = require('../config.js')
 
@@ -46,19 +42,26 @@ function read(id) {
   return readFile(path.join(config.paths.files, id))
 }
 
-function create(entry, file) {
+function create(entry, fileOrPath) {
   return db.insert(`
     INSERT INTO files (sample_id, step_index, mime, name)
       VALUES (
         @sampleId,
         @stepIndex,
-        @userId,
-        ${db.NOW},
-        @description
+        @mime,
+        @name
       )`, entry)
-    .then(row =>
-      writeFile(path.join(config.paths.files, row.id), file)
-        .then(() => row)
+    .then(id =>
+      (targetPath => (
+        fileOrPath instanceof Buffer ?
+        writeFile(targetPath, fileOrPath) :
+        copyFile(fileOrPath, targetPath)
+        .then(() => {
+          unlink(fileOrPath).catch(console.error)
+          return Promise.resolve()
+        })
+      ))(/* targetPath = */ path.join(config.paths.files, id.toString()))
+      .then(() => findById(id))
     )
 }
 

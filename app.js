@@ -54,9 +54,10 @@ app.use('/api/step',                require('./routes/step'))
 app.use('/api/template',            require('./routes/template'))
 app.use('/api/history',             require('./routes/history'))
 app.use('/api/completion-function', require('./routes/completion-function'))
+app.use('/api/file',                require('./routes/file'))
 app.use('/api', (req, res) => {
   res.status(404)
-  res.json({ ok: false, message: '404' })
+  res.json({ ok: false, message: '404', url: req.originalUrl })
   res.end()
 })
 

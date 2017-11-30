@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 
 const { dataHandler, errorHandler } = require('../helpers/handlers.js')
+const parseForm = require('../helpers/parse-form')
 const File = require('../models/file.js')
 
 /* GET files list */
@@ -38,6 +39,21 @@ router.get('/read/:id', (req, res, next) => {
   .catch(errorHandler(res))
 })
 
+/* POST create file */
+router.use('/create/:sampleId/:stepIndex', (req, res, next) => {
+  parseForm(req)
+  .then(({ fields, files: { file } }) =>
+    console.log(file.toJSON()) ||
+    File.create({
+      sampleId: req.params.sampleId,
+      stepIndex: req.params.stepIndex,
+      name: file.name,
+      mime: file.type,
+    }, file.path)
+  )
+  .then(dataHandler(res))
+  .catch(errorHandler(res))
+})
 
 /* POST delete file */
 router.use('/delete/:id', (req, res, next) => {
