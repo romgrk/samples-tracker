@@ -12,6 +12,7 @@ module.exports = {
   findAll,
   findById,
   findBySampleId,
+  read,
   create,
 }
 
