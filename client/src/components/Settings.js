@@ -6,13 +6,16 @@ import styled from 'styled-components'
 import * as Interval from '../utils/postgres-interval'
 import uniq from '../utils/uniq'
 import getEmails from '../utils/get-emails'
+import EditableList from './EditableList'
+import Help from './Help'
 import IntervalInput from './IntervalInput'
 import Title from './Title'
-import EditableList from './EditableList'
 
+
+const INTERVAL_FORMAT = `Use format:\n "1 year 2 months 3 weeks 4 days 5 hours 6 minutes 7 seconds"`
 
 const Group = styled.div`
-  margin-bottom: calc(4 * var(--padding));
+  margin-bottom: calc(6 * var(--padding));
 `
 
 class Settings extends React.Component {
@@ -21,6 +24,7 @@ class Settings extends React.Component {
 
     this.state = Object.assign({
       alertDelay: {},
+      alertEmails: {},
       whitelist: {},
     }, this.parseProps(props))
   }
@@ -51,22 +55,22 @@ class Settings extends React.Component {
     this.setState({ [which]: { ...this.state[which], data: value }})
   }
 
-  onWhitelistAdd = value => {
+  onListAdd = (which, value) => {
     const { onChange, onError } = this.props
-    const { whitelist } = this.state
+    const list = this.state[which]
 
     const emails = uniq(getEmails(value))
     if (emails.length > 0)
-      onChange('whitelist', uniq(whitelist.data.concat(emails)))
+      onChange(which, uniq(list.data.concat(emails)))
     else
       onError(`Couldn't find any email in the input value.`)
   }
 
-  onWhitelistDelete = value => {
+  onListDelete = (which, value) => {
     const { onChange, onError } = this.props
-    const { whitelist } = this.state
+    const list = this.state[which]
 
-    onChange('whitelist', whitelist.data.filter(v => v !== value))
+    onChange(which, list.data.filter(v => v !== value))
   }
 
   onChangeAlertDelay = value => {
@@ -79,7 +83,7 @@ class Settings extends React.Component {
     if (Interval.isValid(value))
       this.props.onChange('alertDelay', value)
     else
-      this.props.onError('Invalid interval', `Use format:\n "1 year 2 months 3 weeks 4 days 5 hours 6 minutes 7 seconds"`)
+      this.props.onError('Invalid interval', INTERVAL_FORMAT)
   }
 
   render() {
@@ -90,31 +94,51 @@ class Settings extends React.Component {
       onError
     } = this.props
 
-    const { alertDelay, whitelist } = this.state
+    const {
+      alertDelay,
+      alertEmails,
+      whitelist
+    } = this.state
 
     return (
       <section className='Settings'>
 
         <Group>
           <Title>Alert delay</Title>
-          <p>Default interval of time after which emails are sent when there is no activity.</p>
+          <p>
+            Default interval of time after which emails are sent when there is no activity.
+          </p>
           <IntervalInput
             value={alertDelay.data}
             loading={alertDelay.isLoading}
             onChange={this.onChangeAlertDelay}
             onAccept={this.onAcceptAlertDelay}
+          /> <Help>{ INTERVAL_FORMAT }</Help>
+        </Group>
+
+        <Group>
+          <Title>Alert-Emails</Title>
+          <p>Emails in this list will receive notifications when a sample is overdue.</p>
+          <EditableList
+            help='Multiple emails allowed. Press <Enter> to submit.'
+            placeHolder='Add email…'
+            loading={alertEmails.isLoading}
+            values={alertEmails.data || []}
+            onAdd={value => this.onListAdd('alertEmails', value)}
+            onDelete={value => this.onListDelete('alertEmails', value)}
           />
         </Group>
 
         <Group>
-          <Title>Email-Whitelist</Title>
+          <Title>Whitelist</Title>
           <p>Emails in this list are allowed to sign up to this application.</p>
           <EditableList
-            placeholder='Multiple emails allowed'
+            help='Multiple emails allowed. Press <Enter> to submit.'
+            placeHolder='Add email…'
             loading={whitelist.isLoading}
             values={whitelist.data || []}
-            onAdd={this.onWhitelistAdd}
-            onDelete={this.onWhitelistDelete}
+            onAdd={value => this.onListAdd('whitelist', value)}
+            onDelete={value => this.onListDelete('whitelist', value)}
           />
         </Group>
 

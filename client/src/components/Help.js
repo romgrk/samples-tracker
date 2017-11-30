@@ -19,7 +19,7 @@ function Help(props) {
 
   return (
     <Tooltip content={children} offset='15px 0'>
-      <Icon className={helpClassName} name='question-circle' {...rest} />
+      <Icon marginLeft={10} className={helpClassName} name='question-circle' {...rest} />
     </Tooltip>
   )
 }

@@ -3,15 +3,17 @@ import PropTypes from 'prop-types'
 import pure from 'recompose/pure'
 
 import arrayEquals from '../utils/array-equals'
+import Button from './Button'
+import Help from './Help'
 import Icon from './Icon'
 import Input from './Input'
-import Button from './Button'
 import Spinner from './Spinner'
 
 class EditableList extends React.Component {
   static propTypes = {
     loading: PropTypes.bool,
     values: PropTypes.array.isRequired,
+    help: PropTypes.string,
     control: PropTypes.element,
     render: PropTypes.func,
     emptyMessage: PropTypes.element,
@@ -42,12 +44,12 @@ class EditableList extends React.Component {
   }
 
   render() {
-    const { values, loading, placeholder } = this.props
+    const { values, loading, placeHolder } = this.props
     const { value } = this.state
 
     const control = this.props.control ||
       <Input
-        placeholder={placeholder}
+        placeHolder={placeHolder}
         loading={loading}
         disabled={loading}
         value={value}
@@ -84,7 +86,7 @@ class EditableList extends React.Component {
         }
         <tr className='EditableList__item'>
           <td className='EditableList__control' colSpan='2'>
-            { control }
+            { control } { this.props.help && <Help>{ this.props.help }</Help> }
           </td>
         </tr>
       </tbody>
