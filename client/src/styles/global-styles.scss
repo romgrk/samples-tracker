@@ -379,6 +379,7 @@ textarea.text.editable:focus {
 
 
 .Dropdown {
+  position: relative;
 }
 .Dropdown.open > .Button {
   border: 1px solid var(--light-border-color);
@@ -416,7 +417,10 @@ textarea.text.editable:focus {
   transition: all .25s;
   pointer-events: none;
 }
-.Dropdown.open .Dropdown__inner {
+.Dropdown__content {
+  z-index: 2;
+}
+.Dropdown__content.open > .Dropdown__inner {
   opacity: 1;
   transform: translateY(0);
   pointer-events: unset;
@@ -438,7 +442,7 @@ textarea.text.editable:focus {
   padding: 0 calc(2 * var(--padding));
 }
 .Popup.with-icons > .item ,
-.Dropdown.with-icons .Dropdown__inner > .item {
+.Dropdown__content.with-icons > .Dropdown__inner > .item {
   padding: 0 calc(2 * var(--padding)) 0 (6 * $padding);
 }
 .Popup > .item[disabled],
@@ -761,6 +765,7 @@ $step-width: 40px;
   transform: translateY(0);
 }
 .StepsModal__content {
+  position: absolute;
   width: max-content;
   transition: all .5s ease-in-out;
 }

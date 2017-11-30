@@ -45,10 +45,11 @@ class Dropdown extends React.Component {
 
     this.element = ref
     this.tether = new Tether({
-      element: `.${this.id} > .Dropdown__content`,
-      target: `.${this.id} > :first-child`,
+      element: `#${this.id} > .Dropdown__content`,
+      target: `#${this.id} > :first-child`,
       attachment:       'top left',
       targetAttachment: 'bottom left',
+      offset: this.props.offset || '0 0',
       constraints: [
         {
           to: 'window',
@@ -73,9 +74,16 @@ class Dropdown extends React.Component {
     const dropdownClassName = classname(
       'Dropdown',
       className,
-      this.id,
       {
-        open: open,
+        'open': open,
+        'with-icons': this.props.icons,
+      })
+
+    const contentClassName = classname(
+      'Dropdown__content',
+      className,
+      {
+        'open': open,
         'with-icons': this.props.icons,
       })
 
@@ -93,9 +101,9 @@ class Dropdown extends React.Component {
     )
 
     return (
-      <div className={dropdownClassName} ref={this.onRef}>
+      <div id={this.id} className={dropdownClassName} ref={this.onRef}>
         { button }
-        <div className='Dropdown__content'>
+        <div className={contentClassName}>
           <div className='Dropdown__inner'>
             { children }
           </div>

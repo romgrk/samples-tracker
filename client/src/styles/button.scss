@@ -31,7 +31,7 @@
 .Button.flat {
   background-color: transparent;
   color: var(--color);
-  border: none;
+  border: 1px solid transparent;
   height: 25px;
   min-width: 25px;
   padding: 0 2px;

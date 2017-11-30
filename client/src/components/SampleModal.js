@@ -138,12 +138,16 @@ class SampleModal extends React.Component {
     this.update(newData)
   }
 
+  setStepStatus = (stepIndex, status) => {
+    this.props.onChangeStatus(this.state.id, stepIndex, status)
+  }
+
   onAddFile = (stepIndex, file) => {
-    this.props.addFile(this.state.sample.data.id, stepIndex, file)
+    this.props.addFile(this.state.id, stepIndex, file)
   }
 
   onDeleteFile = (stepIndex, file) => {
-    this.props.deleteFile(this.state.sample.data.id, stepIndex, file.id)
+    this.props.deleteFile(this.state.id, stepIndex, file.id)
   }
 
   render() {
@@ -218,7 +222,22 @@ class SampleModal extends React.Component {
                                 <tbody>
                                   <tr>
                                     <td>
-                                      <StatusIcon name={step.status} /> <Text>{ step.status }</Text>
+                                      <Dropdown trigger={
+                                        <Button flat style={{ width: '120px'}}>
+                                          <StatusIcon name={step.status} /> <Text>{ step.status }</Text>
+                                        </Button>
+                                      } offset='-20px 0'>
+                                        {
+                                          Object.values(Status)
+                                            .filter(status => status !== step.status
+                                                           && status !== Status.IN_PROGRESS)
+                                            .map((status, i) =>
+                                              <Dropdown.Item onClick={() => this.setStepStatus(stepIndex, status)}>
+                                                <StatusIcon name={status} />&nbsp;&nbsp; <Text>{ status }</Text>
+                                              </Dropdown.Item>
+                                            )
+                                        }
+                                      </Dropdown>
                                     </td>
                                     <td>
                                       { step.status === Status.IN_PROGRESS &&
@@ -341,7 +360,7 @@ class SampleModal extends React.Component {
 
 function contentStyle(stepIndex, stepWidth) {
   return {
-    transform: `translateX(${-stepIndex * stepWidth}px)`
+    left: `${-stepIndex * stepWidth}px`
   }
 }
 
