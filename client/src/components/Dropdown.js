@@ -3,7 +3,6 @@ import { createPortal, findDOMNode } from 'react-dom'
 import pure from 'recompose/pure'
 import classname from 'classname'
 import Tether from 'tether'
-import cuid from 'cuid'
 
 import size from '../utils/size'
 import Button from './Button'
@@ -18,7 +17,6 @@ document.addEventListener('click', ev => {
 class Dropdown extends React.Component {
   constructor(props) {
     super(props)
-    this.id = cuid()
     this.state = {
       open: false,
     }
@@ -108,7 +106,7 @@ class Dropdown extends React.Component {
     )
 
     return (
-      <div id={this.id} className={dropdownClassName}>
+      <div className={dropdownClassName}>
         { button }
         {
           createPortal(
