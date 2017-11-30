@@ -12,6 +12,7 @@ class EditableList extends React.Component {
     loading: PropTypes.bool,
     values: PropTypes.array.isRequired,
     control: PropTypes.element,
+    render: PropTypes.func,
     onAdd: PropTypes.func.isRequired,
     onDelete: PropTypes.func.isRequired,
   }
@@ -58,7 +59,7 @@ class EditableList extends React.Component {
         {
           values.map(value =>
             <tr key={value} className='EditableList__item'>
-              <td className='EditableList__value'>{ value }</td>
+              <td className='EditableList__value'>{ this.props.render ? this.props.render(value) : value }</td>
               <td>
                 <Button flat icon='close' onClick={() => this.props.onDelete(value)}/>
               </td>
@@ -66,7 +67,7 @@ class EditableList extends React.Component {
           )
         }
         <tr className='EditableList__item'>
-          <td className='EditableList__value' colspan='2'>
+          <td className='EditableList__value' colSpan='2'>
             { control }
           </td>
         </tr>
