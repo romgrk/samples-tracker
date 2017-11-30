@@ -2,8 +2,6 @@ import React from 'react'
 import { createPortal } from 'react-dom'
 import pure from 'recompose/pure'
 import classname from 'classname'
-import Tether from 'tether'
-import cuid from 'cuid'
 
 import size from '../utils/size'
 import Button from './Button'
@@ -20,7 +18,6 @@ document.addEventListener('click', ev => {
 class Modal extends React.Component {
   constructor(props) {
     super(props)
-    this.id = cuid()
     this.state = {
       open: false,
     }

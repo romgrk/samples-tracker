@@ -2,7 +2,6 @@ import React from 'react'
 import { createPortal, findDOMNode } from 'react-dom'
 import pure from 'recompose/pure'
 import classname from 'classname'
-import Tether from 'tether'
 
 import size from '../utils/size'
 import Button from './Button'

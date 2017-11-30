@@ -1,11 +1,10 @@
 import React from 'react'
+import { createPortal } from 'react-dom'
 import PropTypes from 'prop-types'
 import pure from 'recompose/pure'
-import styled from 'styled-components'
-import Tether from 'tether'
-import cuid from 'cuid'
 import { withRouter } from 'react-router'
 
+import size from '../utils/size'
 import STATUS from '../constants/status'
 import Badge from './Badge'
 import Button from './Button'
@@ -26,7 +25,6 @@ document.addEventListener('click', ev => {
 class Step extends React.Component {
   constructor(props) {
     super()
-    this.id = cuid()
     this.state = {
       contextMenuOpen: false,
     }
@@ -35,12 +33,19 @@ class Step extends React.Component {
   componentWillReceiveProps(props) {
   }
 
+  componentWillMount() {
+    this.mountNode = this.props.mountNode || document.body
+    this.domNode = document.createElement('div')
+    this.mountNode.appendChild(this.domNode)
+  }
+
   componentDidMount() {
     steps.push(this)
   }
 
   componentWillUnmount() {
     steps.splice(steps.findIndex(x => x === this), 1)
+    this.mountNode.removeChild(this.domNode)
   }
 
   onDocumentClick(ev) {
@@ -67,32 +72,33 @@ class Step extends React.Component {
     })
   }
 
-  onRefPopup = (ref) => {
-    if (ref === null) {
+  onRef = (ref) => {
+    if (ref === null)
       return
-    }
-    if (this.tether) {
-      this.tether.destroy()
-    }
+    this.element = ref
+  }
 
+  onRefPopup = (ref) => {
+    if (ref === null)
+      return
     this.popup = ref
-    this.tether = new Tether({
-      element: `#${this.id} > .Popup`,
-      target: `#${this.id}`,
-      attachment:       'top left',
-      targetAttachment: 'top right',
-      constraints: [
-        {
-          to: 'window',
-          attachment: 'together'
-        }
-      ]
-    })
   }
 
   setStatus = (status) => {
     this.props.onChangeStatus(status)
     this.setContextMenuOpen(false)
+  }
+
+  getPosition() {
+    if (!this.element)
+      return { top: size(0), left: size(0) }
+
+    const box = this.element.getBoundingClientRect()
+
+    return {
+      top:  size(box.top),
+      left: size(box.left + 40),
+    }
   }
 
   render() {
@@ -107,30 +113,39 @@ class Step extends React.Component {
 
     return (
       <Tooltip position='top' offset='30px 0' content={tooltip}>
-        <button id={this.id}
+        <button
           className='Step block'
           onContextMenu={this.onContextMenu}
           onClick={this.onClick}
         >
-          <StatusIcon name={step.status} />
+          <span ref={this.onRef}>
+            <StatusIcon name={step.status} />
+          </span>
 
-          <div
-            className={'Step__menu Popup' + (contextMenuOpen ? ' open' : '')}
-            ref={this.onRefPopup}
-          >
-            {
-              Object.values(STATUS)
-              .filter(status =>
-                status !== step.status
-                && status !== STATUS.IN_PROGRESS
-              )
-              .map((status, i) =>
-                <button key={i} className='item' onClick={() => this.setStatus(status)}>
-                  <StatusIcon name={status} />
-                </button>
-              )
-            }
-          </div>
+          {
+            createPortal(
+              <div
+                ref={this.onRefPopup}
+                className={'Step__menu Popup' + (contextMenuOpen ? ' open' : '')}
+                style={this.getPosition()}
+              >
+                {
+                  Object.values(STATUS)
+                  .filter(status =>
+                    status !== step.status
+                    && status !== STATUS.IN_PROGRESS
+                  )
+                  .map((status, i) =>
+                    <button key={i} className='item' onClick={ev => ev.stopPropagation() || this.setStatus(status)}>
+                      <StatusIcon name={status} />
+                    </button>
+                  )
+                }
+              </div>,
+              this.domNode
+            )
+          }
+
         </button>
       </Tooltip>
     )

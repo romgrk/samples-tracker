@@ -733,9 +733,15 @@ $step-width: 40px;
   min-width: $step-width;
   transition: all .25s;
   cursor: pointer;
+  padding: 0;
 }
 .Step:hover {
   background-color: $hover-light-bg-color;
+}
+.Step > span {
+  width: 100%;
+  height: 100%;
+  line-height: 25px;
 }
 .Step__menu {
   position: absolute;
