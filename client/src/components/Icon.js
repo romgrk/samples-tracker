@@ -2,6 +2,8 @@ import React from 'react'
 import pure from 'recompose/pure'
 import classname from 'classname'
 
+import size from '../utils/size'
+
 function Icon(props) {
   const {
     name,
@@ -17,6 +19,8 @@ function Icon(props) {
     subtle,
     highlight,
     spin,
+    marginLeft,
+    marginRight,
     ...rest
   } = props
 
@@ -39,8 +43,14 @@ function Icon(props) {
     }
   )
 
+  const style = {
+    marginLeft: size(marginLeft),
+    marginRight: size(marginRight),
+    ...props.style
+  }
+
   return (
-    <i className={iconClassName} {...rest} />
+    <i className={iconClassName} {...rest} style={style} />
   )
 }
 

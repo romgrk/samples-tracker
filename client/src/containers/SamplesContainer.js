@@ -22,6 +22,8 @@ class SamplesContainer extends React.Component {
         onChangeStatus={this.props.updateStepStatus}
         onDelete={this.props.delete}
         onError={this.props.showError}
+        addFile={this.props.addFile}
+        deleteFile={this.props.deleteFile}
       />
     )
   }

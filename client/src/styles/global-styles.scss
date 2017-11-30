@@ -507,16 +507,16 @@ abbr {
   border-bottom: 1px solid rgba(white, 0.2);
 }
 
-a {
+a.link {
   color: $link-color;
   text-decoration: none;
   border-bottom: 1px solid rgba($link-color, 0.5);
   //transition: border-bottom .25s;
 }
-a:visited {
+a.link:visited {
   color: $link-color;
 }
-a:hover {
+a.link:hover {
   //border-bottom: 1px solid $link-color;
 }
 
@@ -536,6 +536,9 @@ a:hover {
   color: $text-color-highlight;
   min-width: 220px;
   padding-right: 2 * $padding;
+}
+.EditableList__control {
+  padding-top: 2 * $padding;
 }
 
 

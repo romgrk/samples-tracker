@@ -36,7 +36,9 @@ class Samples extends React.Component {
       onChangeStatus,
       onCreate,
       onDelete,
-      onError
+      onError,
+      addFile,
+      deleteFile
     } = this.props
 
     const samples = Object.values(data)
@@ -103,6 +105,8 @@ class Samples extends React.Component {
           onChangeStatus={onChangeStatus}
           onDelete={onDelete}
           onError={onError}
+          addFile={addFile}
+          deleteFile={deleteFile}
         />
 
       </section>

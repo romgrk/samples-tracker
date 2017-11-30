@@ -1,4 +1,5 @@
 import React from 'react'
+import { findDOMNode } from 'react-dom'
 import classname from 'classname'
 import Tether from 'tether'
 import cuid from 'cuid'
@@ -32,7 +33,7 @@ class Tooltip extends React.Component {
     if (this.tether)
       this.tether.destroy()
 
-    this.target = ref
+    this.target = findDOMNode(ref)
     this.tether = new Tether({
       element: `#${this.id}`,
       target: this.target,
@@ -65,7 +66,7 @@ class Tooltip extends React.Component {
     )
 
     const child = children
-    const childChildren = [...child.props.children]
+    const childChildren = [...(child.props.children || [])]
     childChildren.push(
       <div id={this.id} className={tooltipClassName}>
         { content }

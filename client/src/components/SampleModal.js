@@ -3,18 +3,23 @@ import pure from 'recompose/pure'
 import { withRouter } from 'react-router'
 import classname from 'classname'
 
+import openFile from '../utils/open-file'
 import humanReadableTime from '../utils/human-readable-time'
+import iconForMimeType from '../utils/icon-for-mime-type'
 import Status from '../constants/status'
 import Badge from './Badge'
 import Button from './Button'
 import Dropdown from './Dropdown'
-import DropZone from './DropZone'
+import DropZone from 'react-drop-zone'
 import EditableLabel from './EditableLabel'
+import EditableList from './EditableList'
 import EditableText from './EditableText'
+import Help from './Help'
 import Icon from './Icon'
 import Input from './Input'
 import IntervalInput from './IntervalInput'
 import Label from './Label'
+import Link from './Link'
 import Modal from './Modal'
 import Sample from './Sample'
 import Spinner from './Spinner'
@@ -133,6 +138,14 @@ class SampleModal extends React.Component {
     this.update(newData)
   }
 
+  onAddFile = (stepIndex, file) => {
+    this.props.addFile(this.state.sample.data.id, stepIndex, file)
+  }
+
+  onDeleteFile = (stepIndex, file) => {
+    this.props.deleteFile(this.state.sample.data.id, stepIndex, file.id)
+  }
+
   render() {
     const {
       onChange,
@@ -187,7 +200,7 @@ class SampleModal extends React.Component {
                 <div className='StepsModal__content hbox' style={contentStyle(stepIndex, stepWidth)}>
                   {
                     sample.data.steps.map((step, stepIndex) =>
-                      <DropZone key={ `${sample.id}:${stepIndex}`}>
+                      <DropZone key={ `${sample.id}:${stepIndex}`} onDrop={(file) => this.onAddFile(stepIndex, file)}>
                         {
                           ({ dragOver, dragOverDocument }) =>
 
@@ -269,10 +282,34 @@ class SampleModal extends React.Component {
                                 />
                               </div>
 
+                              <Title>Files</Title>
                               <div className='row'>
-                                <Title>
-                                  Files
-                                </Title>
+                                <EditableList
+                                  values={step.files}
+                                  onAdd={() => {/* nop */}}
+                                  onDelete={file => this.onDeleteFile(stepIndex, file)}
+                                  render={file =>
+                                    <span>
+                                      {
+                                        !file.hasError ?
+                                          <Icon name={iconForMimeType(file.mime)} /> :
+                                          <Icon name='warning' error />
+                                      } <Link href={`/api/file/read/${file.id}`}>
+                                        { file.name }
+                                      </Link>
+                                    </span>
+                                  }
+                                  emptyMessage={<Label small muted>No files attached</Label>}
+                                  control={
+                                    <div>
+                                      <Button
+                                        style={{ marginTop: 'var(--padding)' }}
+                                        onClick={() => openFile().then(file => this.onAddFile(stepIndex, file))}>
+                                        Add file
+                                      </Button> <Help marginLeft={10}>You can also drag-and-drop a file on this step</Help>
+                                    </div>
+                                  }
+                                />
                               </div>
 
                             </div>

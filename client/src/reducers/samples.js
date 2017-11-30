@@ -1,12 +1,15 @@
 import {
   get,
   set,
+  over,
   lensPath,
   indexBy,
   prop,
+  whereEq,
   assoc,
   dissoc
 } from 'ramda'
+import * as L from 'partial.lenses'
 
 import Status from '../constants/status'
 import { SAMPLES } from '../constants/ActionTypes'
@@ -66,6 +69,79 @@ export default function samples(state = initialState, action) {
       const step = steps[action.meta.index]
       steps[action.meta.index] = { ...step, status: step.status.previousValue }
       return set(lensPath(['data', action.meta.id]), { isLoading: false, data: { ...sample, steps } }, state)
+    }
+
+    case SAMPLES.ADD_FILE.REQUEST: {
+      const sample = state.data[action.payload.id].data
+      const steps = [ ...sample.steps ]
+      const step = steps[action.payload.index]
+      steps[action.payload.index] = {
+        ...step,
+        files: step.files.concat({
+          isLoading: true,
+          id: action.payload.file.name,
+          name: action.payload.file.name,
+          mime: action.payload.file.type
+        })
+      }
+      return set(lensPath(['data', action.payload.id]), { isLoading: true, data: { ...sample, steps } }, state)
+    }
+    case SAMPLES.ADD_FILE.RECEIVE: {
+      const newState = set(lensPath(['data', action.meta.id, 'isLoading']), false, state)
+      return over(
+        lensPath(['data', action.meta.id, 'data', 'steps', action.meta.index, 'files']),
+        (files) => L.modify(
+          L.find(whereEq({ id: action.meta.file.name })),
+          (file) => action.payload,
+          files
+        ),
+        newState
+      )
+    }
+    case SAMPLES.ADD_FILE.ERROR: {
+      const newState = set(lensPath(['data', action.meta.id, 'isLoading']), false, state)
+      return over(
+        lensPath(['data', action.meta.id, 'data', 'steps', action.meta.index, 'files']),
+        (files) => L.modify(
+          L.find(whereEq({ id: action.meta.file.name })),
+          (file) => ({ ...file, isLoading: false, hasError: true }),
+          files
+        ),
+        newState
+      )
+    }
+
+    case SAMPLES.DELETE_FILE.REQUEST: {
+      const newState = set(lensPath(['data', action.payload.id, 'isLoading']), true, state)
+      return over(
+        lensPath(['data', action.payload.id, 'data', 'steps', action.payload.index, 'files']),
+        (files) => L.modify(
+          L.find(whereEq({ id: action.payload.fileId })),
+          (file) => ({ ...file, isLoading: true }),
+          files
+        ),
+        newState
+      )
+    }
+    case SAMPLES.DELETE_FILE.RECEIVE: {
+      const newState = set(lensPath(['data', action.meta.id, 'isLoading']), false, state)
+      return over(
+        lensPath(['data', action.meta.id, 'data', 'steps', action.meta.index, 'files']),
+        (files) => files.filter(f => f.id !== action.meta.fileId),
+        newState
+      )
+    }
+    case SAMPLES.DELETE_FILE.ERROR: {
+      const newState = set(lensPath(['data', action.meta.id, 'isLoading']), false, state)
+      return over(
+        lensPath(['data', action.meta.id, 'data', 'steps', action.meta.index, 'files']),
+        (files) => L.modify(
+          L.find(whereEq({ id: action.meta.fileId })),
+          (file) => ({ ...file, isLoading: false, hasError: true }),
+          files
+        ),
+        newState
+      )
     }
 
     case SAMPLES.DELETE.REQUEST:

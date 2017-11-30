@@ -59,6 +59,19 @@ export const completionFunctions = {
   delete: (id) => POST(`/completion-function/delete/${id}`),
 }
 
+export const files = {
+  list: () => GET('/file/list'),
+  get: (id) => GET(`/file/get/${id}`),
+  create: (sampleId, stepIndex, file) => {
+    const formData = new FormData()
+    formData.append('file', file)
+    return POST(`/file/create/${sampleId}/${stepIndex}`, formData)
+  },
+  delete: (id) => POST(`/file/delete/${id}`),
+}
+
+
+
 
 function fetchAPI(url, params, options = {}) {
   let { method = 'get', ...other } = options
@@ -87,8 +100,8 @@ function fetchAPI(url, params, options = {}) {
   })
 }
 
-function GET(url, params)  { return fetchAPI(url, params, { method: 'get' }) }
-function POST(url, params) { return fetchAPI(url, params, { method: 'post' }) }
+function GET(url, params, options = {})  { return fetchAPI(url, params, { method: 'get', ...options }) }
+function POST(url, params, options = {}) { return fetchAPI(url, params, { method: 'post', ...options }) }
 
 function createError(data) {
   const e = new Error(data.message)

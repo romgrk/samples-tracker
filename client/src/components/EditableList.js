@@ -6,6 +6,7 @@ import arrayEquals from '../utils/array-equals'
 import Icon from './Icon'
 import Input from './Input'
 import Button from './Button'
+import Spinner from './Spinner'
 
 class EditableList extends React.Component {
   static propTypes = {
@@ -13,6 +14,7 @@ class EditableList extends React.Component {
     values: PropTypes.array.isRequired,
     control: PropTypes.element,
     render: PropTypes.func,
+    emptyMessage: PropTypes.element,
     onAdd: PropTypes.func.isRequired,
     onDelete: PropTypes.func.isRequired,
   }
@@ -58,16 +60,30 @@ class EditableList extends React.Component {
       <tbody>
         {
           values.map(value =>
-            <tr key={value} className='EditableList__item'>
+            <tr key={value.id || value} className='EditableList__item'>
               <td className='EditableList__value'>{ this.props.render ? this.props.render(value) : value }</td>
               <td>
-                <Button flat icon='close' onClick={() => this.props.onDelete(value)}/>
+                {
+                  value.isLoading ?
+                    <Spinner /> :
+                    <Button flat icon='close' onClick={() => this.props.onDelete(value)}/>
+                }
               </td>
             </tr>
           )
         }
+        {
+          values.length === 0 && this.props.emptyMessage &&
+            <tr key={value} className='EditableList__item'>
+              <td className='EditableList__value empty'>
+                { this.props.emptyMessage }
+              </td>
+              <td>
+              </td>
+            </tr>
+        }
         <tr className='EditableList__item'>
-          <td className='EditableList__value' colSpan='2'>
+          <td className='EditableList__control' colSpan='2'>
             { control }
           </td>
         </tr>
