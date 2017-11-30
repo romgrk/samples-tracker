@@ -206,8 +206,8 @@ class SampleModal extends React.Component {
 
                           <div
                             className={ classname('StepsModal__step', 'drop-zone', {
-                              over: dragOver,
-                              active: dragOverDocument,
+                              'over': dragOver,
+                              'over-document': dragOverDocument,
                             }) }
                             >
                               <Label highlight>

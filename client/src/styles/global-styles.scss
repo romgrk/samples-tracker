@@ -556,7 +556,7 @@ a.link:hover {
   left: calc(-1 * var(--border));
   pointer-events: none;
 }
-.drop-zone.active::after {
+.drop-zone.over-document::after {
   border: var(--border) dashed $focus-color;
 }
 .drop-zone.over::after {
@@ -721,9 +721,10 @@ $step-width: 40px;
 }
 
 .Step {
-  min-width: $step-width;
+  display: flex;
   justify-content: center;
   align-items: center;
+  min-width: $step-width;
   transition: all .25s;
   cursor: pointer;
 }
