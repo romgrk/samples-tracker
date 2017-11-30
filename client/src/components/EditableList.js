@@ -11,6 +11,7 @@ class EditableList extends React.Component {
   static propTypes = {
     loading: PropTypes.bool,
     values: PropTypes.array.isRequired,
+    control: PropTypes.element,
     onAdd: PropTypes.func.isRequired,
     onDelete: PropTypes.func.isRequired,
   }
@@ -41,6 +42,16 @@ class EditableList extends React.Component {
     const { values, loading, placeholder } = this.props
     const { value } = this.state
 
+    const control = this.props.control ||
+      <Input
+        placeholder={placeholder}
+        loading={loading}
+        disabled={loading}
+        value={value}
+        onChange={value => this.setState({ value })}
+        onEnter={value => this.props.onAdd(value)}
+      />
+
     return (
       <table className='EditableList'>
       <tbody>
@@ -56,14 +67,7 @@ class EditableList extends React.Component {
         }
         <tr className='EditableList__item'>
           <td className='EditableList__value' colspan='2'>
-            <Input
-              placeholder={placeholder}
-              loading={loading}
-              disabled={loading}
-              value={value}
-              onChange={value => this.setState({ value })}
-              onEnter={value => this.props.onAdd(value)}
-            />
+            { control }
           </td>
         </tr>
       </tbody>
