@@ -5,6 +5,7 @@ import classname from 'classname'
 import Tether from 'tether'
 import cuid from 'cuid'
 
+import size from '../utils/size'
 import Button from './Button'
 import Icon from './Icon'
 
@@ -30,7 +31,7 @@ class Modal extends React.Component {
   }
 
   componentWillMount() {
-    this.mountNode = document.body
+    this.mountNode = this.props.mountNode || document.body
     this.domNode = document.createElement('div')
     this.mountNode.appendChild(this.domNode)
   }
@@ -111,14 +112,6 @@ class Modal extends React.Component {
       </div>
       , this.domNode)
   }
-}
-
-function size(value) {
-  if (typeof value === 'number')
-    return value + 'px'
-  if (typeof value === 'string')
-    return value
-  return undefined
 }
 
 const defaultExport = pure(Modal)

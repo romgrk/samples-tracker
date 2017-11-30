@@ -224,16 +224,16 @@ class SampleModal extends React.Component {
                                     <td>
                                       <Dropdown trigger={
                                         <Button flat style={{ width: '120px'}}>
-                                          <StatusIcon name={step.status} /> <Text>{ step.status }</Text>
+                                          <StatusIcon name={step.status} />&nbsp;&nbsp; <Text>{ step.status }</Text>
                                         </Button>
-                                      } offset='-20px 0'>
+                                      }>
                                         {
                                           Object.values(Status)
                                             .filter(status => status !== step.status
                                                            && status !== Status.IN_PROGRESS)
                                             .map((status, i) =>
                                               <Dropdown.Item onClick={() => this.setStepStatus(stepIndex, status)}>
-                                                <StatusIcon name={status} />&nbsp;&nbsp; <Text>{ status }</Text>
+                                                <StatusIcon name={status} />&nbsp;&nbsp; <Text normal>{ status }</Text>
                                               </Dropdown.Item>
                                             )
                                         }

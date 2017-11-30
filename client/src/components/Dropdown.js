@@ -1,9 +1,11 @@
 import React from 'react'
+import { createPortal, findDOMNode } from 'react-dom'
 import pure from 'recompose/pure'
 import classname from 'classname'
 import Tether from 'tether'
 import cuid from 'cuid'
 
+import size from '../utils/size'
 import Button from './Button'
 import Icon from './Icon'
 
@@ -22,12 +24,19 @@ class Dropdown extends React.Component {
     }
   }
 
+  componentWillMount() {
+    this.mountNode = this.props.mountNode || document.body
+    this.domNode = document.createElement('div')
+    this.mountNode.appendChild(this.domNode)
+  }
+
   componentDidMount() {
     dropdowns.push(this)
   }
 
   componentWillUnmount() {
     dropdowns.splice(dropdowns.findIndex(x => x === this), 1)
+    this.mountNode.removeChild(this.domNode)
   }
 
   onDocumentClick(ev) {
@@ -36,27 +45,22 @@ class Dropdown extends React.Component {
   }
 
   onRef = ref => {
-    if (ref === null) {
+    if (ref === null)
       return
-    }
-    if (this.tether) {
-      this.tether.destroy()
-    }
 
-    this.element = ref
-    this.tether = new Tether({
-      element: `#${this.id} > .Dropdown__content`,
-      target: `#${this.id} > :first-child`,
-      attachment:       'top left',
-      targetAttachment: 'bottom left',
-      offset: this.props.offset || '0 0',
-      constraints: [
-        {
-          to: 'window',
-          attachment: 'together'
-        }
-      ]
-    })
+    this.element = findDOMNode(ref)
+  }
+
+  getPosition() {
+    if (!this.element)
+      return { top: size(0), left: size(0) }
+
+    const box = this.element.getBoundingClientRect()
+
+    return {
+      top:  size(box.top + box.height),
+      left: size(box.left),
+    }
   }
 
   close = () => {
@@ -79,8 +83,8 @@ class Dropdown extends React.Component {
         'with-icons': this.props.icons,
       })
 
-    const contentClassName = classname(
-      'Dropdown__content',
+    const menuClassName = classname(
+      'Dropdown__menu',
       className,
       {
         'open': open,
@@ -90,7 +94,10 @@ class Dropdown extends React.Component {
     const button =
       React.cloneElement(
         trigger || <Button flat icon='caret-down' />,
-        { onClick: this.toggle }
+        {
+          ref: this.onRef,
+          onClick: this.toggle,
+        }
       )
 
     const children = React.Children.map(this.props.children, child =>
@@ -101,13 +108,17 @@ class Dropdown extends React.Component {
     )
 
     return (
-      <div id={this.id} className={dropdownClassName} ref={this.onRef}>
+      <div id={this.id} className={dropdownClassName}>
         { button }
-        <div className={contentClassName}>
-          <div className='Dropdown__inner'>
-            { children }
-          </div>
-        </div>
+        {
+          createPortal(
+            <div className={menuClassName} style={this.getPosition()}>
+              <div className='Dropdown__inner'>
+                { children }
+              </div>
+            </div>
+            , this.domNode)
+        }
       </div>
     )
   }
