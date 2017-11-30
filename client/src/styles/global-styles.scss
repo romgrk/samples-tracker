@@ -203,7 +203,7 @@ textarea.text.editable {
   background-color: transparent;
   border: none;
   border-radius: 2px;
-  padding: 0;
+  padding: 0 2px;
   transition: box-shadow .25s;
 }
 textarea.text.editable:active,
