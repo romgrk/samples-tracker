@@ -1,10 +1,8 @@
 import React from 'react'
-import { findDOMNode } from 'react-dom'
+import { findDOMNode, createPortal } from 'react-dom'
 import classname from 'classname'
-import Tether from 'tether'
-import cuid from 'cuid'
 
-import has from '../utils/has'
+import size from '../utils/size'
 import Button from './Button'
 import Icon from './Icon'
 
@@ -12,10 +10,19 @@ class Tooltip extends React.Component {
   constructor(props) {
     super(props)
 
-    this.id = cuid()
     this.state = {
       visible: false,
     }
+  }
+
+  componentWillMount() {
+    this.mountNode = this.props.mountNode || document.body
+    this.domNode = document.createElement('div')
+    this.mountNode.appendChild(this.domNode)
+  }
+
+  componentWillUnmount() {
+    this.mountNode.removeChild(this.domNode)
   }
 
   onMouseOver = ev => {
@@ -28,23 +35,33 @@ class Tooltip extends React.Component {
 
   onRef = ref => {
     if (ref === null)
-      return;
+      return
+    this.element = findDOMNode(ref)
+  }
 
-    if (this.tether)
-      this.tether.destroy()
+  getPosition() {
+    if (!this.element)
+      return { top: size(0), left: size(0) }
 
-    this.target = findDOMNode(ref)
-    this.tether = new Tether({
-      element: `#${this.id}`,
-      target: this.target,
-      ...getPosition(this.props.position, this.props.offset),
-      constraints: [
-        {
-          to: 'window',
-          attachment: 'together'
-        }
-      ]
-    })
+    const box = this.element.getBoundingClientRect()
+
+    const position = this.props.position || 'top'
+
+    if (position === 'bottom')
+      return {
+        top:  size(box.top + box.height),
+        left: size(box.left),
+      }
+    if (position === 'right')
+      return {
+        top:  size(box.top),
+        left: size(box.left + box.width),
+      }
+    // default: if (position === 'top')
+    return {
+      top:  size(box.top - 30), /* we're hardcoding the tooltip height here */
+      left: size(box.left),
+    }
   }
 
   render() {
@@ -68,35 +85,21 @@ class Tooltip extends React.Component {
     const child = children
     const childChildren = [...(child.props.children || [])]
     childChildren.push(
-      <div id={this.id} className={tooltipClassName}>
-        { content }
-      </div>
+      createPortal(
+        <div className={tooltipClassName} style={this.getPosition()}>
+          { content }
+        </div>,
+        this.domNode
+      )
     )
 
     return React.cloneElement(child, {
       ref: this.onRef,
       onMouseOver: this.onMouseOver,
       onMouseOut: this.onMouseOut,
-      style: Object.assign(child.props.style || {}, { position: 'relative' })
     }, childChildren)
 
   }
-}
-
-function getPosition(position = 'top', offset = '0 0') {
-  if (position === 'top')
-    return {
-      attachment:       'bottom left',
-      targetAttachment: 'top left',
-      offset: offset,
-    }
-
-  if (position === 'bottom')
-    return {
-      attachment:       'top left',
-      targetAttachment: 'bottom left',
-      offset: offset,
-    }
 }
 
 export default Tooltip
