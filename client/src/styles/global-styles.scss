@@ -507,6 +507,21 @@ abbr {
   border-bottom: 1px solid rgba(white, 0.2);
 }
 
+a {
+  color: $link-color;
+  text-decoration: none;
+  border-bottom: 1px solid rgba($link-color, 0.5);
+  //transition: border-bottom .25s;
+}
+a:visited {
+  color: $link-color;
+}
+a:hover {
+  //border-bottom: 1px solid $link-color;
+}
+
+
+
 .text-highlight { color: var(--text-color-highlight); }
 .text-success   { color: var(--text-color-success); }
 .text-muted     { color: var(--text-color-muted); }
@@ -516,9 +531,11 @@ abbr {
 .text-subtle    { color: var(--text-color-subtle); }
 
 
+
 .EditableList__value {
-  min-width: 220px;
   color: $text-color-highlight;
+  min-width: 220px;
+  padding-right: 2 * $padding;
 }
 
 
