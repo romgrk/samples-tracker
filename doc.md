@@ -39,6 +39,17 @@ const sample = {
 }
 ```
 
+# File
+```javascript
+const file = {
+  id: 1,
+  sampleId: 1,
+  stepIndex: 5,
+  mime: 'text/plain',
+  name: 'file.txt',
+}
+```
+
 # History
 ```javascript
 const entry = {
