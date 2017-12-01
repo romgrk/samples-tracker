@@ -29,7 +29,7 @@ function Spinner(props) {
   )
 
   return (
-    <span className={spinnerClassName} { ...rest } />
+    <i className={spinnerClassName} { ...rest } />
   )
 }
 
