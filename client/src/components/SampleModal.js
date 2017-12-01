@@ -150,6 +150,14 @@ class SampleModal extends React.Component {
     this.props.deleteFile(this.state.id, stepIndex, file.id)
   }
 
+  onMouseOverStep(stepIndex) {
+    if (stepIndex !== this.state.stepIndex && this.lastMouseOver !== stepIndex) {
+      this.gotoStep(stepIndex)
+      this.lastMouseOver = this.state.stepIndex
+      setTimeout(() => this.lastMouseOver = undefined, 250)
+    }
+  }
+
   render() {
     const {
       onChange,
@@ -213,6 +221,7 @@ class SampleModal extends React.Component {
                               'over': dragOver,
                               'over-document': dragOverDocument,
                             }) }
+                            onMouseOver={() => this.onMouseOverStep(stepIndex)}
                             >
                               <Label highlight>
                                 { step.name }
