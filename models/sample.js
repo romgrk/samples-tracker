@@ -5,9 +5,10 @@
 
 const { rejectMessage } = require('../helpers/promise')
 const db = require('../database.js')
-const Step = require('./step')
-const File = require('./file')
 const Completion = require('./completion-function')
+const File = require('./file')
+const Settings = require('./settings')
+const Step = require('./step')
 
 module.exports = {
   findAll,
@@ -46,8 +47,19 @@ function addDetails(sample) {
   })
 }
 
-function findAll() {
-  return db.selectAll(`SELECT ${columns} FROM samples`)
+function findAll(includeArchived) {
+  return Settings.findByKey('archiveInterval')
+    .then(archiveInterval =>
+      db.selectAll(`
+        SELECT ${columns}
+          FROM samples
+        WHERE ${includeArchived ?
+              '1 = 1' :
+              `completed IS NULL
+              OR completed + interval '${archiveInterval}' > CURRENT_TIMESTAMP
+            `}
+      `)
+      )
     .then(samples =>
       Promise.all(samples.map(addDetails))
     )
@@ -131,7 +143,7 @@ function updateStepStatus(id, index, status, user) {
         if (status === 'DONE') {
 
           if (nextSteps.length === 0)
-            actions.push(complete(sample.id))
+            actions.push(complete(sample.id, true))
 
           if (nextStep !== undefined && nextStep.status === 'NOT_DONE')
             actions.push(Step.updateStatus(nextStep.id, 'IN_PROGRESS', new Date()))

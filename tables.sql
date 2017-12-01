@@ -24,7 +24,8 @@ CREATE TABLE settings (
 INSERT INTO settings VALUES
     ('alertDelay', '"2 weeks"'),                -- postgres interval
     ('alertEmails',  '["rom7011@gmail.com"]'),  -- emails alerted when step is overdue
-    ('whitelist',  '["rom7011@gmail.com"]')     -- users allowed to login/signup
+    ('whitelist',  '["rom7011@gmail.com"]'),    -- users allowed to login/signup
+    ('archiveInterval', '"6 months"')           -- delay after which completed samples are not shown
 ;
 
 CREATE TABLE users (
@@ -92,10 +93,7 @@ CREATE TABLE template_steps (
 INSERT INTO templates (name) VALUES ('experiment');
 INSERT INTO template_steps (template_id, index, name, "alertDelay", "completionFn") VALUES
     (1, 0, 'Extract', '1 second', NULL),
-    (1, 1, 'Pack',    '2 weeks', NULL),
-    (1, 2, 'Analyze', '2 weeks', 1),
-    (1, 3, 'Compute', '2 weeks', NULL),
-    (1, 4, 'Report',  '2 weeks', NULL)
+    (1, 1, 'Pack',    '2 weeks', NULL)
 ;
 INSERT INTO templates (name) VALUES ('request');
 INSERT INTO template_steps (template_id, index, name, "alertDelay", "completionFn") VALUES

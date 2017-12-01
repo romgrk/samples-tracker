@@ -5,7 +5,7 @@ import * as requests from '../requests'
 
 const samples = {
   fetch:  createFetchActions(SAMPLES.FETCH,  requests.samples.list, {
-    fnMap: ({ ui: includeArchived }) => [includeArchived]
+    fnMap: ({ ui: { includeArchived } }) => [includeArchived]
   }),
   update: createFetchActions(SAMPLES.UPDATE, requests.samples.update,
     (id, data) => ({ id, data }),

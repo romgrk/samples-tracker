@@ -69,7 +69,7 @@ export function createFetchFunction(fn, fnMap = A) {
 
       dispatch(self.request(...args))
 
-      return fn(...A(getState(), ...args))
+      return fn(...fnMap(getState(), ...args))
       .then(result => {
         dispatch(self.receive(result, ...args))
         return result

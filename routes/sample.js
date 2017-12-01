@@ -6,7 +6,7 @@ const Sample = require('../models/sample.js')
 
 /* GET samples list */
 router.get('/list', (req, res, next) => {
-  Sample.findAll()
+  Sample.findAll(req.query.includeArchived === 'true')
   .then(dataHandler(res))
   .catch(errorHandler(res))
 })
