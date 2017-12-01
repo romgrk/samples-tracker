@@ -42,7 +42,7 @@ class Checkbox extends React.Component {
 
     return (
       <label className={labelClassName}>
-        <input type='checkbox' className='Checkbox' { ...rest } /> { children }
+        <input type='checkbox' className='Checkbox' { ...rest } onChange={this.onChange} /> { children }
       </label>
     )
   }
