@@ -3,7 +3,10 @@
  */
 
 import { createAction } from 'redux-actions'
+import isObject from 'is-object'
 
+const I = x => x
+const A = (state, ...args) => args
 
 export function createModelConstants(namespace, others = []) {
   const constants = {
@@ -39,25 +42,34 @@ export function createModelActions(namespace, fns) {
   }
 }
 
-export function createFetchActions(namespace, fn, contraMapFn, mapFn, errorMapFn) {
+export function createFetchActions(namespace, fn, contraMapFn, mapFn, errorMapFn, fnMap) {
   if (fn === undefined) {
     console.warn('Received undefined function for namespace:', namespace)
     return undefined
   }
-  const action = createFetchFunction(fn, contraMapFn, mapFn, errorMapFn)
+
+  if (isObject(contraMapFn)) {
+    const options = contraMapFn
+    contraMapFn = options.contraMap
+    mapFn       = options.map
+    errorMapFn  = options.errorMap
+    fnMap       = options.fnMap
+  }
+
+  const action = createFetchFunction(fn, fnMap)
   action.request = createAction(namespace.REQUEST, contraMapFn)
   action.receive = createAction(namespace.RECEIVE, undefined, mapFn)
   action.error   = createAction(namespace.ERROR, undefined, errorMapFn)
   return action
 }
 
-export function createFetchFunction(fn) {
+export function createFetchFunction(fn, fnMap = A) {
   const self = function (...args) {
     return (dispatch, getState) => {
 
       dispatch(self.request(...args))
 
-      return fn(...args)
+      return fn(...A(getState(), ...args))
       .then(result => {
         dispatch(self.receive(result, ...args))
         return result
