@@ -1,5 +1,7 @@
 import { createModelConstants } from '../utils/create-actions.js'
 
+// UI
+export const SET_INCLUDE_ARCHIVED = 'SET_INCLUDE_ARCHIVED'
 // Notifications
 export const SHOW_NOTIFICATION = 'SHOW_NOTIFICATION'
 export const SHOW = {
