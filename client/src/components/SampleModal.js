@@ -33,6 +33,9 @@ class SampleModal extends React.Component {
   constructor(props) {
     super()
 
+    this.lastMouseOver = undefined
+    this.canMouseOver = true
+
     this.state = {
       id: undefined,
       stepIndex: undefined,
@@ -78,8 +81,11 @@ class SampleModal extends React.Component {
   }
 
   gotoStep = (stepIndex) => {
-    if (stepIndex >= 0 && stepIndex <= this.state.sample.data.steps.length - 1)
+    if (stepIndex >= 0 && stepIndex <= this.state.sample.data.steps.length - 1) {
       this.props.history.push(`/samples/${this.state.id}/${stepIndex}`)
+      this.canMouseOver = false
+      setTimeout(() => this.canMouseOver = true, 500)
+    }
   }
 
   update = (data = this.state.sample.data) => {
@@ -151,7 +157,11 @@ class SampleModal extends React.Component {
   }
 
   onMouseOverStep(stepIndex) {
-    if (stepIndex !== this.state.stepIndex && this.lastMouseOver !== stepIndex) {
+    if (
+      stepIndex !== this.state.stepIndex
+      && this.lastMouseOver !== stepIndex
+      && this.canMouseOver
+    ) {
       this.gotoStep(stepIndex)
       this.lastMouseOver = this.state.stepIndex
       setTimeout(() => this.lastMouseOver = undefined, 250)
@@ -176,6 +186,7 @@ class SampleModal extends React.Component {
 
     return (
       <Modal
+        className='SampleModal'
         title={
           <EditableLabel value={sample ? sample.data.name : ''} onEnter={this.setName} />
         }
@@ -208,6 +219,19 @@ class SampleModal extends React.Component {
                 onEnter={this.setNotes}
               />
 
+              <div className='hcenter ButtonGroup'>
+              {
+                sample.data.steps.map((step, stepIndex) =>
+                  <Button small
+                    highlight={stepIndex === this.state.stepIndex}
+                    onClick={() => this.gotoStep(stepIndex)}
+                  >
+                    { step.name }
+                  </Button>
+                )
+              }
+              </div>
+
               <div className='StepsModal'>
                 <div className='StepsModal__content hbox' style={contentStyle(stepIndex, stepWidth)}>
                   {
@@ -223,9 +247,6 @@ class SampleModal extends React.Component {
                             }) }
                             onMouseOver={() => this.onMouseOverStep(stepIndex)}
                             >
-                              <Label highlight>
-                                { step.name }
-                              </Label>
 
                               <table className='StepsModal__status'>
                                 <tbody>
