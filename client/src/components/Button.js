@@ -13,6 +13,7 @@ function Button(props) {
     size,
     flat,
     round,
+    square,
     small,
     large,
     info,
@@ -38,6 +39,7 @@ function Button(props) {
     {
       'flat': flat,
       'round': round,
+      'square': square,
       'small': small,
       'large': large,
       'info': info,

@@ -32,8 +32,6 @@
   background-color: transparent;
   color: var(--color);
   border: 1px solid transparent;
-  height: 25px;
-  min-width: 25px;
   padding: 0 2px;
 }
 .Button.flat:not([disabled]):hover {
@@ -49,6 +47,10 @@
 .Button.round {
   min-width: 30px;
   border-radius: 50%;
+}
+.Button.square {
+  height: 30px;
+  min-width: 30px;
 }
 
 .Button.small {
