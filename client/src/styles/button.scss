@@ -66,6 +66,10 @@
 
 // Colors
 
+.Button.highlight {
+  color: $text-color-highlight;
+}
+
 @each $level, $values in $colors {
   .Button.#{$level} {
     color: #fff;
