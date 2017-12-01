@@ -30,7 +30,7 @@
 .Modal__container {
   position: absolute;
   top: 10%;
-  background: $dark-bg-color;
+  background: $bg-color-dark;
   border-radius: 2px;
   z-index: 2;
   //min-height: 40%;
@@ -52,7 +52,7 @@
   border-bottom: 1px solid var(--light-border-color);
   border-top-left-radius: 2px;
   border-top-right-radius: 2px;
-  background-color: var(--dark-bg-color);
+  background-color: var(--bg-color-dark);
 }
 .Modal__content {
   padding: 2 * $padding;

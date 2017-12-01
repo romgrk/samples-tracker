@@ -5,14 +5,14 @@ html {
   --light-color: $light-color;
   --bg-color: $bg-color;
   --border-color: $border-color;
-  --dark-bg-color: $dark-bg-color;
+  --bg-color-dark: $bg-color-dark;
+  --border-color-dark: $border-color-dark;
   --hover-color: $hover-color;
   --hover-bg-color: $hover-bg-color;
   --hover-light-bg-color: $hover-light-bg-color;
   --active-bg-color: $active-bg-color;
   --light-border-color: $light-border-color;
   --checkbox-border-color: $checkbox-border-color;
-  --dark-border-color: $dark-border-color;
 
   --focus-color: $focus-color;
   --accent-color: $accent-color;
@@ -21,24 +21,32 @@ html {
   --selection-color: $selection-color;
 
   --text-color: $text-color;
-  --text-color-info:    $text-color-info;
+  --text-color-normal: $text-color-normal;
+  --text-color-info: $text-color-info;
   --text-color-success: $text-color-success;
   --text-color-warning: $text-color-warning;
-  --text-color-error:   $text-color-error;
+  --text-color-error: $text-color-error;
   --text-color-muted: $text-color-muted;
-  --text-color-selected: $text-color-selected;
-  --text-color-highlight:  $text-color-highlight;
   --text-color-subtle: $text-color-subtle;
+  --text-color-highlight: $text-color-highlight;
+  --text-color-selected: $text-color-selected;
 
-  --bg-color-info:    $bg-color-info;
+  --link-color: $link-color;
+
+  --bg-color-normal: $bg-color-normal;
+  --bg-color-info: $bg-color-info;
   --bg-color-success: $bg-color-success;
   --bg-color-warning: $bg-color-warning;
-  --bg-color-error:   $bg-color-error;
+  --bg-color-error: $bg-color-error;
+  --bg-color-muted: $bg-color-muted;
+  --bg-color-subtle: $bg-color-subtle;
+  --bg-color-highlight: $bg-color-highlight;
+  --bg-color-selected: $bg-color-selected;
 
-  --bg-light-color-info:    $bg-light-color-info;
+  --bg-light-color-info: $bg-light-color-info;
   --bg-light-color-success: $bg-light-color-success;
   --bg-light-color-warning: $bg-light-color-warning;
-  --bg-light-color-error:   $bg-light-color-error;
+  --bg-light-color-error: $bg-light-color-error;
 
   --table-color: $table-color;
   --table-bg-color: $table-bg-color;

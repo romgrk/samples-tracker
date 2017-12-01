@@ -256,9 +256,9 @@ textarea.text.editable:focus {
 }
 .Input__element {
   color: var(--light-color);
-  background-color: rgba(0, 0, 0, 0.3); //var(--dark-bg-color);
+  background-color: rgba(0, 0, 0, 0.3);
   outline: none;
-  border: 1px solid var(--dark-border-color);
+  border: 1px solid rgba(0, 0, 0, 0.5);
   border-radius: 2px;
   padding: 0 8px;
   height: 30px;
@@ -296,6 +296,7 @@ textarea.text.editable:focus {
 .input-label {
   position: relative;
   padding-left: 5px;
+  font-weight: bold;
   cursor: pointer;
 }
 .Checkbox {
@@ -306,9 +307,10 @@ textarea.text.editable:focus {
   position: relative;
   width: 16px;
   height: 16px;
+  margin-bottom: 0;
   font-size: inherit;
   border-radius: 3px;
-  background-color: var(--dark-bg-color);
+  background-color: var(--bg-color-dark);
   box-shadow: 0 0 0 1px var(--checkbox-border-color);
   transition: background-color 0.16s cubic-bezier(0.5, 0.15, 0.2, 1);
 }
@@ -372,8 +374,9 @@ textarea.text.editable:focus {
 .input-label .input-radio,
 .input-label .Checkbox,
 .input-label .input-toggle {
-  margin-top: -0.25em;
-  margin-right: 0.3em;
+  margin-top: -3px;
+  margin-right: 2 * $padding;
+  margin-bottom: 0;
 }
 
 
@@ -384,7 +387,7 @@ textarea.text.editable:focus {
 .Dropdown.open > .Button {
   border: 1px solid var(--light-border-color);
   border-bottom: 1px solid transparent;;
-  background-color: var(--dark-bg-color);
+  background-color: var(--bg-color-dark);
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
 }
@@ -407,7 +410,7 @@ textarea.text.editable:focus {
   border: 1px solid var(--light-border-color);
   border-radius: 2px;
   color: var(--light-color);
-  background-color: var(--dark-bg-color);
+  background-color: var(--bg-color-dark);
   box-shadow: 1px 2px 6px 1px rgba(0, 0, 0, 0.3);
   cursor: default;
 }
@@ -536,6 +539,9 @@ a.link:hover {
 .text-info      { color: var(--text-color-info); }
 .text-subtle    { color: var(--text-color-subtle); }
 
+.bg-dark { background-color: var(--bg-color-dark); }
+.border-left { border-left: 1px solid var(--border-color-dark); }
+
 
 
 .EditableList__value {
@@ -603,7 +609,7 @@ a.link:hover {
 .Sidebar {
   position: relative;
   height: 100%;
-  background-color: var(--dark-bg-color);
+  background-color: var(--bg-color-dark);
 }
 .Sidebar a {
   color: inherit;
@@ -802,7 +808,7 @@ $step-width: 40px;
   right: -30px;
 }
 .StepsModal__step {
-  background: $dark-bg-color;
+  background: $bg-color-dark;
   border-bottom-right-radius: 2px;
   border-bottom-left-radius: 2px;
   box-shadow: 0px 20px 16px 0px rgba(0, 0, 0, 0.3);
@@ -841,15 +847,15 @@ $step-width: 40px;
   border-bottom: 1px solid var(--light-border-color);
 }
 .Template:first-of-type .Steps {
-  border-top: 1px solid var(--dark-bg-color);
+  border-top: 1px solid var(--bg-color-dark);
 }
 .Template .Steps {
-  border-bottom: 1px solid var(--dark-bg-color);
+  border-bottom: 1px solid var(--bg-color-dark);
 }
 
 .Template__info {
   padding: var(--padding) calc(2 * var(--padding));
-  background-color: var(--dark-bg-color);
+  background-color: var(--bg-color-dark);
   width: 175px;
 }
 .Template__info .delete,
@@ -887,7 +893,7 @@ $step-width: 40px;
 
 .CompletionFunctions__list {
   border-left: 1px solid $bg-color;
-  background-color: $dark-bg-color;
+  background-color: $bg-color-dark;
 }
 .CompletionFunctions__list > .item {
   display: flex;
