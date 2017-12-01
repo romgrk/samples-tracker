@@ -62,11 +62,7 @@ export const completionFunctions = {
 export const files = {
   list: () => GET('/file/list'),
   get: (id) => GET(`/file/get/${id}`),
-  create: (sampleId, stepIndex, file) => {
-    const formData = new FormData()
-    formData.append('file', file)
-    return POST(`/file/create/${sampleId}/${stepIndex}`, formData)
-  },
+  create: (sampleId, stepIndex, file) => POST(`/file/create/${sampleId}/${stepIndex}`, createFormData(file)),
   delete: (id) => POST(`/file/delete/${id}`),
 }
 
@@ -107,4 +103,10 @@ function createError(data) {
   const e = new Error(data.message)
   e.stack = data.stack
   return e
+}
+
+function createFormData(file) {
+  const formData = new FormData()
+  formData.append('file', file)
+  return formData
 }
