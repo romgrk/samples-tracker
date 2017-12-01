@@ -74,15 +74,14 @@ class Settings extends React.Component {
     onChange(which, list.data.filter(v => v !== value))
   }
 
-  onChangeAlertDelay = value => {
-    this.changeData('alertDelay', value)
+  onChangeInterval = (which, value) => {
+    this.changeData(which, value)
   }
 
-  onAcceptAlertDelay = () => {
-    const value = this.state.alertDelay.data
-
+  onAcceptInterval = (which) => {
+    const value = this.state[which].data
     if (Interval.isValid(value))
-      this.props.onChange('alertDelay', value)
+      this.props.onChange(which, value)
     else
       this.props.onError('Invalid interval', INTERVAL_FORMAT)
   }
@@ -113,8 +112,8 @@ class Settings extends React.Component {
           <IntervalInput
             value={archiveInterval.data}
             loading={archiveInterval.isLoading}
-            onChange={this.onChangeAlertDelay}
-            onAccept={this.onAcceptAlertDelay}
+            onChange={value => this.onChangeInterval('archiveInterval', value)}
+            onAccept={() => this.onAcceptInterval('archiveInterval')}
           /> <Help>{ INTERVAL_FORMAT }</Help>
         </Group>
 
@@ -126,8 +125,8 @@ class Settings extends React.Component {
           <IntervalInput
             value={alertDelay.data}
             loading={alertDelay.isLoading}
-            onChange={this.onChangeAlertDelay}
-            onAccept={this.onAcceptAlertDelay}
+            onChange={value => this.onChangeInterval('alertDelay', value)}
+            onAccept={() => this.onAcceptInterval('alertDelay')}
           /> <Help>{ INTERVAL_FORMAT }</Help>
         </Group>
 
