@@ -6,6 +6,7 @@ import { createStructuredSelector, createSelector } from 'reselect'
 import { fromLoadable } from '../utils/to-loadable'
 import Samples from '../components/Samples'
 import GlobalActions from '../actions/global'
+import UIActions from '../actions/ui'
 import SampleActions from '../actions/samples'
 
 class SamplesContainer extends React.Component {
@@ -24,6 +25,7 @@ class SamplesContainer extends React.Component {
         onError={this.props.showError}
         addFile={this.props.addFile}
         deleteFile={this.props.deleteFile}
+        setIncludeArchived={this.props.setIncludeArchived}
       />
     )
   }
@@ -38,7 +40,7 @@ const mapStateToProps = createStructuredSelector({
 })
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ ...SampleActions, ...GlobalActions }, dispatch)
+  return bindActionCreators({ ...SampleActions, ...UIActions, ...GlobalActions }, dispatch)
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(SamplesContainer)

@@ -8,6 +8,7 @@ import { getNewSample } from '../models'
 import STATUS from '../constants/status'
 import Badge from './Badge'
 import Button from './Button'
+import Checkbox from './Checkbox'
 import Dropdown from './Dropdown'
 import Icon from './Icon'
 import Input from './Input'
@@ -46,9 +47,9 @@ class Samples extends React.Component {
     const selectedSample = data[selectedId]
 
     const newSampleButton =
-      <Button info
+      <Button highlight
         loading={templates.isLoading}
-        iconAfter={ templates.isLoading ? undefined : 'caret-down' } >
+        iconAfter={ templates.isLoading ? undefined : 'chevron-down' } >
         Create New Sample
       </Button>
 
@@ -66,8 +67,13 @@ class Samples extends React.Component {
     return (
       <section className='Samples vbox'>
 
-        <div className='row'>
+        <div className='row bg-dark border-left'>
           { createSampleDropdown }
+          <div className='fill' />
+
+          <Checkbox onChange={this.props.setIncludeArchived}>
+            Include archived samples
+          </Checkbox>
         </div>
 
         <div className='Samples__table bordered'>

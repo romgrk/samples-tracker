@@ -4,7 +4,9 @@ import { createFetchActions } from '../utils/create-actions'
 import * as requests from '../requests'
 
 const samples = {
-  fetch:  createFetchActions(SAMPLES.FETCH,  requests.samples.list),
+  fetch:  createFetchActions(SAMPLES.FETCH,  requests.samples.list, {
+    fnMap: ({ ui: includeArchived }) => [includeArchived]
+  }),
   update: createFetchActions(SAMPLES.UPDATE, requests.samples.update,
     (id, data) => ({ id, data }),
     (res, id, data) => ({ id, data }),
