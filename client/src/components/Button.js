@@ -60,7 +60,10 @@ function Button(props) {
       disabled={loading || disabled}
     >
       { icon !== undefined && <Icon name={icon} className='Button__icon' /> }
-      <span>{ children }</span>
+      {
+        children &&
+          <span>{ children }</span>
+      }
       {
         loading &&
           <Spinner />
