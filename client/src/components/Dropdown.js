@@ -90,7 +90,7 @@ class Dropdown extends React.Component {
 
     const button =
       React.cloneElement(
-        trigger || <Button flat icon='chevron-down' />,
+        trigger || <Button iconAfter='chevron-down'>{ this.props.label }</Button>,
         {
           ref: this.onRef,
           onClick: this.toggle,
