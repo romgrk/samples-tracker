@@ -26,6 +26,7 @@ class Settings extends React.Component {
       alertDelay: {},
       alertEmails: {},
       whitelist: {},
+      archiveInterval: {},
     }, this.parseProps(props))
   }
 
@@ -96,6 +97,7 @@ class Settings extends React.Component {
 
     const {
       alertDelay,
+      archiveInterval,
       alertEmails,
       whitelist
     } = this.state
@@ -104,7 +106,7 @@ class Settings extends React.Component {
       <section className='Settings'>
 
         <Group>
-          <Title>Alert delay</Title>
+          <Title>Alert-Delay</Title>
           <p>
             Default interval of time after which emails are sent when there is no activity.
           </p>
@@ -140,6 +142,19 @@ class Settings extends React.Component {
             onAdd={value => this.onListAdd('whitelist', value)}
             onDelete={value => this.onListDelete('whitelist', value)}
           />
+        </Group>
+
+        <Group>
+          <Title>Archive-Interval</Title>
+          <p>
+            Delay after which completed samples are hidden from the list.
+          </p>
+          <IntervalInput
+            value={archiveInterval.data}
+            loading={archiveInterval.isLoading}
+            onChange={this.onChangeAlertDelay}
+            onAccept={this.onAcceptAlertDelay}
+          /> <Help>{ INTERVAL_FORMAT }</Help>
         </Group>
 
       </section>
