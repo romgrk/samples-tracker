@@ -15,6 +15,7 @@ class SamplesContainer extends React.Component {
       <Samples
         isLoading={this.props.samples.isLoading}
         data={this.props.samples.data}
+        ui={this.props.ui}
         templates={this.props.templates}
         selectedId={this.props.match.params.id ? Number(this.props.match.params.id) : undefined}
         selectedStepIndex={this.props.match.params.stepIndex ? Number(this.props.match.params.stepIndex) : undefined}
@@ -26,12 +27,15 @@ class SamplesContainer extends React.Component {
         addFile={this.props.addFile}
         deleteFile={this.props.deleteFile}
         setIncludeArchived={this.props.setIncludeArchived}
+        setSortingCriteria={this.props.setSortingCriteria}
+        setSortingReverse={this.props.setSortingReverse}
       />
     )
   }
 }
 
 const mapStateToProps = createStructuredSelector({
+  ui: createSelector(state => state.ui, state => state),
   samples: createSelector(state => state.samples, state => state),
   templates: createSelector(state => ({
     isLoading: state.templates.isLoading,

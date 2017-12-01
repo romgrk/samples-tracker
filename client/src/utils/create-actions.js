@@ -27,6 +27,22 @@ export function createNetworkConstants(namespace) {
   }
 }
 
+export function createConstants(namespace, others = []) {
+  const constants = {}
+  others.forEach(k =>
+    constants[k] = `${namespace}.${k}`)
+
+  const handler = {
+    get: (target, name) => {
+      if (name in target)
+        return target[name]
+      throw new Error(`accessing undefined constant: ${name}`)
+    }
+  }
+
+  return new Proxy(constants, handler)
+}
+
 
 export function createModelActions(namespace, fns) {
   return {

@@ -57,13 +57,13 @@ function Button(props) {
       onClick={onClick}
       disabled={loading || disabled}
     >
-      { icon !== undefined && <Icon name={icon} /> }
+      { icon !== undefined && <Icon name={icon} className='Button__icon' /> }
       <span>{ children }</span>
       {
         loading &&
           <Spinner />
       }
-      { iconAfter !== undefined && <Icon name={iconAfter} /> }
+      { iconAfter !== undefined && <Icon name={iconAfter} className='Button__iconAfter' /> }
     </button>
   )
 }

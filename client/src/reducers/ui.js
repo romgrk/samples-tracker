@@ -1,11 +1,16 @@
 import {
-  SET_INCLUDE_ARCHIVED,
   SHOW,
-  SHOW_NOTIFICATION
-} from 'constants/ActionTypes'
+  SHOW_NOTIFICATION,
+  UI
+} from '../constants/ActionTypes'
+import Sort from '../constants/sorting'
 
 const initialState = {
   includeArchived: false,
+  sorting: {
+    criteria: [Sort.BY_TAG],
+    reverse: false,
+  },
   notifications: [],
 }
 
@@ -25,7 +30,13 @@ export default function ui(state = initialState, action) {
   }
 
   switch (action.type) {
-    case SET_INCLUDE_ARCHIVED:
+    case UI.SET_SORTING_CRITERIA:
+      return { ...state, sorting: { ...state.sorting, criteria: action.payload } }
+    case UI.SET_SORTING_REVERSE:
+      return { ...state, sorting: { ...state.sorting, reverse: action.payload } }
+    case UI.TOGGLE_SORTING_REVERSE:
+      return { ...state, sorting: { ...state.sorting, reverse: !state.sorting.reverse } }
+    case UI.SET_INCLUDE_ARCHIVED:
       return { ...state, includeArchived: action.payload }
     case SHOW_NOTIFICATION:
       return { ...state, notifications: state.notifications.concat(action.payload) }

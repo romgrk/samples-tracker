@@ -5,7 +5,11 @@ import styled from 'styled-components'
 import { withRouter } from 'react-router'
 
 import { getNewSample } from '../models'
-import STATUS from '../constants/status'
+import Sort, {
+  sort as sortSamples,
+  getName as getSortName,
+  sortCriteria
+} from '../constants/sorting'
 import Badge from './Badge'
 import Button from './Button'
 import Checkbox from './Checkbox'
@@ -30,6 +34,7 @@ class Samples extends React.Component {
     const {
       isLoading,
       data,
+      ui,
       templates,
       selectedId,
       selectedStepIndex,
@@ -42,7 +47,7 @@ class Samples extends React.Component {
       deleteFile
     } = this.props
 
-    const samples = Object.values(data)
+    const samples = sortSamples(ui.sorting.criteria, Object.values(data))
 
     const selectedSample = data[selectedId]
 
@@ -64,11 +69,29 @@ class Samples extends React.Component {
         }
       </Dropdown>
 
+    const sortingDropdown =
+      <Dropdown label={ui.sorting.criteria.map(getSortName).join(', ')}>
+        {
+          sortCriteria.map(criterion =>
+            <Dropdown.Item key={criterion.k}
+              onClick={() => this.props.setSortingCriteria([criterion.k])}
+            >
+              { criterion.name }
+            </Dropdown.Item>
+          )
+        }
+      </Dropdown>
+
     return (
       <section className='Samples vbox'>
 
         <div className='row bg-dark border-left'>
           { createSampleDropdown }
+
+          <div className='fill' />
+
+          <Label>Sort by</Label> { sortingDropdown }
+
           <div className='fill' />
 
           <Checkbox onChange={this.props.setIncludeArchived}>

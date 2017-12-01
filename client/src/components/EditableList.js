@@ -68,7 +68,7 @@ class EditableList extends React.Component {
                 {
                   value.isLoading ?
                     <Spinner /> :
-                    <Button flat icon='close' onClick={() => this.props.onDelete(value)}/>
+                    <Button flat square icon='close' onClick={() => this.props.onDelete(value)}/>
                 }
               </td>
             </tr>

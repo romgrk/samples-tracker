@@ -1,7 +1,12 @@
-import { createModelConstants } from '../utils/create-actions.js'
+import { createModelConstants, createConstants } from '../utils/create-actions.js'
 
 // UI
-export const SET_INCLUDE_ARCHIVED = 'SET_INCLUDE_ARCHIVED'
+export const UI = createConstants('UI', [
+  'SET_INCLUDE_ARCHIVED',
+  'SET_SORTING_CRITERIA',
+  'SET_SORTING_REVERSE',
+  'TOGGLE_SORTING_REVERSE',
+])
 // Notifications
 export const SHOW_NOTIFICATION = 'SHOW_NOTIFICATION'
 export const SHOW = {

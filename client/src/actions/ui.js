@@ -1,4 +1,4 @@
-import { SET_INCLUDE_ARCHIVED } from '../constants/ActionTypes'
+import { UI } from '../constants/ActionTypes'
 import { createAction } from 'redux-actions'
 
 import samples from './samples'
@@ -9,8 +9,13 @@ export function setIncludeArchived(value) {
     dispatch(samples.fetch())
   }
 }
-setIncludeArchived.action = createAction(SET_INCLUDE_ARCHIVED)
+setIncludeArchived.action = createAction(UI.SET_INCLUDE_ARCHIVED)
+
+export const setSortingCriteria = createAction(UI.SET_SORTING_CRITERIA)
+export const setSortingReverse  = createAction(UI.SET_SORTING_REVERSE)
 
 export default {
   setIncludeArchived,
+  setSortingCriteria,
+  setSortingReverse,
 }
