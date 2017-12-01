@@ -4,12 +4,16 @@ import {
   UI
 } from '../constants/ActionTypes'
 import Sort from '../constants/sorting'
+import uniq from '../utils/uniq'
 
 const initialState = {
   includeArchived: false,
   sorting: {
     criteria: [Sort.BY_TAG],
     reverse: false,
+  },
+  filtering: {
+    tags: [],
   },
   notifications: [],
 }
@@ -36,8 +40,15 @@ export default function ui(state = initialState, action) {
       return { ...state, sorting: { ...state.sorting, reverse: action.payload } }
     case UI.TOGGLE_SORTING_REVERSE:
       return { ...state, sorting: { ...state.sorting, reverse: !state.sorting.reverse } }
+    case UI.ADD_FILTERING_TAG:
+      return { ...state, filtering: { ...state.filtering, tags: uniq([...state.filtering.tags, action.payload]) } }
+    case UI.DELETE_FILTERING_TAG:
+      return { ...state, filtering: { ...state.filtering, tags: state.filtering.tags.filter(t => t !== action.payload) } }
+    case UI.SET_FILTERING_TAGS:
+      return { ...state, filtering: { ...state.filtering, tags: action.payload } }
     case UI.SET_INCLUDE_ARCHIVED:
       return { ...state, includeArchived: action.payload }
+
     case SHOW_NOTIFICATION:
       return { ...state, notifications: state.notifications.concat(action.payload) }
     case SHOW.INFO:

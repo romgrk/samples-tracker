@@ -23,6 +23,15 @@ function Item({ icon, children, ...rest }) {
   )
 }
 
+function Content({ icon, children, ...rest }) {
+  return (
+    <button className='item' { ...rest }>
+      { icon && <Icon name={icon} className='menu' /> }
+      { children }
+    </button>
+  )
+}
+
 function Group({ children }) {
   return (
     <div className='group'>
@@ -156,5 +165,6 @@ class Dropdown extends React.Component {
 const defaultExport = pure(Dropdown)
 export default defaultExport
 defaultExport.Item      = Item
+defaultExport.Content   = Content
 defaultExport.Group     = Group
 defaultExport.Separator = Separator

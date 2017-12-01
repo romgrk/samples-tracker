@@ -4,6 +4,9 @@ import pure from 'recompose/pure'
 import styled from 'styled-components'
 import { withRouter } from 'react-router'
 
+import alphabeticalSort from '../utils/alphabetical-sort'
+import filterTags from '../utils/filter-tags'
+import uniq from '../utils/uniq'
 import { getNewSample } from '../models'
 import Sort, {
   sort as sortSamples,
@@ -47,9 +50,13 @@ class Samples extends React.Component {
       deleteFile
     } = this.props
 
-    const samples = sortSamples(ui.sorting.criteria, Object.values(data))
+    const allSamples = Object.values(data)
+    const samples = sortSamples(ui.sorting.criteria, filterTags(ui.filtering.tags, allSamples))
 
     const selectedSample = data[selectedId]
+
+    const tags = Array.from(allSamples.map(s => s.data.tags).reduce((acc, cur) => (cur.forEach(tag => acc.add(tag)), acc), new Set()))
+    const filteredTags = new Set(ui.filtering.tags)
 
     const newSampleButton =
       <Button info
@@ -82,6 +89,25 @@ class Samples extends React.Component {
         }
       </Dropdown>
 
+    const tagsDropdown =
+    <Dropdown label={ ui.filtering.tags.join(', ') || <span>&nbsp;</span> }>
+        {
+          alphabeticalSort(tags).map(tag =>
+            <Dropdown.Content key={tag}
+              onClick={() => filteredTags.has(tag) ?
+                this.props.deleteFilteringTag(tag) :
+                this.props.addFilteringTag(tag)
+              }
+            >
+              <Icon
+                name={filteredTags.has(tag) ? 'check-square' : 'square'}
+                marginRight={10}
+              /> <Badge info>{ tag }</Badge>
+            </Dropdown.Content>
+          )
+        }
+      </Dropdown>
+
     return (
       <section className='Samples vbox'>
 
@@ -91,6 +117,10 @@ class Samples extends React.Component {
           <div className='fill' />
 
           <Label>Sort by</Label> { sortingDropdown }
+
+          <div className='fill' />
+
+          <Label>Filter tags</Label> { tagsDropdown }
 
           <div className='fill' />
 

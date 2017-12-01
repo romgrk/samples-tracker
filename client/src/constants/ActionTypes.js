@@ -6,6 +6,9 @@ export const UI = createConstants('UI', [
   'SET_SORTING_CRITERIA',
   'SET_SORTING_REVERSE',
   'TOGGLE_SORTING_REVERSE',
+  'ADD_FILTERING_TAG',
+  'DELETE_FILTERING_TAG',
+  'SET_FILTERING_TAGS',
 ])
 // Notifications
 export const SHOW_NOTIFICATION = 'SHOW_NOTIFICATION'

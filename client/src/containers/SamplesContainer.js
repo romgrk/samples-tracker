@@ -29,6 +29,8 @@ class SamplesContainer extends React.Component {
         setIncludeArchived={this.props.setIncludeArchived}
         setSortingCriteria={this.props.setSortingCriteria}
         setSortingReverse={this.props.setSortingReverse}
+        addFilteringTag={this.props.addFilteringTag}
+        deleteFilteringTag={this.props.deleteFilteringTag}
       />
     )
   }
