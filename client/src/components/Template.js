@@ -4,11 +4,14 @@ import pure from 'recompose/pure'
 import { set, lensPath } from 'ramda'
 import { withRouter } from 'react-router'
 
+import * as _ from '../constants/text'
 import { getNewTemplateStep } from '../models'
 import Button from './Button'
 import Dropdown from './Dropdown'
+import Help from './Help'
 import Icon from './Icon'
 import Input from './Input'
+import IntervalInput from './IntervalInput'
 import Label from './Label'
 import Spinner from './Spinner'
 import EditableLabel from './EditableLabel'
@@ -72,6 +75,11 @@ class Template extends React.Component {
     this.update(data)
   }
 
+  setStepAlertDelay = (i, alertDelay) => {
+    const data = set(lensPath(['steps', i, 'alertDelay']), alertDelay,  this.state.data)
+    this.update(data)
+  }
+
   addStep = () => {
     const data = { ...this.state.data, steps:
       this.state.data.steps.concat(getNewTemplateStep(this.props.settings.alertDelay))
@@ -112,7 +120,7 @@ class Template extends React.Component {
           <EditableLabel onEnter={this.setName} value={name} />
           {
             !isLoading &&
-              <Button flat icon='trash' className='delete' onClick={this.deleteTemplate} />
+              <Button flat square icon='trash' className='delete' onClick={this.deleteTemplate} />
           }
           {
             isLoading &&
@@ -132,10 +140,20 @@ class Template extends React.Component {
                       <span className='text-info'> *</span>
                   }
                 </EditableLabel>
-                <Dropdown trigger={<Button flat icon='ellipsis-v' />} icons>
+                <Dropdown trigger={<Button square center flat icon='ellipsis-v' />} icons>
                   <Dropdown.Item icon='trash' onClick={() => this.deleteStep(i)}>
                     Delete
                   </Dropdown.Item>
+                  <Dropdown.Separator />
+                  <Dropdown.Group>
+                    Set alert delay <Help>{ _.INTERVAL_FORMAT }</Help>
+                  </Dropdown.Group>
+                  <Dropdown.Group>
+                    <IntervalInput
+                      defaultValue={step.alertDelay}
+                      onAccept={alertDelay => this.setStepAlertDelay(i, alertDelay)}
+                    />
+                  </Dropdown.Group>
                   <Dropdown.Separator />
                   <Dropdown.Group>
                     Set completion function

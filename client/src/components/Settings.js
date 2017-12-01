@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import pure from 'recompose/pure'
 import styled from 'styled-components'
 
+import * as _ from '../constants/text'
 import * as Interval from '../utils/postgres-interval'
 import uniq from '../utils/uniq'
 import getEmails from '../utils/get-emails'
@@ -11,8 +12,6 @@ import Help from './Help'
 import IntervalInput from './IntervalInput'
 import Title from './Title'
 
-
-const INTERVAL_FORMAT = `Use format:\n "1 year 2 months 3 weeks 4 days 5 hours 6 minutes 7 seconds"`
 
 const Group = styled.div`
   margin-bottom: calc(6 * var(--padding));
@@ -83,7 +82,7 @@ class Settings extends React.Component {
     if (Interval.isValid(value))
       this.props.onChange(which, value)
     else
-      this.props.onError('Invalid interval', INTERVAL_FORMAT)
+      this.props.onError('Invalid interval', _.INTERVAL_FORMAT)
   }
 
   render() {
@@ -114,7 +113,7 @@ class Settings extends React.Component {
             loading={archiveInterval.isLoading}
             onChange={value => this.onChangeInterval('archiveInterval', value)}
             onAccept={() => this.onAcceptInterval('archiveInterval')}
-          /> <Help>{ INTERVAL_FORMAT }</Help>
+          /> <Help>{ _.INTERVAL_FORMAT }</Help>
         </Group>
 
         <Group>
@@ -127,7 +126,7 @@ class Settings extends React.Component {
             loading={alertDelay.isLoading}
             onChange={value => this.onChangeInterval('alertDelay', value)}
             onAccept={() => this.onAcceptInterval('alertDelay')}
-          /> <Help>{ INTERVAL_FORMAT }</Help>
+          /> <Help>{ _.INTERVAL_FORMAT }</Help>
         </Group>
 
         <Group>
