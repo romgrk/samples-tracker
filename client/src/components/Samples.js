@@ -52,8 +52,8 @@ class Samples extends React.Component {
     const selectedSample = data[selectedId]
 
     const newSampleButton =
-      <Button highlight
-        loading={templates.isLoading}
+      <Button info
+        loading={templates.isLoading || isLoading}
         iconAfter={ templates.isLoading ? undefined : 'chevron-down' } >
         Create New Sample
       </Button>

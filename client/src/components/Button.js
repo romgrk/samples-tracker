@@ -68,7 +68,9 @@ function Button(props) {
         loading &&
           <Spinner />
       }
-      { iconAfter !== undefined && <Icon name={iconAfter} className='Button__iconAfter' /> }
+      { iconAfter !== undefined && !loading &&
+        <Icon name={iconAfter} className='Button__iconAfter' />
+      }
     </button>
   )
 }

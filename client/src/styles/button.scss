@@ -87,6 +87,9 @@
   .Button.#{$level} {
     color: #fff;
     background-color: map-get($values, bg);
+    & .Spinner::after {
+
+    }
   }
   .Button.#{$level}:hover {
     color: #fff;

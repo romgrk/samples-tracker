@@ -694,9 +694,9 @@ $step-width: 40px;
   &:hover {
     background-color: $hover-light-bg-color;
   }
-}
-.Sample.overdue {
-  background-color: rgba($bg-light-color-warning, 0.15);
+  &.overdue {
+    background-color: rgba($bg-light-color-warning, 0.15);
+  }
 }
 .Sample__empty {
   display: flex;
