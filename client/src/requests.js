@@ -22,7 +22,7 @@ export const users = {
 }
 
 export const samples = {
-  list: () => GET('/sample/list'),
+  list: (includeArchived) => GET('/sample/list', { includeArchived }),
   get: (id) => GET(`/sample/get/${id}`),
   create: (data) => POST(`/sample/create`, data),
   update: (id, data) => POST(`/sample/update/${id}`, data),
