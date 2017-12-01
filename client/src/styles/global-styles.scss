@@ -386,7 +386,7 @@ textarea.text.editable:focus {
 }
 .Dropdown > .Button {
   text-align: left;
-  max-width: 200px;
+  width: 180px;
 }
 .Dropdown.open > .Button {
   border: 1px solid var(--light-border-color);
@@ -409,7 +409,7 @@ textarea.text.editable:focus {
 .Dropdown__inner {
   position: absolute;
   /* top & left set by tether */
-  min-width: 200px;
+  min-width: 180px;
   padding: calc(2 * var(--padding) - 2px) 0;
   border: 1px solid var(--light-border-color);
   border-radius: 2px;
@@ -463,7 +463,7 @@ textarea.text.editable:focus {
   color: #fff;
 }
 .Popup > .item > .Icon.menu,
-.Dropdown__inner.with-icons > .item > .Icon.menu {
+.Dropdown__menu.with-icons > div > .item > .Icon.menu {
   position: absolute;
   color: var(--color);
   width: calc(2 * var(--padding));
@@ -892,6 +892,9 @@ $step-width: 40px;
 }
 .TemplateStep .Dropdown {
   flex: 0 0 auto;
+}
+.TemplateStep .Dropdown .Button {
+  width: unset;
 }
 
 

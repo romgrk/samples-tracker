@@ -31,6 +31,7 @@ class SamplesContainer extends React.Component {
         setSortingReverse={this.props.setSortingReverse}
         addFilteringTag={this.props.addFilteringTag}
         deleteFilteringTag={this.props.deleteFilteringTag}
+        setFilteringTags={this.props.setFilteringTags}
       />
     )
   }

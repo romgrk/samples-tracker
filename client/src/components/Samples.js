@@ -90,7 +90,14 @@ class Samples extends React.Component {
       </Dropdown>
 
     const tagsDropdown =
-    <Dropdown label={ ui.filtering.tags.join(', ') || <span>&nbsp;</span> }>
+    <Dropdown label={
+      ui.filtering.tags.join(', ') || <span>&nbsp;</span>
+    }>
+        <Dropdown.Content
+          onClick={() => this.props.setFilteringTags([])  }
+        >
+          Clear all
+        </Dropdown.Content>
         {
           alphabeticalSort(tags).map(tag =>
             <Dropdown.Content key={tag}
