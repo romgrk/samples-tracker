@@ -8,6 +8,7 @@ const { OAuth2Strategy } = require('passport-google-oauth')
 const Settings = require('./models/settings.js')
 const User = require('./models/user.js')
 const config = require('./config.js')
+const db = require('./database.js')
 
 module.exports = passport
 
@@ -36,13 +37,13 @@ passport.use(new OAuth2Strategy(config.google.auth, (token, refreshToken, profil
     .then(user => {
 
       // if a user is found, log them in
-      if (user) {
-        return done(undefined, user)
-
-      }
+      Settings.canLogin(user.email)
+      .then(() => done(undefined, user))
+      .catch(err => done(err))
+    })
+    .catch(err => {
       // if the user isnt in our database, create a new user
-      else {
-
+      if (err.type === db.E_TYPE) {
         const newUser = {
           id: profile.id,
           token: token,
@@ -55,7 +56,10 @@ passport.use(new OAuth2Strategy(config.google.auth, (token, refreshToken, profil
         .then(() => done(undefined, newUser))
         .catch(err => done(err))
       }
+      // if some other error happens, throw it
+      else {
+        done(err)
+      }
     })
-    .catch(err => done(err))
   })
 }))

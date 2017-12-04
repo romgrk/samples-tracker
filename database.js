@@ -20,6 +20,7 @@ client.connect((err) => {
 })
 
 const NOW = `to_char (now()::timestamp at time zone 'UTC', 'YYYY-MM-DD"T"HH24:MI:SS"Z"')`
+const E_TYPE = 'DATABASE_ERROR'
 
 module.exports = {
   client,
@@ -28,6 +29,7 @@ module.exports = {
   selectAll,
   insert,
   NOW,
+  E_TYPE,
 }
 
 /**
@@ -79,7 +81,7 @@ function query(q, params) {
 function selectOne(q, params, field) {
   return query(q, params).then(result =>
     result.rows.length === 0 ?
-      rejectMessage(`Couldnt find record in query ${q} with params ${JSON.stringify(params)}`) :
+      rejectMessage(`Couldnt find record in query ${q} with params ${JSON.stringify(params)}`, E_TYPE) :
     field ?
       result.rows[0][field] :
       result.rows[0])
