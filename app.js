@@ -42,31 +42,34 @@ app.use(passport.session()) // persistent login sessions
 app.use(flash()) // use connect-flash for flash messages stored in session
 
 
-function defaultRoute(req, res) {
-  if (req.isAuthenticated())
-    res.redirect('/profile')
-  else
-    res.render('index.ejs')
-}
+
+// API
 
 app.use('/api/is-logged-in',        require('./routes/is-logged-in'))
-app.use('/api/user',                require('./routes/user'))
-app.use('/api/settings',            require('./routes/settings'))
-app.use('/api/sample',              require('./routes/sample'))
-app.use('/api/step',                require('./routes/step'))
-app.use('/api/template',            require('./routes/template'))
-app.use('/api/history',             require('./routes/history'))
-app.use('/api/completion-function', require('./routes/completion-function'))
-app.use('/api/file',                require('./routes/file'))
+app.use('/api/user',                apiProtected, require('./routes/user'))
+app.use('/api/settings',            apiProtected, require('./routes/settings'))
+app.use('/api/sample',              apiProtected, require('./routes/sample'))
+app.use('/api/step',                apiProtected, require('./routes/step'))
+app.use('/api/template',            apiProtected, require('./routes/template'))
+app.use('/api/history',             apiProtected, require('./routes/history'))
+app.use('/api/completion-function', apiProtected, require('./routes/completion-function'))
+app.use('/api/file',                apiProtected, require('./routes/file'))
 app.use('/api', (req, res) => {
   res.status(404)
   res.json({ ok: false, message: '404', url: req.originalUrl })
   res.end()
 })
+function apiProtected(req, res, next) {
+  if (req.isAuthenticated())
+    return next()
+  res.json({ ok: false, message: 'Not authenticated' })
+  res.end()
+}
 
 
 
-// Google OAuth
+// Authentication
+
 app.get('/auth/google', passport.authenticate('google', {
   scope: ['profile', 'email'],
   callbackURL: config.google.callbackURL,
@@ -79,31 +82,27 @@ app.get('/auth/logout', (req, res) => {
   req.logout()
   res.redirect('/')
 })
-app.get('/auth/done', isLoggedIn, (req, res) => {
+app.get('/auth/done', (req, res) => {
   res.render('oauth.ejs', {
     user: req.user // get the user out of session and pass to template
   })
 })
 
 
-function isLoggedIn(req, res, next) {
-  if (req.isAuthenticated())
-    return next()
-  res.redirect('/')
-}
 
+/*
+ * Redirect handler
+ * We need to redirect all other routes to the app, e.g. /samples, /settings, etc.
+ */
 
-app.use('/', defaultRoute)
-
-
-// 404 Handler
 app.use((req, res, next) => {
-  const err = new Error('Not Found')
-  err.status = 404
-  next(err)
+  res.redirect('/')
 })
 
+
+
 // Error handler
+
 app.use((err, req, res, next) => {
   // set locals, only providing error in development
   res.locals.message = err.message
