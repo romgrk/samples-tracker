@@ -53,7 +53,7 @@ passport.use(new OAuth2Strategy(config.google.auth, (token, refreshToken, profil
 
         Settings.canLogin(newUser.email)
         .then(() => User.create(newUser))
-        .then(() => done(undefined, newUser))
+        .then(user => done(undefined, user))
         .catch(err => done(err))
       }
       // if some other error happens, throw it
