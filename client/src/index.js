@@ -44,7 +44,9 @@ Promise.all([
   // Prefill some data for development testing
   if (process.env.NODE_ENV === 'development' && Object.keys(state.samples.data).length === 0) {
 
-    store.dispatch(samples.create(getNewSample(state.templates.data[1].data)))
+    const newSample = getNewSample(state.templates.data[1].data)
+    newSample.tags = ['other', 'tags']
+    store.dispatch(samples.create(newSample))
     store.dispatch(samples.create(getNewSample(state.templates.data[2].data)))
     store.dispatch(samples.create(getNewSample(state.templates.data[1].data)))
     store.dispatch(samples.create(getNewSample(state.templates.data[2].data)))
