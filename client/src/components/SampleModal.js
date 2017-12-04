@@ -267,7 +267,7 @@ class SampleModal extends React.Component {
                                             .filter(status => status !== step.status
                                                            && status !== Status.IN_PROGRESS)
                                             .map((status, i) =>
-                                              <Dropdown.Item onClick={() => this.setStepStatus(stepIndex, status)}>
+                                              <Dropdown.Item key={i} onClick={() => this.setStepStatus(stepIndex, status)}>
                                                 <StatusIcon name={status} />&nbsp;&nbsp; <Text normal>{ status }</Text>
                                               </Dropdown.Item>
                                             )
