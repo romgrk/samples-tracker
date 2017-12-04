@@ -8,7 +8,7 @@ function Gap(props) {
   const { className } = props
 
   const gapClassName = classname(
-    'gap',
+    'Gap',
     className
   )
 

@@ -68,7 +68,6 @@ function Routes({ isLoggedIn }) {
           } }/>
 
           <Switch>
-            <Route exact path='/' render={() => <div>Index</div>} />
             <Route path='/settings' component={SettingsContainer} />
             <Route path='/samples/:id?/:stepIndex?' component={SamplesContainer} />
             <Route path='/templates' component={TemplatesContainer} />

@@ -16,12 +16,7 @@ import './styles/notifications.css'
 import './styles/modal.css'
 import './styles/global-styles.css'
 
-import { getNewSample, getNewCompletionFunction } from './models'
-import completionFunctions from './actions/completion-functions'
-import samples from './actions/samples'
-import settings from './actions/settings'
-import templates from './actions/templates'
-import users from './actions/users'
+import global from './actions/global'
 
 const store = configureStore()
 
@@ -33,33 +28,12 @@ render(
 )
 
 
-Promise.all([
-  store.dispatch(completionFunctions.fetch()),
-  store.dispatch(samples.fetch()),
-  store.dispatch(settings.fetch()),
-  store.dispatch(templates.fetch()),
-  store.dispatch(users.fetch())
-])
-.then(() => {
-  const state = store.getState()
+store.dispatch(global.checkIsLoggedIn())
+.then(isLoggedIn => {
+  console.log('LOGIN:', isLoggedIn)
 
-  // Prefill some data for development testing
-  if (process.env.NODE_ENV === 'development' && Object.keys(state.samples.data).length === 0) {
-
-    const newSample = getNewSample(state.templates.data[1].data)
-    newSample.tags = ['other', 'tags']
-    store.dispatch(samples.create(newSample))
-    store.dispatch(samples.create(getNewSample(state.templates.data[2].data)))
-    store.dispatch(samples.create(getNewSample(state.templates.data[1].data)))
-    store.dispatch(samples.create(getNewSample(state.templates.data[2].data)))
-
-    store.dispatch(completionFunctions.create(getNewCompletionFunction()))
-    .then(data => store.dispatch(completionFunctions.update(data.id, { ...data, name: 'has-one-file' })))
-    store.dispatch(completionFunctions.create(getNewCompletionFunction()))
-    .then(data => store.dispatch(completionFunctions.update(data.id, { ...data, name: 'is-not-john' })))
-    store.dispatch(completionFunctions.create(getNewCompletionFunction()))
-    .then(data => store.dispatch(completionFunctions.update(data.id, { ...data, name: 'has-some-notes' })))
-  }
+  if (isLoggedIn)
+    return store.dispatch(global.fetchAll())
 })
 
 
@@ -82,12 +56,9 @@ if (module.hot) {
       document.querySelector('#root')
     )
   })
-  module.hot.accept('./styles/global-styles.css', () => {
-    /* eslint-disable global-require */
-    require('styles/global-styles.css')
-  })
-  module.hot.accept('./styles/reset.css', () => {
-    /* eslint-disable global-require */
-    require('./styles/reset.css')
-  })
+  /* eslint-disable global-require */
+  module.hot.accept('./styles/global-styles.css', () => require('styles/global-styles.css'))
+  module.hot.accept('./styles/reset.css', () => require('./styles/reset.css'))
+  module.hot.accept('./styles/button.css', () => require('./styles/button.css'))
+  module.hot.accept('./styles/badges.css', () => require('./styles/badges.css'))
 }

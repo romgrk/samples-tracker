@@ -9,6 +9,8 @@ import queryString from './utils/query-string'
 
 
 
+export const isLoggedIn = () => GET('/is-logged-in')
+
 export const settings = {
   list: () => GET('/settings/list'),
   update: (key, value) => POST(`/settings/update/${key}`, { value }),

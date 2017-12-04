@@ -67,6 +67,10 @@ html, body {
 .block {
   display: block;
 }
+.parent-size {
+  width: 100%;
+  height: 100%;
+}
 
 .row {
   display: flex;
@@ -608,6 +612,11 @@ a.link:hover {
   border: var(--border) dashed lighten($focus-color, 40%);
 }
 
+.Gap {
+  display: inline-block;
+}
+
+
 
 #root {
   width: 100%;
@@ -624,15 +633,7 @@ a.link:hover {
   overflow: hidden;
 }
 .App__sidebar {
-  flex-basis: 0;
-  width: 0;
-  transform: translateX(calc(-1 * var(--sidebar-size)));
-  transition: all .5s;
-}
-.App__sidebar.visible {
-  flex-basis: var(--sidebar-size);
-  width: var(--sidebar-size);
-  transform: translateX(0);
+  flex-basis: auto;
 }
 .App__section {
   padding: 0 calc(2 * var(--padding));
@@ -643,6 +644,17 @@ a.link:hover {
   position: relative;
   height: 100%;
   background-color: var(--bg-color-dark);
+  transition: all .5s;
+}
+.Sidebar:not(.visible) {
+  flex-basis: 0;
+  width: 0;
+  transform: translateX(calc(-1 * var(--sidebar-size)));
+}
+.Sidebar.visible {
+  flex-basis: var(--sidebar-size);
+  width: var(--sidebar-size);
+  transform: translateX(0);
 }
 .Sidebar a {
   color: inherit;

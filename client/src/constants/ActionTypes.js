@@ -1,4 +1,8 @@
-import { createModelConstants, createConstants } from '../utils/create-actions.js'
+import {
+  createModelConstants,
+  createNetworkConstants,
+  createConstants
+} from '../utils/create-actions.js'
 
 // UI
 export const UI = createConstants('UI', [
@@ -10,6 +14,7 @@ export const UI = createConstants('UI', [
   'DELETE_FILTERING_TAG',
   'SET_FILTERING_TAGS',
 ])
+export const LOGGED_IN = createNetworkConstants('LOGGED_IN')
 // Notifications
 export const SHOW_NOTIFICATION = 'SHOW_NOTIFICATION'
 export const SHOW = {
