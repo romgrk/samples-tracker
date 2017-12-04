@@ -49,12 +49,7 @@ function defaultRoute(req, res) {
     res.render('index.ejs')
 }
 
-app.get('/profile', isLoggedIn, (req, res) => {
-  res.render('profile.ejs', {
-    user: req.user // get the user out of session and pass to template
-  })
-})
-
+app.use('/api/is-logged-in',        require('./routes/is-logged-in'))
 app.use('/api/user',                require('./routes/user'))
 app.use('/api/settings',            require('./routes/settings'))
 app.use('/api/sample',              require('./routes/sample'))
@@ -73,16 +68,21 @@ app.use('/api', (req, res) => {
 
 // Google OAuth
 app.get('/auth/google', passport.authenticate('google', {
-  scope : ['profile', 'email'],
+  scope: ['profile', 'email'],
   callbackURL: config.google.callbackURL,
 }))
 app.get('/auth/google/callback', passport.authenticate('google', {
-  successRedirect : '/profile',
-  failureRedirect : '/',
+  successRedirect: '/auth/done',
+  failureRedirect: '/',
 }))
 app.get('/auth/logout', (req, res) => {
   req.logout()
   res.redirect('/')
+})
+app.get('/auth/done', isLoggedIn, (req, res) => {
+  res.render('oauth.ejs', {
+    user: req.user // get the user out of session and pass to template
+  })
 })
 
 
