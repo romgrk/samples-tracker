@@ -23,6 +23,7 @@
   color: var(--hover-color);
   background-color: var(--hover-bg-color);
 }
+.Button.active,
 .Button:active,
 .Button:focus {
   outline: none;
@@ -114,7 +115,9 @@
     color: #fff;
     background-color: lighten(map-get($values, bg), 5%);
   }
-  .Button.#{$level}:active {
+  .Button.#{$level}.active,
+  .Button.#{$level}:active,
+  .Button.#{$level}:focus {
     color: #fff;
     background-color: darken(map-get($values, bg), 4%);
   }

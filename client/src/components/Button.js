@@ -11,6 +11,7 @@ function Button(props) {
     className,
     type,
     size,
+    active,
     flat,
     round,
     square,
@@ -38,6 +39,7 @@ function Button(props) {
     type,
     size,
     {
+      'active': active,
       'flat': flat,
       'round': round,
       'square': square,
