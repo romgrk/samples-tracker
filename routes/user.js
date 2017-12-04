@@ -18,16 +18,16 @@ router.get('/get/:id', (req, res, next) => {
   .catch(errorHandler(res))
 })
 
-/* POST delete user */
-router.use('/delete/:id', (req, res, next) => {
-  User.delete(req.params.id)
+/* POST update user */
+router.use('/update/:id', (req, res, next) => {
+  User.update({ ...req.body, id: req.params.id })
   .then(dataHandler(res))
   .catch(errorHandler(res))
 })
 
-/* POST update user */
-router.use('/update/:id', (req, res, next) => {
-  User.update({ ...req.body, id: req.params.id })
+/* POST delete user */
+router.use('/delete/:id', (req, res, next) => {
+  User.delete(req.params.id)
   .then(dataHandler(res))
   .catch(errorHandler(res))
 })
