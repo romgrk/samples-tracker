@@ -33,6 +33,7 @@
   background: $bg-color-dark;
   border-radius: 2px;
   z-index: 2;
+  display: flex;
 
   //min-height: 40%;
   width: 500px;
@@ -46,6 +47,10 @@
 .Modal.open .Modal__container {
   transform: translateY(0);
 }
+.Modal__content {
+  flex: 1 1;
+}
+
 
 .Modal.small .Modal__container {
   width: 300px;
