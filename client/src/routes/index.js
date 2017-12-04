@@ -1,8 +1,16 @@
 import React from 'react'
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import {
+  BrowserRouter as Router,
+  Route,
+  Redirect,
+  Switch
+} from 'react-router-dom'
+import { connect } from 'react-redux'
+import { createStructuredSelector, createSelector } from 'reselect'
 
 import Sidebar from '../components/Sidebar'
 import CompletionFunctionsContainer from '../containers/CompletionFunctionsContainer'
+import IndexContainer from '../containers/IndexContainer'
 import NotificationsContainer from '../containers/NotificationsContainer'
 import SamplesContainer from '../containers/SamplesContainer'
 import SettingsContainer from '../containers/SettingsContainer'
@@ -13,21 +21,33 @@ const items = [
   { type: 'item', icon: 'flask', path: '/samples',   title: 'Samples', showTitle: false },
   { type: 'item', icon: 'list',  path: '/templates', title: 'Templates' },
   { type: 'item', icon: 'code',  path: '/completions', title: 'Completion Functions', showTitle: false },
-  { type: 'fill'},
-  { type: 'button', icon: 'question-circle', title: 'Help' },
-  { type: 'button', icon: 'sign-out', title: 'Sign Out' },
 ]
 
-function Routes() {
+function Routes({ isLoggedIn }) {
   return (
     <Router>
       <div className='App hbox'>
-        <div className='App__sidebar visible'>
+
+        <Route render={(props) =>
+          (!isLoggedIn && props.location.pathname !== '/') ?
+            <Redirect to='/' /> :
+          (isLoggedIn && props.location.pathname === '/') ?
+            <Redirect to='/samples' /> :
+            null
+        }/>
+
+        <div className='App__sidebar'>
           <Route render={(props) =>
+
             <Sidebar
+              visible={isLoggedIn}
               index={items.findIndex(i => props.location.pathname.startsWith(i.path))}
               items={items}
-            />
+            >
+              <Sidebar.Button icon='question-circle' onClick={undefined} />
+              <Sidebar.Button icon='sign-out' onClick={undefined} />
+            </Sidebar>
+
           }/>
         </div>
         <div className='App__content vbox'>
@@ -57,9 +77,14 @@ function Routes() {
         </div>
 
         <NotificationsContainer />
+        <IndexContainer />
       </div>
     </Router>
   )
 }
 
-export default Routes
+const mapStateToProps = createStructuredSelector({
+  isLoggedIn: createSelector(state => state.ui.loggedIn.value, state => state),
+})
+
+export default connect(mapStateToProps)(Routes)
