@@ -31,7 +31,7 @@ function update(user) {
 }
 
 function create(user) {
-  return db.query('INSERT INTO users VALUES (@id, @token, @name, @email)', user)
+  return db.insert('INSERT INTO users VALUES (@id, @token, @name, @email)', user)
     .then(id => findById(id))
 }
 
