@@ -7,13 +7,6 @@ import size from '../utils/size'
 import Button from './Button'
 import Icon from './Icon'
 
-const modalComponents = []
-
-document.addEventListener('click', ev => {
-  modalComponents.forEach(d => d.onDocumentClick(ev))
-})
-
-
 
 class Modal extends React.Component {
   constructor(props) {
@@ -23,10 +16,6 @@ class Modal extends React.Component {
     }
   }
 
-  componentDidMount() {
-    modalComponents.push(this)
-  }
-
   componentWillMount() {
     this.mountNode = this.props.mountNode || document.body
     this.domNode = document.createElement('div')
@@ -34,11 +23,7 @@ class Modal extends React.Component {
   }
 
   componentWillUnmount() {
-    modalComponents.splice(modalComponents.findIndex(x => x === this), 1)
     this.mountNode.removeChild(this.domNode)
-  }
-
-  onDocumentClick(ev) {
   }
 
   onKeyDown = (ev) => {
@@ -70,6 +55,8 @@ class Modal extends React.Component {
       large,
       width,
       height,
+      showHeader = true,
+      showClose = true,
     } = this.props
 
     const modalClassName = classname(
@@ -89,19 +76,25 @@ class Modal extends React.Component {
     return createPortal(
       <div id={this.id} className={modalClassName} ref={this.onRef} tabIndex='-1' onKeyDown={this.onKeyDown}>
         <div className='Modal__background' onClick={this.onClickBackground} />
-        <div className='Modal__container' style={style}>
+        <div className='Modal__container vbox' style={style}>
 
-          <div className='Modal__header hbox'>
-            <div className='Modal__title title fill'>
-              { title }
-            </div>
-            <Button
-              className='Modal__close'
-              round
-              icon='close'
-              onClick={this.props.onClose}
-            />
-          </div>
+          {
+            showHeader &&
+              <div className='Modal__header hbox'>
+                <div className='Modal__title title fill'>
+                  { title }
+                </div>
+                {
+                  showClose &&
+                    <Button
+                      className='Modal__close'
+                      round
+                      icon='close'
+                      onClick={this.props.onClose}
+                    />
+                }
+              </div>
+          }
 
           <div className='Modal__content'>
             { this.props.children }
