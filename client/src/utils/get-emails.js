@@ -2,9 +2,7 @@
  * get-emails.js
  */
 
-import EmailRegex from 'email-regex'
-
-const emailRegex = EmailRegex()
+const emailRegex = new RegExp('[^\\.\\s@:][^\\s@:]*(?!\\.)@[^\\.\\s@]+(?:\\.[^\\.\\s@]+)*', 'g')
 
 export default function getEmails(value) {
   const emails = value.match(emailRegex) || []
