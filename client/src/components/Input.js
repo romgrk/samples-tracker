@@ -20,6 +20,12 @@ class Input extends React.Component {
     if (ev.which === 13 /* Enter */) {
       this.accept(ev)
     }
+    if (ev.which === 32 /* Space */) {
+      if (this.props.acceptOnSpace)
+        this.accept(ev)
+      else if (this.props.onSpace)
+        this.props.onSpace(ev.target.value, ev)
+    }
   }
 
   onFocus = (ev) => {
