@@ -6,6 +6,7 @@
     "start": "node ./bin/www",
     "start:dev": "nodemon ./bin/www",
     "start:client": "cd client && npm start",
+    "build": "rm -rf ./public && mkdir public && cd client && npm run build && cp -r ./build/* ../public",
     "docker": "docker-compose build && docker-compose up"
   },
   "dependencies": {
