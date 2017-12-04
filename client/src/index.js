@@ -16,7 +16,7 @@ import './styles/notifications.css'
 import './styles/modal.css'
 import './styles/global-styles.css'
 
-import { getNewSample } from './models'
+import { getNewSample, getNewCompletionFunction } from './models'
 import completionFunctions from './actions/completion-functions'
 import samples from './actions/samples'
 import settings from './actions/settings'
@@ -47,6 +47,13 @@ Promise.all([
     store.dispatch(samples.create(getNewSample(templates.data[2].data)))
     store.dispatch(samples.create(getNewSample(templates.data[1].data)))
     store.dispatch(samples.create(getNewSample(templates.data[2].data)))
+
+    store.dispatch(completionFunctions.create(getNewCompletionFunction()))
+    .then(data => store.dispatch(completionFunctions.update(data.id, { ...data, name: 'has-one-file' })))
+    store.dispatch(completionFunctions.create(getNewCompletionFunction()))
+    .then(data => store.dispatch(completionFunctions.update(data.id, { ...data, name: 'is-not-john' })))
+    store.dispatch(completionFunctions.create(getNewCompletionFunction()))
+    .then(data => store.dispatch(completionFunctions.update(data.id, { ...data, name: 'has-some-notes' })))
   }
 })
 
