@@ -78,6 +78,11 @@ class SampleModal extends React.Component {
 
         step = sample.data.steps[stepIndex]
       }
+
+      if (this.props.id === undefined) {
+        this.canMouseOver = false
+        setTimeout(() => this.canMouseOver = true, 500)
+      }
     }
 
     this.setState({ id, stepIndex, sample, step })
