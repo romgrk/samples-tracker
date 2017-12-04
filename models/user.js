@@ -21,11 +21,18 @@ function findById(id) {
 }
 
 function update(user) {
-  return db.query('UPDATE users SET name = @name, email = @email WHERE id = @id', user)
+  return db.query(`
+    UPDATE users
+       SET name = @name
+         , email = @email
+     WHERE id = @id
+    `, user)
+    .then(() => findById(user.id))
 }
 
 function create(user) {
   return db.query('INSERT INTO users VALUES (@id, @token, @name, @email)', user)
+    .then(id => findById(id))
 }
 
 module.exports.delete = function(id) {
