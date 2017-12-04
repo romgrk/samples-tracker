@@ -56,9 +56,42 @@ export const logIn = () => {
       }, 200)
     })
 
-    didAuth
+    return didAuth
       .then(() => dispatch(checkIsLoggedIn()))
       .then(isLoggedIn => isLoggedIn ? dispatch(fetchAll()) : undefined)
+  }
+}
+
+export const logOut = () => {
+  return (dispatch, getState) => {
+    const { ui: { loggedIn } } = getState()
+
+    if (loggedIn.value === false || window.isPopupOpen)
+      return
+
+    const didLogout = new Promise((resolve, reject) => {
+      let popup
+      let interval
+
+      window.oauthDone = () => {
+        popup.close()
+        window.isPopupOpen = false
+        clearInterval(interval)
+        resolve()
+      }
+
+      window.isPopupOpen = true
+      popup = openCentered('/auth/logout', 600, 600)
+      interval = setInterval(() => {
+        if (popup.closed) {
+          window.isPopupOpen = false
+          clearInterval(interval)
+          reject()
+        }
+      }, 200)
+    })
+
+    return didLogout.then(() => dispatch(checkIsLoggedIn()))
   }
 }
 
@@ -104,5 +137,6 @@ export default {
   showError,
   checkIsLoggedIn,
   logIn,
+  logOut,
   fetchAll,
 }

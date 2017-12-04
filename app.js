@@ -80,7 +80,7 @@ app.get('/auth/google/callback', passport.authenticate('google', {
 }))
 app.get('/auth/logout', (req, res) => {
   req.logout()
-  res.redirect('/')
+  res.redirect('/auth/done')
 })
 app.get('/auth/done', (req, res) => {
   res.render('oauth.ejs', {

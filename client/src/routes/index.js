@@ -1,4 +1,5 @@
 import React from 'react'
+import { bindActionCreators } from 'redux'
 import {
   BrowserRouter as Router,
   Route,
@@ -8,6 +9,7 @@ import {
 import { connect } from 'react-redux'
 import { createStructuredSelector, createSelector } from 'reselect'
 
+import GlobalActions from '../actions/global'
 import Sidebar from '../components/Sidebar'
 import CompletionFunctionsContainer from '../containers/CompletionFunctionsContainer'
 import IndexContainer from '../containers/IndexContainer'
@@ -23,7 +25,7 @@ const items = [
   { type: 'item', icon: 'code',  path: '/completions', title: 'Completion Functions', showTitle: false },
 ]
 
-function Routes({ isLoggedIn }) {
+function Routes({ isLoggedIn, logOut }) {
   return (
     <Router>
       <div className='App hbox'>
@@ -45,7 +47,7 @@ function Routes({ isLoggedIn }) {
               items={items}
             >
               <Sidebar.Button icon='question-circle' onClick={undefined} />
-              <Sidebar.Button icon='sign-out' onClick={undefined} />
+              <Sidebar.Button icon='sign-out' onClick={logOut} />
             </Sidebar>
 
           }/>
@@ -86,4 +88,8 @@ const mapStateToProps = createStructuredSelector({
   isLoggedIn: createSelector(state => state.ui.loggedIn.value, state => state),
 })
 
-export default connect(mapStateToProps)(Routes)
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators(GlobalActions, dispatch)
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Routes)
