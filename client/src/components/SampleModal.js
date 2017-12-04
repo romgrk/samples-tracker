@@ -27,6 +27,7 @@ import StatusIcon from './StatusIcon'
 import Text from './Text'
 import Time from './Time'
 import Title from './Title'
+import Tooltip from './Tooltip'
 
 
 class SampleModal extends React.Component {
@@ -219,15 +220,18 @@ class SampleModal extends React.Component {
                 onEnter={this.setNotes}
               />
 
+              { /* Steps Button Bar */ }
               <div className='hcenter ButtonGroup'>
               {
                 sample.data.steps.map((step, stepIndex) =>
-                  <Button small
-                    highlight={stepIndex === this.state.stepIndex}
-                    onClick={() => this.gotoStep(stepIndex)}
-                  >
-                    { step.name }
-                  </Button>
+                  <Tooltip content={step.name} delay={500} minWidth='parent'>
+                    <Button small
+                      highlight={stepIndex === this.state.stepIndex}
+                      onClick={() => this.gotoStep(stepIndex)}
+                    >
+                      { step.name }
+                    </Button>
+                  </Tooltip>
                 )
               }
               </div>
@@ -235,6 +239,7 @@ class SampleModal extends React.Component {
               <div className='StepsModal'>
                 <div className='StepsModal__content hbox' style={contentStyle(stepIndex, stepWidth)}>
                   {
+                    /* Steps sub-modals */
                     sample.data.steps.map((step, stepIndex) =>
                       <DropZone key={ `${sample.id}:${stepIndex}`} onDrop={(file) => this.onAddFile(stepIndex, file)}>
                         {

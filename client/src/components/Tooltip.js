@@ -26,20 +26,42 @@ class Tooltip extends React.Component {
   }
 
   onMouseOver = ev => {
-    this.setState({ visible: true })
+    ev.stopPropagation()
+
+    if (this.timeout)
+      return;
+
+    if (this.props.delay)
+      this.timeout = setTimeout(() =>
+        this.setState({ visible: true })
+        , this.props.delay)
+    else
+      this.setState({ visible: true })
   }
 
   onMouseOut = ev => {
+    ev.stopPropagation()
+
+    if (this.timeout)
+      this.timeout = clearTimeout(this.timeout)
+
     this.setState({ visible: false })
   }
 
   onRef = ref => {
-    if (ref === null)
+    if (ref === null) {
+      if (this.element) {
+        this.element.removeEventListener('mouseover', this.onMouseOver)
+        this.element.removeEventListener('mouseout', this.onMouseOut)
+      }
       return
+    }
     this.element = findDOMNode(ref)
+    this.element.addEventListener('mouseover', this.onMouseOver)
+    this.element.addEventListener('mouseout', this.onMouseOut)
   }
 
-  getPosition() {
+  getStyle() {
     if (!this.element)
       return { top: size(0), left: size(0) }
 
@@ -47,21 +69,35 @@ class Tooltip extends React.Component {
 
     const position = this.props.position || 'top'
 
+    let style
+
     if (position === 'bottom')
-      return {
+      style = {
         top:  size(box.top + box.height),
         left: size(box.left),
       }
-    if (position === 'right')
-      return {
+    else if (position === 'right')
+      style = {
         top:  size(box.top),
         left: size(box.left + box.width),
       }
-    // default: if (position === 'top')
-    return {
-      top:  size(box.top - 30), /* we're hardcoding the tooltip height here */
-      left: size(box.left),
-    }
+    else // default: if (position === 'top')
+      style = {
+        top:  size(box.top - 30), /* we're hardcoding the tooltip height here */
+        left: size(box.left),
+      }
+
+    if (this.props.minWidth === 'parent')
+      style.minWidth = box.width
+    else if (this.props.minWidth)
+      style.minWidth = this.props.minWidth
+
+    if (this.props.minHeight === 'parent')
+      style.minHeight = box.height
+    else if (this.props.minHeight)
+      style.minHeight = this.props.minHeight
+
+    return style
   }
 
   render() {
@@ -86,7 +122,7 @@ class Tooltip extends React.Component {
     const childChildren = [...(child.props.children || [])]
     childChildren.push(
       createPortal(
-        <div className={tooltipClassName} style={this.getPosition()}>
+        <div className={tooltipClassName} style={this.getStyle()}>
           { content }
         </div>,
         this.domNode

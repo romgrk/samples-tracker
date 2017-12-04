@@ -101,6 +101,7 @@
 
 .Button.highlight {
   color: $text-color-highlight;
+  background-color: $hover-light-bg-color;
 }
 
 @each $level, $values in $colors {
