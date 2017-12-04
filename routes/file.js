@@ -39,6 +39,16 @@ router.get('/read/:id', (req, res, next) => {
   .catch(errorHandler(res))
 })
 
+/* GET download file */
+router.get('/download/:id', (req, res, next) => {
+  File.findById(req.params.id)
+  .then(file => {
+    res.download(file.path, file.name)
+    res.contentType(file.name)
+  })
+  .catch(errorHandler(res))
+})
+
 /* POST create file */
 router.use('/create/:sampleId/:stepIndex', (req, res, next) => {
   parseForm(req)

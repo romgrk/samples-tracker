@@ -29,7 +29,12 @@ function findAll() {
 }
 
 function findById(id) {
-  return db.selectOne(`SELECT ${columns} FROM files WHERE id = @id`, { id })
+  return db.selectOne(`
+    SELECT ${columns}
+         , '${config.paths.files}/' || id::text as "path"
+      FROM files
+     WHERE id = @id`,
+    { id })
 }
 
 function findBySampleId(sampleId) {
