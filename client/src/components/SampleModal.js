@@ -358,7 +358,7 @@ class SampleModal extends React.Component {
                                     <em>None</em>
                                   </Dropdown.Item>
                                   {
-                                    completionFunctions.data.map(completion =>
+                                    Object.values(completionFunctions.data).map(completion =>
                                       <Dropdown.Item
                                         icon={ step.completionFn === completion.id ? 'dot-circle-o' : 'circle-o'}
                                         onClick={() => this.setStepCompletion(stepIndex, completion.id)}

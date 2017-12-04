@@ -47,7 +47,7 @@ const mapStateToProps = createStructuredSelector({
   }), state => state),
   completionFunctions: createSelector(state => ({
     isLoading: state.completionFunctions.isLoading,
-    data: Object.values(fromLoadable(state.completionFunctions.data)),
+    data: fromLoadable(state.completionFunctions.data),
   }), state => state),
 })
 
