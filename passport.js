@@ -37,7 +37,11 @@ passport.use(new OAuth2Strategy(config.google.auth, (token, refreshToken, profil
     .then(user => {
 
       // if a user is found, log them in
-      Settings.canLogin(user.email)
+      Promise.any([
+        Settings.canLogin(user.email),
+      ].concat(profile.emails.map(email =>
+        Settings.canLogin(email.value)
+      )))
       .then(() => done(undefined, user))
       .catch(err => done(err))
     })
