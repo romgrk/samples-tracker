@@ -4,6 +4,7 @@ import samples from './samples'
 import settings from './settings'
 import templates from './templates'
 import ui from './ui'
+import users from './users'
 
 const rootReducer = combineReducers({
   completionFunctions,
@@ -11,6 +12,7 @@ const rootReducer = combineReducers({
   settings,
   templates,
   ui,
+  users,
 })
 
 export default rootReducer

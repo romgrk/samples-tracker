@@ -21,6 +21,7 @@ import completionFunctions from './actions/completion-functions'
 import samples from './actions/samples'
 import settings from './actions/settings'
 import templates from './actions/templates'
+import users from './actions/users'
 
 const store = configureStore()
 
@@ -36,7 +37,8 @@ Promise.all([
   store.dispatch(completionFunctions.fetch()),
   store.dispatch(samples.fetch()),
   store.dispatch(settings.fetch()),
-  store.dispatch(templates.fetch())
+  store.dispatch(templates.fetch()),
+  store.dispatch(users.fetch())
 ])
 .then(() => {
   const state = store.getState()
