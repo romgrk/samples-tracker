@@ -27,7 +27,7 @@ router.get('/sample/:id', (req, res, next) => {
 })
 
 /* GET read file */
-router.get('/read/:id', (req, res, next) => {
+router.get('/read/:id/:name?', (req, res, next) => {
   File.findById(req.params.id)
   .then(file =>
     File.read(req.params.id)
