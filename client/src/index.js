@@ -66,7 +66,7 @@ Promise.all([
 
 // Register service worker
 
-registerServiceWorker()
+//registerServiceWorker()
 
 
 
