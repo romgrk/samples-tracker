@@ -9,7 +9,7 @@ import {
   assoc,
   dissoc
 } from 'ramda'
-import * as L from 'partial.lenses'
+import * as L from 'partial.lenses/dist/partial.lenses.min.js'
 
 import Status from '../constants/status'
 import { SAMPLES } from '../constants/ActionTypes'
