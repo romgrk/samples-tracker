@@ -16,6 +16,7 @@ import './styles/notifications.css'
 import './styles/modal.css'
 import './styles/global-styles.css'
 
+import { getNewSample } from './models'
 import completionFunctions from './actions/completion-functions'
 import samples from './actions/samples'
 import settings from './actions/settings'
@@ -31,10 +32,23 @@ render(
 )
 
 
-store.dispatch(completionFunctions.fetch())
-store.dispatch(samples.fetch())
-store.dispatch(settings.fetch())
-store.dispatch(templates.fetch())
+Promise.all([
+  store.dispatch(completionFunctions.fetch()),
+  store.dispatch(samples.fetch()),
+  store.dispatch(settings.fetch()),
+  store.dispatch(templates.fetch())
+])
+.then(() => {
+  // Prefill some data for development testing
+  if (process.env.NODE_ENV === 'development') {
+    const { templates } = store.getState()
+
+    store.dispatch(samples.create(getNewSample(templates.data[1].data)))
+    store.dispatch(samples.create(getNewSample(templates.data[2].data)))
+    store.dispatch(samples.create(getNewSample(templates.data[1].data)))
+    store.dispatch(samples.create(getNewSample(templates.data[2].data)))
+  }
+})
 
 
 
