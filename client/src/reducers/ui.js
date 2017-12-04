@@ -1,4 +1,5 @@
 import {
+  LOGGED_IN,
   SHOW,
   SHOW_NOTIFICATION,
   UI
@@ -7,6 +8,10 @@ import Sort from '../constants/sorting'
 import uniq from '../utils/uniq'
 
 const initialState = {
+  loggedIn: {
+    isLoading: false,
+    value: false,
+  },
   includeArchived: false,
   sorting: {
     criteria: [Sort.BY_CREATED],
@@ -22,7 +27,7 @@ export default function ui(state = initialState, action) {
   if (action.error === true) {
     console.error(action.payload)
 
-    return {
+    state = {
       ...state,
       notifications: state.notifications.concat({
         type: 'error',
@@ -34,6 +39,13 @@ export default function ui(state = initialState, action) {
   }
 
   switch (action.type) {
+    case LOGGED_IN.REQUEST:
+      return { ...state, loggedIn: { ...state.loggedIn, isLoading: true } }
+    case LOGGED_IN.RECEIVE:
+      return { ...state, loggedIn: { isLoading: false, value: action.payload } }
+    case LOGGED_IN.ERROR:
+      return { ...state, loggedIn: { isLoading: false, value: false } }
+
     case UI.SET_SORTING_CRITERIA:
       return { ...state, sorting: { ...state.sorting, criteria: action.payload } }
     case UI.SET_SORTING_REVERSE:
