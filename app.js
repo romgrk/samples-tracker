@@ -11,6 +11,7 @@ const flash = require('connect-flash')
 const config = require('./config.js')
 const passport = require('./passport.js')
 const mail = require('./mail')
+const k = require('./constants')
 
 
 // Setup interval for checking overdue steps
@@ -107,6 +108,9 @@ app.use((err, req, res, next) => {
   // set locals, only providing error in development
   res.locals.message = err.message
   res.locals.error   = req.app.get('env') === 'development' ? err : {}
+
+  if (err.type === k.ACCOUNT_NOT_FOUND)
+    req.logout()
 
   // render the error page
   res.status(err.status || 500)

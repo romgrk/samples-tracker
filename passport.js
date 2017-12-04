@@ -9,11 +9,13 @@ const Settings = require('./models/settings.js')
 const User = require('./models/user.js')
 const config = require('./config.js')
 const db = require('./database.js')
+const k = require('./constants')
 
 module.exports = passport
 
 // used to serialize the user for the session
 passport.serializeUser((user, done) => {
+  console.log('SERIALIZE', user)
   done(undefined, user.id)
 })
 
@@ -47,7 +49,8 @@ passport.use(new OAuth2Strategy(config.google.auth, (token, refreshToken, profil
     })
     .catch(err => {
       // if the user isnt in our database, create a new user
-      if (err.type === db.E_TYPE) {
+      if (err.type === k.ACCOUNT_NOT_FOUND) {
+
         const newUser = {
           id: profile.id,
           token: token,
@@ -62,6 +65,7 @@ passport.use(new OAuth2Strategy(config.google.auth, (token, refreshToken, profil
       }
       // if some other error happens, throw it
       else {
+        throw 'other'
         done(err)
       }
     })
