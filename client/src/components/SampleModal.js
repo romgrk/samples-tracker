@@ -1,5 +1,6 @@
 import React from 'react'
 import pure from 'recompose/pure'
+import { set, lensPath } from 'ramda'
 import { withRouter } from 'react-router'
 import classname from 'classname'
 
@@ -66,12 +67,17 @@ class SampleModal extends React.Component {
     }
 
     if (props.id !== undefined) {
+
       if (stepIndex === undefined)
         stepIndex = 0
-      if (stepIndex > sample.data.steps.length - 1)
-        stepIndex = sample.data.steps.length - 1
 
-      step = sample.data.steps[stepIndex]
+      // Sample might be undefined if we're loading the page
+      if (sample !== undefined) {
+        if (stepIndex > sample.data.steps.length - 1)
+          stepIndex = sample.data.steps.length - 1
+
+        step = sample.data.steps[stepIndex]
+      }
     }
 
     this.setState({ id, stepIndex, sample, step })
@@ -95,6 +101,10 @@ class SampleModal extends React.Component {
 
   setData = (data) => {
     this.setState({ sample: { ...this.state.sample, data }})
+  }
+
+  createNewFunction = () => {
+    this.props.history.push('/completions/new')
   }
 
   removeTag(tag) {
@@ -145,6 +155,11 @@ class SampleModal extends React.Component {
     this.update(newData)
   }
 
+  setStepCompletion = (stepIndex, completionFn) => {
+    const data = set(lensPath(['steps', stepIndex, 'completionFn']), completionFn,  this.state.sample.data)
+    this.update(data)
+  }
+
   setStepStatus = (stepIndex, status) => {
     this.props.onChangeStatus(this.state.id, stepIndex, status)
   }
@@ -171,6 +186,7 @@ class SampleModal extends React.Component {
 
   render() {
     const {
+      completionFunctions,
       onChange,
       onChangeStatus,
       onDelete,
@@ -326,6 +342,36 @@ class SampleModal extends React.Component {
                                   onChange={(alertDelay) => this.setAlertDelay(stepIndex, alertDelay)}
                                   onAccept={this.update}
                                 />
+
+                                <div className='fill' />
+
+                                <Label>Completion Function</Label>
+                                <Dropdown label={
+                                  step.completionFn ?
+                                    completionFunctions.data[step.completionFn].name :
+                                    <em>None</em>
+                                } icons>
+                                  <Dropdown.Item
+                                    icon={ step.completionFn === null ? 'dot-circle-o' : 'circle-o'}
+                                    onClick={() => this.setStepCompletion(stepIndex, null)}
+                                  >
+                                    <em>None</em>
+                                  </Dropdown.Item>
+                                  {
+                                    completionFunctions.data.map(completion =>
+                                      <Dropdown.Item
+                                        icon={ step.completionFn === completion.id ? 'dot-circle-o' : 'circle-o'}
+                                        onClick={() => this.setStepCompletion(stepIndex, completion.id)}
+                                      >
+                                        { completion.name }
+                                      </Dropdown.Item>
+                                    )
+                                  }
+                                  <Dropdown.Separator />
+                                  <Dropdown.Item icon='plus' onClick={this.createNewFunction}>
+                                    Create new
+                                  </Dropdown.Item>
+                                </Dropdown>
                               </div>
 
                               <div className='row'>

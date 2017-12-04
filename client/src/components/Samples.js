@@ -39,6 +39,7 @@ class Samples extends React.Component {
       data,
       ui,
       templates,
+      completionFunctions,
       selectedId,
       selectedStepIndex,
       onChange,
@@ -164,9 +165,11 @@ class Samples extends React.Component {
         </div>
 
         <SampleModal
+          isLoading={isLoading}
           id={selectedId}
           stepIndex={selectedStepIndex}
           sample={selectedSample}
+          completionFunctions={completionFunctions}
           onChange={onChange}
           onChangeStatus={onChangeStatus}
           onDelete={onDelete}
