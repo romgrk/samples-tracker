@@ -117,7 +117,11 @@ class Template extends React.Component {
     return (
       <div className='Template'>
         <div className='Template__info vcenter'>
-          <EditableLabel onEnter={this.setName} value={name} />
+          <EditableLabel
+            className='fill'
+            value={name}
+            onEnter={this.setName}
+          />
           {
             !isLoading &&
               <Button flat square icon='trash' className='delete' onClick={this.deleteTemplate} />

@@ -17,6 +17,7 @@ import Badge from './Badge'
 import Button from './Button'
 import Checkbox from './Checkbox'
 import Dropdown from './Dropdown'
+import Gap from './Gap'
 import Icon from './Icon'
 import Input from './Input'
 import Label from './Label'
@@ -162,6 +163,24 @@ class Samples extends React.Component {
                 No sample to display here.
               </div>
           }
+        </div>
+
+        <div className='row bg-dark border-left border-top'>
+          <div className='fill' />
+
+          <div className='vcenter'>
+            <span className='Step legend'>
+              <div className='file-marker'/>
+            </span>&nbsp;&nbsp;<Label>Has some file(s)</Label>
+          </div>
+
+          <Gap fill={10} />
+
+          <div className='vcenter'>
+            <span className='Step legend'>
+              <div className='notes-marker'/>
+            </span>&nbsp;&nbsp;<Label>Has notes</Label>
+          </div>
         </div>
 
         <SampleModal

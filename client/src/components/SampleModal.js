@@ -237,7 +237,7 @@ class SampleModal extends React.Component {
               />
 
               { /* Steps Button Bar */ }
-              <div className='hcenter ButtonGroup'>
+              <div className='ButtonGroup hcenter flex-fill'>
               {
                 sample.data.steps.map((step, stepIndex) =>
                   <Tooltip content={step.name} delay={500} minWidth='parent'>

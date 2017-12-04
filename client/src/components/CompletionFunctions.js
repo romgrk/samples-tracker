@@ -134,7 +134,7 @@ class CompletionFunctions extends React.Component {
 
         <div className='CompletionFunctions__editor vbox'>
           <div className='row'>
-            <div className='CompletionFunctions__name'>
+            <div className='CompletionFunctions__name fill'>
               {
                 selectedFunction !== undefined &&
                 <EditableLabel
@@ -147,8 +147,6 @@ class CompletionFunctions extends React.Component {
                 <Label muted>No completion function selected</Label>
               }
             </div>
-
-            <div className='fill' />
 
             <Button info
               disabled={selectedFunction === undefined}

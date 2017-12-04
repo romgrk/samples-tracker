@@ -54,9 +54,7 @@ html, body {
 .vcenter {
   @include vcenter;
 }
-.center>*,
-.hcenter>*,
-.vcenter>* {
+.flex-fill>* {
   flex: 1 1;
 }
 .text-center {
@@ -85,6 +83,13 @@ html, body {
 .static {
   flex: 0 0 auto;
 }
+
+.column {
+  display: flex;
+  flex-direction: column;
+  padding: calc(2 * var(--padding));
+}
+
 
 .line {
   white-space: nowrap;
@@ -545,6 +550,7 @@ a.link:hover {
 
 .bg-dark { background-color: var(--bg-color-dark); }
 .border-left { border-left: 1px solid var(--border-color-dark); }
+.border-top { border-top: 1px solid var(--border-color-dark); }
 
 
 
@@ -737,6 +743,7 @@ $step-width: 40px;
 }
 
 .Step {
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -748,10 +755,31 @@ $step-width: 40px;
 .Step:hover {
   background-color: $hover-light-bg-color;
 }
-.Step > span {
+.Step.legend {
+  display: inline-block;
+  width: 40px;
+  height: $line-height;
+  border: 1px solid $table-border-color;
+}
+.Step > .content {
   width: 100%;
   height: 100%;
   line-height: 25px;
+}
+.Step > .file-marker,
+.Step > .notes-marker {
+  position: absolute;
+  right: 0;
+  content: '';
+  border: 3px solid transparent;
+}
+.Step > .file-marker {
+  top: 0;
+  border-color: $text-color-warning $text-color-warning transparent transparent;
+}
+.Step > .notes-marker {
+  bottom: 0;
+  border-color: transparent $text-color-info $text-color-info transparent;
 }
 .Step__menu {
   position: absolute;

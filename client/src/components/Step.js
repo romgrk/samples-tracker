@@ -118,9 +118,17 @@ class Step extends React.Component {
           onContextMenu={this.onContextMenu}
           onClick={this.onClick}
         >
-          <span ref={this.onRef}>
+          <span className='content' ref={this.onRef}>
             <StatusIcon name={step.status} />
           </span>
+          {
+            step.files.length > 0 &&
+              <span className='file-marker' />
+          }
+          {
+            step.notes.length > 0 &&
+              <span className='notes-marker' />
+          }
 
           {
             createPortal(
