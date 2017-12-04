@@ -9,7 +9,7 @@ import uniq from '../utils/uniq'
 const initialState = {
   includeArchived: false,
   sorting: {
-    criteria: [Sort.BY_TAG],
+    criteria: [Sort.BY_CREATED],
     reverse: false,
   },
   filtering: {
