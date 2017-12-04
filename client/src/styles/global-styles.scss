@@ -538,6 +538,29 @@ a.link:hover {
 }
 
 
+.table {
+  width: 100%;
+  background-color: $table-bg-color;
+}
+.table th,
+.table td {
+  padding: 0 $padding;
+  border: 1px solid $table-border-color;
+}
+.table th {
+  text-align: left;
+}
+.table .button-column {
+  width: 30px;
+}
+.table .empty td {
+  text-align: center;
+  font-weight: bold;
+  color: $text-color-muted;
+}
+
+
+
 
 .text-normal    { color: var(--color); }
 .text-highlight { color: var(--text-color-highlight); }

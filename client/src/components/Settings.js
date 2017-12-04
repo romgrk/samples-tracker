@@ -7,8 +7,11 @@ import * as _ from '../constants/text'
 import * as Interval from '../utils/postgres-interval'
 import uniq from '../utils/uniq'
 import getEmails from '../utils/get-emails'
+import Button from './Button'
+import EditableLabel from './EditableLabel'
 import EditableList from './EditableList'
 import Help from './Help'
+import Icon from './Icon'
 import IntervalInput from './IntervalInput'
 import Title from './Title'
 
@@ -85,10 +88,25 @@ class Settings extends React.Component {
       this.props.onError('Invalid interval', _.INTERVAL_FORMAT)
   }
 
+  onDeleteUser = (id) => {
+    this.props.deleteUser(id)
+  }
+
+  onUpdateUserName = (id, name) => {
+    const user = { ...this.props.users.find(u => u.id === id), name }
+    this.props.updateUser(id, user)
+  }
+
+  onUpdateUserEmail = (id, email) => {
+    const user = { ...this.props.users.find(u => u.id === id), email }
+    this.props.updateUser(id, user)
+  }
+
   render() {
     const {
       isLoading,
       data,
+      users,
       onChange,
       onError
     } = this.props
@@ -101,59 +119,117 @@ class Settings extends React.Component {
     } = this.state
 
     return (
-      <section className='Settings'>
+      <section className='Settings hbox'>
 
-        <Group>
-          <Title>Archive-Interval</Title>
+        <div className='Settings__left fill'>
+          <Group>
+            <Title>Archive-Interval</Title>
+            <p>
+              Delay after which completed samples are hidden from the list.
+            </p>
+            <IntervalInput
+              value={archiveInterval.data}
+              loading={archiveInterval.isLoading}
+              onChange={value => this.onChangeInterval('archiveInterval', value)}
+              onAccept={() => this.onAcceptInterval('archiveInterval')}
+            /> <Help>{ _.INTERVAL_FORMAT }</Help>
+          </Group>
+
+          <Group>
+            <Title>Alert-Delay</Title>
+            <p>
+              Default interval of time after which emails are sent when there is no activity.
+            </p>
+            <IntervalInput
+              value={alertDelay.data}
+              loading={alertDelay.isLoading}
+              onChange={value => this.onChangeInterval('alertDelay', value)}
+              onAccept={() => this.onAcceptInterval('alertDelay')}
+            /> <Help>{ _.INTERVAL_FORMAT }</Help>
+          </Group>
+
+          <Group>
+            <Title>Alert-Emails</Title>
+            <p>Emails in this list will receive notifications when a sample is overdue.</p>
+            <EditableList
+              help='Multiple emails allowed. Press <Enter> to submit.'
+              placeHolder='Add email…'
+              loading={alertEmails.isLoading}
+              values={alertEmails.data || []}
+              onAdd={value => this.onListAdd('alertEmails', value)}
+              onDelete={value => this.onListDelete('alertEmails', value)}
+            />
+          </Group>
+
+          <Group>
+            <Title>Whitelist</Title>
+            <p>Emails in this list are allowed to log-in/sign-up to this application.</p>
+            <EditableList
+              help='Multiple emails allowed. Press <Enter> to submit.'
+              placeHolder='Add email…'
+              loading={whitelist.isLoading}
+              values={whitelist.data || []}
+              onAdd={value => this.onListAdd('whitelist', value)}
+              onDelete={value => this.onListDelete('whitelist', value)}
+            />
+          </Group>
+        </div>
+        <div className='Settings__right fill'>
+
+          <Title>Users</Title>
           <p>
-            Delay after which completed samples are hidden from the list.
+            This is the list of users with an account. <br/>
           </p>
-          <IntervalInput
-            value={archiveInterval.data}
-            loading={archiveInterval.isLoading}
-            onChange={value => this.onChangeInterval('archiveInterval', value)}
-            onAccept={() => this.onAcceptInterval('archiveInterval')}
-          /> <Help>{ _.INTERVAL_FORMAT }</Help>
-        </Group>
 
-        <Group>
-          <Title>Alert-Delay</Title>
-          <p>
-            Default interval of time after which emails are sent when there is no activity.
-          </p>
-          <IntervalInput
-            value={alertDelay.data}
-            loading={alertDelay.isLoading}
-            onChange={value => this.onChangeInterval('alertDelay', value)}
-            onAccept={() => this.onAcceptInterval('alertDelay')}
-          /> <Help>{ _.INTERVAL_FORMAT }</Help>
-        </Group>
+          <table className='table'>
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              {
+                users.map(user =>
+                  <tr>
+                    <td>
+                      <EditableLabel
+                        value={user.name}
+                        onEnter={name => this.onUpdateUserName(user.id, name)}
+                      />
+                    </td>
+                    <td>
+                      <EditableLabel
+                        value={user.email}
+                        onEnter={email => this.onUpdateUserEmail(user.id, email)}
+                      />
+                  </td>
+                    <td className='button-column'>
+                      <Button
+                        flat
+                        square
+                        small
+                        icon='close'
+                        onClick={() => this.onDeleteUser(user.id)}
+                      />
+                    </td>
+                  </tr>
+                )
+              }
+              {
+                users.length === 0 &&
+                  <tr className='empty'>
+                    <td colSpan='3'>
+                      No users yet
+                    </td>
+                  </tr>
+              }
+            </tbody>
+          </table>
 
-        <Group>
-          <Title>Alert-Emails</Title>
-          <p>Emails in this list will receive notifications when a sample is overdue.</p>
-          <EditableList
-            help='Multiple emails allowed. Press <Enter> to submit.'
-            placeHolder='Add email…'
-            loading={alertEmails.isLoading}
-            values={alertEmails.data || []}
-            onAdd={value => this.onListAdd('alertEmails', value)}
-            onDelete={value => this.onListDelete('alertEmails', value)}
-          />
-        </Group>
+        </div>
 
-        <Group>
-          <Title>Whitelist</Title>
-          <p>Emails in this list are allowed to sign up to this application.</p>
-          <EditableList
-            help='Multiple emails allowed. Press <Enter> to submit.'
-            placeHolder='Add email…'
-            loading={whitelist.isLoading}
-            values={whitelist.data || []}
-            onAdd={value => this.onListAdd('whitelist', value)}
-            onDelete={value => this.onListDelete('whitelist', value)}
-          />
-        </Group>
 
       </section>
     )
