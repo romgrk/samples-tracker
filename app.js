@@ -60,7 +60,7 @@ app.use('/api', (req, res) => {
   res.end()
 })
 function apiProtected(req, res, next) {
-  if (req.isAuthenticated())
+  if (req.isAuthenticated() || process.env.NODE_ENV === 'development')
     return next()
   res.json({ ok: false, message: 'Not authenticated' })
   res.end()

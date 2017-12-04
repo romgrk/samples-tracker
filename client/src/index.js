@@ -28,13 +28,19 @@ render(
 )
 
 
-store.dispatch(global.checkIsLoggedIn())
-.then(isLoggedIn => {
-  console.log('LOGIN:', isLoggedIn)
 
-  if (isLoggedIn)
-    return store.dispatch(global.fetchAll())
-})
+if (process.env.NODE_ENV === 'development') {
+  store.dispatch(global.checkIsLoggedIn.receive(true))
+  store.dispatch(global.fetchAll())
+}
+else /* production */ {
+  store.dispatch(global.checkIsLoggedIn())
+  .then(isLoggedIn => {
+    if (isLoggedIn)
+      return store.dispatch(global.fetchAll())
+  })
+}
+
 
 
 
