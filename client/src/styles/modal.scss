@@ -33,8 +33,10 @@
   background: $bg-color-dark;
   border-radius: 2px;
   z-index: 2;
+
   //min-height: 40%;
-  min-width: 500px;
+  width: 500px;
+
   box-shadow: 1px 2px 20px 10px rgba(0, 0, 0, 0.3);
 
   // .Modal:not(.open)
@@ -43,6 +45,13 @@
 }
 .Modal.open .Modal__container {
   transform: translateY(0);
+}
+
+.Modal.small .Modal__container {
+  width: 300px;
+}
+.Modal.large .Modal__container {
+  width: 800px;
 }
 
 

@@ -66,6 +66,8 @@ class Modal extends React.Component {
       className,
       title,
       open,
+      small,
+      large,
       width,
       height,
     } = this.props
@@ -75,6 +77,8 @@ class Modal extends React.Component {
       className,
       {
         open: open,
+        small: small,
+        large: large,
       })
 
     const style = {
