@@ -39,14 +39,15 @@ Promise.all([
   store.dispatch(templates.fetch())
 ])
 .then(() => {
-  // Prefill some data for development testing
-  if (process.env.NODE_ENV === 'development') {
-    const { templates } = store.getState()
+  const state = store.getState()
 
-    store.dispatch(samples.create(getNewSample(templates.data[1].data)))
-    store.dispatch(samples.create(getNewSample(templates.data[2].data)))
-    store.dispatch(samples.create(getNewSample(templates.data[1].data)))
-    store.dispatch(samples.create(getNewSample(templates.data[2].data)))
+  // Prefill some data for development testing
+  if (process.env.NODE_ENV === 'development' && Object.keys(state.samples.data).length === 0) {
+
+    store.dispatch(samples.create(getNewSample(state.templates.data[1].data)))
+    store.dispatch(samples.create(getNewSample(state.templates.data[2].data)))
+    store.dispatch(samples.create(getNewSample(state.templates.data[1].data)))
+    store.dispatch(samples.create(getNewSample(state.templates.data[2].data)))
 
     store.dispatch(completionFunctions.create(getNewCompletionFunction()))
     .then(data => store.dispatch(completionFunctions.update(data.id, { ...data, name: 'has-one-file' })))
