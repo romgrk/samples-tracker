@@ -38,7 +38,7 @@ else /* production */ {
   .then(() => store.dispatch(global.fetchAll()))
 }
 
-const updateInterval = setInterval(() => store.dispatch(global.fetchAll()), 60 * 1000)
+setInterval(() => store.dispatch(global.fetchAll()), 60 * 1000)
 
 
 
