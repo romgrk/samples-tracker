@@ -63,7 +63,7 @@ router.use('/update-step-status/:id/:index/:status', (req, res, next) => {
       sampleId: sampleId,
       stepIndex: stepIndex,
       userId: req.user.id,
-      description: `changed step ${stepIndex} status to ${status}`
+      description: `changed status to ${status}`
     })
     return sample
   })

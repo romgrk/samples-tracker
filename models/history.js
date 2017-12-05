@@ -33,7 +33,7 @@ function findBySampleId(sampleId) {
       SELECT ${columns}
         FROM history
        WHERE sample_id = @sampleId
-    ORDER BY date
+    ORDER BY date DESC
     `, { sampleId })
 }
 

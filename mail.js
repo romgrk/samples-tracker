@@ -7,6 +7,7 @@ const nodemailer = require('nodemailer')
 const Sample = require('./models/sample')
 const Settings = require('./models/settings')
 const Step = require('./models/step')
+const History = require('./models/history')
 const config = require('./config')
 
 const transporter = nodemailer.createTransport(config.nodemailer)
@@ -41,9 +42,20 @@ function processOverdueSteps() {
 }
 
 function sendAlertEmail(sample, step) {
+
+  const stepIndex = sample.steps.findIndex(s => s.id === step.id)
+
   return Settings.findByKey('alertEmails')
-    .then(to =>
-      sendEmail({
+    .then(to => {
+
+      History.create({
+        sampleId: sample.id,
+        stepIndex: stepIndex,
+        userId: null,
+        description: `Sent alert email${to.length > 1 ? 's' : ''} to ${to.join(', ')}`
+      })
+
+      return sendEmail({
         from: config.alertEmail.from,
         to: to,
         subject: `Alert: Sample ${sample.name} is being forgotten`,
@@ -54,7 +66,7 @@ function sendAlertEmail(sample, step) {
         </p>
         `
       })
-    )
+    })
 }
 
 function sendEmail(options) {

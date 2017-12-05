@@ -60,8 +60,19 @@ app.use('/api', (req, res) => {
   res.end()
 })
 function apiProtected(req, res, next) {
-  if (req.isAuthenticated() || process.env.NODE_ENV === 'development')
+  if (req.isAuthenticated())
     return next()
+
+  if (process.env.NODE_ENV === 'development') {
+    req.user = {
+      id: '113897916442927912291',
+      token: 'ya29.O5ze6WD',
+      name: 'Rom Grk',
+      email: 'rom7011@gmail.com'
+    }
+    return next()
+  }
+
   res.json({ ok: false, message: 'Not authenticated' })
   res.end()
 }

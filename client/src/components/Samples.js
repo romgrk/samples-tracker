@@ -40,6 +40,7 @@ class Samples extends React.Component {
       data,
       ui,
       templates,
+      users,
       completionFunctions,
       selectedId,
       selectedStepIndex,
@@ -188,6 +189,7 @@ class Samples extends React.Component {
           id={selectedId}
           stepIndex={selectedStepIndex}
           sample={selectedSample}
+          users={users}
           completionFunctions={completionFunctions}
           onChange={onChange}
           onChangeStatus={onChangeStatus}

@@ -4,8 +4,8 @@ import { set, lensPath } from 'ramda'
 import { withRouter } from 'react-router'
 import classname from 'classname'
 
-import openFile from '../utils/open-file'
 import humanReadableTime from '../utils/human-readable-time'
+import openFile from '../utils/open-file'
 import * as MimeType from '../utils/mime-type'
 import Status from '../constants/status'
 import Badge from './Badge'
@@ -37,6 +37,10 @@ class SampleModal extends React.Component {
 
     this.lastMouseOver = undefined
     this.canMouseOver = true
+
+    this.modalWidth = 800
+    this.stepWidth = this.modalWidth + 100
+
 
     this.state = {
       id: undefined,
@@ -86,6 +90,26 @@ class SampleModal extends React.Component {
     }
 
     this.setState({ id, stepIndex, sample, step })
+  }
+
+  onAddFile = (stepIndex, file) => {
+    this.props.addFile(this.state.id, stepIndex, file)
+  }
+
+  onDeleteFile = (stepIndex, file) => {
+    this.props.deleteFile(this.state.id, stepIndex, file.id)
+  }
+
+  onMouseOverStep(stepIndex) {
+    if (
+      stepIndex !== this.state.stepIndex
+      && this.lastMouseOver !== stepIndex
+      && this.canMouseOver
+    ) {
+      this.gotoStep(stepIndex)
+      this.lastMouseOver = this.state.stepIndex
+      setTimeout(() => this.lastMouseOver = undefined, 250)
+    }
   }
 
   closeModal = () => {
@@ -169,24 +193,14 @@ class SampleModal extends React.Component {
     this.props.onChangeStatus(this.state.id, stepIndex, status)
   }
 
-  onAddFile = (stepIndex, file) => {
-    this.props.addFile(this.state.id, stepIndex, file)
-  }
+  getUserName(userId) {
+    if (userId === null)
+      return ''
 
-  onDeleteFile = (stepIndex, file) => {
-    this.props.deleteFile(this.state.id, stepIndex, file.id)
-  }
+    if (this.props.users.isLoading)
+      return '[loading]'
 
-  onMouseOverStep(stepIndex) {
-    if (
-      stepIndex !== this.state.stepIndex
-      && this.lastMouseOver !== stepIndex
-      && this.canMouseOver
-    ) {
-      this.gotoStep(stepIndex)
-      this.lastMouseOver = this.state.stepIndex
-      setTimeout(() => this.lastMouseOver = undefined, 250)
-    }
+    return this.props.users.data[userId].name
   }
 
   render() {
@@ -204,15 +218,13 @@ class SampleModal extends React.Component {
       step
     } = this.state
 
-    const stepWidth = 700
-
     return (
       <Modal
         className='SampleModal'
         title={
           <EditableLabel value={sample ? sample.data.name : ''} onEnter={this.setName} />
         }
-        width={600}
+        width={this.modalWidth}
         open={id !== undefined}
         onClose={this.closeModal}
       >
@@ -258,173 +270,10 @@ class SampleModal extends React.Component {
               </div>
 
               <div className='StepsModal'>
-                <div className='StepsModal__content hbox' style={contentStyle(stepIndex, stepWidth)}>
+                <div className='StepsModal__content hbox' style={contentStyle(stepIndex, this.stepWidth)}>
                   {
                     /* Steps sub-modals */
-                    sample.data.steps.map((step, stepIndex) =>
-                      <DropZone key={ `${sample.id}:${stepIndex}`} onDrop={(file) => this.onAddFile(stepIndex, file)}>
-                        {
-                          ({ dragOver, dragOverDocument }) =>
-
-                          <div
-                            className={ classname('StepsModal__step', 'drop-zone', {
-                              'over': dragOver,
-                              'over-document': dragOverDocument,
-                            }) }
-                            onMouseOver={() => this.onMouseOverStep(stepIndex)}
-                            >
-
-                              <table className='StepsModal__status'>
-                                <tbody>
-                                  <tr>
-                                    <td>
-                                      <Dropdown trigger={
-                                        <Button flat style={{ width: '120px'}}>
-                                          <StatusIcon name={step.status} />&nbsp;&nbsp; <Text>{ step.status }</Text>
-                                        </Button>
-                                      }>
-                                        {
-                                          Object.values(Status)
-                                            .filter(status => status !== step.status
-                                                           && status !== Status.IN_PROGRESS)
-                                            .map((status, i) =>
-                                              <Dropdown.Item key={i} onClick={() => this.setStepStatus(stepIndex, status)}>
-                                                <StatusIcon name={status} />&nbsp;&nbsp; <Text normal>{ status }</Text>
-                                              </Dropdown.Item>
-                                            )
-                                        }
-                                      </Dropdown>
-                                    </td>
-                                    <td>
-                                      { step.status === Status.IN_PROGRESS &&
-                                          <Text>&nbsp;&nbsp; Since:</Text>
-                                      }
-                                    </td>
-                                    <td>
-                                      {
-                                        step.status === Status.IN_PROGRESS &&
-                                          <Time>{ step.started }</Time>
-                                      } {
-                                        step.status === Status.IN_PROGRESS &&
-                                          <Button small onClick={() => this.setStepStarted(stepIndex)}>Reset</Button>
-                                      }
-                                    </td>
-                                  </tr>
-
-                                  <tr>
-                                    <td></td>
-                                    <td>
-                                      {
-                                        step.isOverdue &&
-                                          <Icon name='warning' warning />
-                                      } {
-                                        step.isOverdue &&
-                                          <Text>Overdue since:</Text>
-                                      }
-                                      {
-                                        step.isOverdue === false &&
-                                          <Text>Will be overdue at:</Text>
-                                      }
-                                    </td>
-                                    <td>
-                                      {
-                                        step.isOverdue &&
-                                          <Time>{ step.overdueAt }</Time>
-                                      }
-                                      {
-                                        step.isOverdue === false &&
-                                          <Time>{ step.overdueAt }</Time>
-                                      }
-                                    </td>
-                                  </tr>
-                                </tbody>
-                              </table>
-
-                              <div className='row'>
-                                <table className='StepsModal__controlsTable'>
-                                <tbody>
-                                  <tr>
-                                    <td>
-                                      <Label>Alert delay</Label>
-                                    </td>
-                                    <td>
-                                      <IntervalInput
-                                        value={step.alertDelay}
-                                        onChange={(alertDelay) => this.setAlertDelay(stepIndex, alertDelay)}
-                                        onAccept={this.update}
-                                      />
-                                    </td>
-                                  </tr>
-                                  <tr>
-                                    <td>
-                                      <Label>Completion Function</Label>
-                                    </td>
-                                    <td>
-                                      <Dropdown label={
-                                        step.completionFn ?
-                                          completionFunctions.data[step.completionFn].name :
-                                          <em>None</em>
-                                      } icons>
-                                        <Dropdown.Item
-                                          icon={ step.completionFn === null ? 'dot-circle-o' : 'circle-o'}
-                                          onClick={() => this.setStepCompletion(stepIndex, null)}
-                                        >
-                                          <em>None</em>
-                                        </Dropdown.Item>
-                                        {
-                                          Object.values(completionFunctions.data).map(completion =>
-                                            <Dropdown.Item
-                                              icon={ step.completionFn === completion.id ? 'dot-circle-o' : 'circle-o'}
-                                              onClick={() => this.setStepCompletion(stepIndex, completion.id)}
-                                            >
-                                              { completion.name }
-                                            </Dropdown.Item>
-                                          )
-                                        }
-                                        <Dropdown.Separator />
-                                        <Dropdown.Item icon='plus' onClick={this.createNewFunction}>
-                                          Create new
-                                        </Dropdown.Item>
-                                      </Dropdown>
-                                    </td>
-                                  </tr>
-                                </tbody>
-                                </table>
-                              </div>
-
-
-                              <div className='row'>
-                                <EditableText
-                                  placeHolder='Enter step notes...'
-                                  value={step.notes}
-                                  onEnter={(notes) => this.setStepNotes(stepIndex, notes)}
-                                />
-                              </div>
-
-                              <Title>Files</Title>
-                              <div className='row'>
-                                <EditableList
-                                  values={step.files}
-                                  onAdd={() => {/* nop */}}
-                                  onDelete={file => this.onDeleteFile(stepIndex, file)}
-                                  render={renderFile}
-                                  emptyMessage={<Label small muted>No files attached</Label>}
-                                  control={
-                                    <div>
-                                      <Button
-                                        style={{ marginTop: 'var(--padding)' }}
-                                        onClick={() => openFile().then(file => this.onAddFile(stepIndex, file))}>
-                                        Add file
-                                      </Button> <Help marginLeft={10}>You can also drag-and-drop a file on this step</Help>
-                                    </div>
-                                  }
-                                />
-                              </div>
-
-                            </div>
-                        }
-                      </DropZone>
-                    )
+                    sample.data.steps.map(this.renderStepModal)
                   }
                 </div>
                 <Button large
@@ -444,6 +293,208 @@ class SampleModal extends React.Component {
             </div>
         }
       </Modal>
+    )
+  }
+
+  renderStepModal = (step, stepIndex) => {
+    const {
+      completionFunctions,
+      onChange,
+      onChangeStatus,
+      onDelete,
+      onError
+    } = this.props
+    const { sample } = this.state
+
+    const history = sample.data.history.filter(entry => entry.stepIndex === null || entry.stepIndex === stepIndex)
+
+    return (
+      <DropZone key={ `${sample.id}:${stepIndex}`} onDrop={(file) => this.onAddFile(stepIndex, file)}>
+        {
+          ({ dragOver, dragOverDocument }) =>
+
+          <div
+            className={ classname('StepsModal__step drop-zone hbox', {
+              'over': dragOver,
+              'over-document': dragOverDocument,
+            }) }
+            onMouseOver={() => this.onMouseOverStep(stepIndex)}
+            style={{ width: this.modalWidth, marginRight: 100 }}
+            >
+
+              <div className='StepsModalStep__controls'>
+                <table className='StepsModal__status'>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <Dropdown trigger={
+                          <Button flat style={{ width: '120px'}}>
+                            <StatusIcon name={step.status} />&nbsp;&nbsp; <Text>{ step.status }</Text>
+                          </Button>
+                        }>
+                          {
+                            Object.values(Status)
+                              .filter(status => status !== step.status
+                                            && status !== Status.IN_PROGRESS)
+                              .map((status, i) =>
+                                <Dropdown.Item key={i} onClick={() => this.setStepStatus(stepIndex, status)}>
+                                  <StatusIcon name={status} />&nbsp;&nbsp; <Text normal>{ status }</Text>
+                                </Dropdown.Item>
+                              )
+                          }
+                        </Dropdown>
+                      </td>
+                      <td>
+                        { step.status === Status.IN_PROGRESS &&
+                            <Text>&nbsp;&nbsp; Since:</Text>
+                        }
+                      </td>
+                      <td>
+                        {
+                          step.status === Status.IN_PROGRESS &&
+                            <Time>{ step.started }</Time>
+                        } {
+                          step.status === Status.IN_PROGRESS &&
+                            <Button small onClick={() => this.setStepStarted(stepIndex)}>Reset</Button>
+                        }
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <td></td>
+                      <td>
+                        {
+                          step.isOverdue &&
+                            <Icon name='warning' warning />
+                        } {
+                          step.isOverdue &&
+                            <Text>Overdue since:</Text>
+                        }
+                        {
+                          step.isOverdue === false &&
+                            <Text>Will be overdue at:</Text>
+                        }
+                      </td>
+                      <td>
+                        {
+                          step.isOverdue &&
+                            <Time>{ step.overdueAt }</Time>
+                        }
+                        {
+                          step.isOverdue === false &&
+                            <Time>{ step.overdueAt }</Time>
+                        }
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+
+                <div className='row'>
+                  <table className='StepsModal__controlsTable'>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <Label>Alert delay</Label>
+                      </td>
+                      <td>
+                        <IntervalInput
+                          value={step.alertDelay}
+                          onChange={(alertDelay) => this.setAlertDelay(stepIndex, alertDelay)}
+                          onAccept={this.update}
+                        />
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <Label>Completion Function</Label>
+                      </td>
+                      <td>
+                        <Dropdown label={
+                          step.completionFn ?
+                            completionFunctions.data[step.completionFn].name :
+                            <em>None</em>
+                        } icons>
+                          <Dropdown.Item
+                            icon={ step.completionFn === null ? 'dot-circle-o' : 'circle-o'}
+                            onClick={() => this.setStepCompletion(stepIndex, null)}
+                          >
+                            <em>None</em>
+                          </Dropdown.Item>
+                          {
+                            Object.values(completionFunctions.data).map(completion =>
+                              <Dropdown.Item
+                                icon={ step.completionFn === completion.id ? 'dot-circle-o' : 'circle-o'}
+                                onClick={() => this.setStepCompletion(stepIndex, completion.id)}
+                              >
+                                { completion.name }
+                              </Dropdown.Item>
+                            )
+                          }
+                          <Dropdown.Separator />
+                          <Dropdown.Item icon='plus' onClick={this.createNewFunction}>
+                            Create new
+                          </Dropdown.Item>
+                        </Dropdown>
+                      </td>
+                    </tr>
+                  </tbody>
+                  </table>
+                </div>
+
+                <div className='row'>
+                  <EditableText
+                    placeHolder='Enter step notes...'
+                    value={step.notes}
+                    onEnter={(notes) => this.setStepNotes(stepIndex, notes)}
+                  />
+                </div>
+
+                <Title>Files</Title>
+                <div className='row'>
+                  <EditableList
+                    values={step.files}
+                    onAdd={() => {/* nop */}}
+                    onDelete={file => this.onDeleteFile(stepIndex, file)}
+                    render={renderFile}
+                    emptyMessage={<Label small muted>No files attached</Label>}
+                    control={
+                      <div>
+                        <Button
+                          style={{ marginTop: 'var(--padding)' }}
+                          onClick={() => openFile().then(file => this.onAddFile(stepIndex, file))}>
+                          Add file
+                        </Button> <Help marginLeft={10}>You can also drag-and-drop a file on this step</Help>
+                      </div>
+                    }
+                  />
+                </div>
+              </div>
+
+              <div className='StepsModalStep__history'>
+                <div className='History'>
+                  {
+                    sample.data.history
+                      .filter(entry => entry.stepIndex === null || entry.stepIndex === stepIndex)
+                      .map(entry =>
+                        <div className='History__entry'>
+                          <span className='History__date'>
+                            { humanReadableTime(entry.date) }
+                          </span>
+                          <span className='History__description'>
+                            <span className='History__username'>
+                              {this.getUserName(entry.userId)}
+                            </span> { entry.description }
+                          </span>
+                        </div>
+                      )
+                  }
+                </div>
+              </div>
+
+
+            </div>
+        }
+      </DropZone>
     )
   }
 }
@@ -466,7 +517,7 @@ function renderFile(file) {
     return element
 
   return (
-    <Tooltip content={<img src={`/api/file/read/${file.id}`} height={300} />} height={300}>
+    <Tooltip content={<img src={`/api/file/read/${file.id}`} height={300} />} height={320}>
       { element }
     </Tooltip>
   )

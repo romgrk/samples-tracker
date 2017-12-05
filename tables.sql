@@ -90,21 +90,6 @@ CREATE TABLE template_steps (
     unique (template_id, index)
 );
 
-INSERT INTO templates (name) VALUES ('experiment');
-INSERT INTO template_steps (template_id, index, name, "alertDelay", "completionFn") VALUES
-    (1, 0, 'Extract', '1 second', NULL),
-    (1, 1, 'Pack',    '2 weeks', NULL)
-;
-INSERT INTO templates (name) VALUES ('request');
-INSERT INTO template_steps (template_id, index, name, "alertDelay", "completionFn") VALUES
-    (2, 0, 'Write',    '2 weeks', NULL),
-    (2, 1, 'Review',   '2 weeks', NULL),
-    (2, 2, 'Send',     '2 weeks', 1),
-    (2, 3, 'Response', '2 weeks', NULL),
-    (2, 4, 'Read',     '2 weeks', NULL),
-    (2, 5, 'Archive',  '2 weeks', NULL),
-    (2, 6, 'Sleep',    '2 weeks', NULL)
-;
 
 CREATE TABLE completion_functions (
     id          serial  primary key,
@@ -123,7 +108,7 @@ CREATE TABLE history (
     id          serial      primary key,
     sample_id   integer     not null,
     step_index  integer         null,
-    user_id     varchar(50) not null,
+    user_id     varchar(50)     null,
     date        timestamp   not null,
     description text        not null
 );
@@ -135,6 +120,33 @@ CREATE TABLE files (
     step_index  integer          null,
     mime        varchar(100) not null,
     name        text         not null
+);
+
+
+
+-- Test data
+
+
+INSERT INTO templates (name) VALUES ('experiment');
+INSERT INTO template_steps (template_id, index, name, "alertDelay", "completionFn") VALUES
+    (1, 0, 'Extract', '1 second', NULL),
+    (1, 1, 'Pack',    '2 weeks', NULL)
+;
+INSERT INTO templates (name) VALUES ('request');
+INSERT INTO template_steps (template_id, index, name, "alertDelay", "completionFn") VALUES
+    (2, 0, 'Write',    '2 weeks', NULL),
+    (2, 1, 'Review',   '2 weeks', NULL),
+    (2, 2, 'Send',     '2 weeks', 1),
+    (2, 3, 'Response', '2 weeks', NULL),
+    (2, 4, 'Read',     '2 weeks', NULL),
+    (2, 5, 'Archive',  '2 weeks', NULL),
+    (2, 6, 'Sleep',    '2 weeks', NULL)
+;
+INSERT INTO users (id, token, name, email) VALUES (
+    '113897916442927912291',
+    'ya2GlsZBV75c-JxuuzblrbS7WoUmuWpJDJtgOOdzUcwFOaFt_7ADAIRKpiOXA1A_TtFl1AkMoXAPcqus6_ia',
+    'Rom Grk',
+    'rom7011@gmail.com'
 );
 
 -- vim:et

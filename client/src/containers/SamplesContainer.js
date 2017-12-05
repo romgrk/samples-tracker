@@ -17,6 +17,7 @@ class SamplesContainer extends React.Component {
         data={this.props.samples.data}
         ui={this.props.ui}
         templates={this.props.templates}
+        users={this.props.users}
         completionFunctions={this.props.completionFunctions}
         selectedId={this.props.match.params.id ? Number(this.props.match.params.id) : undefined}
         selectedStepIndex={this.props.match.params.stepIndex ? Number(this.props.match.params.stepIndex) : undefined}
@@ -48,6 +49,10 @@ const mapStateToProps = createStructuredSelector({
   completionFunctions: createSelector(state => ({
     isLoading: state.completionFunctions.isLoading,
     data: fromLoadable(state.completionFunctions.data),
+  }), state => state),
+  users: createSelector(state => ({
+    isLoading: state.users.isLoading,
+    data: fromLoadable(state.users.data),
   }), state => state),
 })
 

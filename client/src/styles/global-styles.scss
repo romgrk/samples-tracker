@@ -888,8 +888,9 @@ $step-width: 40px;
   padding: 2 * $padding;
 
   min-height: 200px;
-  width: 600px;
-  margin-right: 100px;
+
+  //width: 800px;
+  //margin-right: 100px;
 
   // .Modal:not(.open)
   transition: all .25s;
@@ -905,6 +906,56 @@ $step-width: 40px;
   padding: $padding 2*$padding $padding 0;
 }
 
+.StepsModalStep__controls {
+  flex: 1 1;
+}
+.StepsModalStep__history {
+  flex: 0 0 auto;
+  width: 300px;
+}
+
+.History {
+  //background-color: $bg-color-darker;
+  height: 100%;
+  border: 1px solid $border-color-dark;
+  overflow-y: auto;
+}
+.History__title,
+.History__entry {
+  font-size: 11px;
+  line-height: 20px;
+  position: relative;
+  &::after {
+    position: absolute;
+    content: '';
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    border-bottom: 1px solid $border-color-dark;
+  }
+}
+.History__title {
+  font-weight: bold;
+  padding: 0 $padding;
+  border-bottom: 2px solid $border-color-dark;
+}
+.History__entry {
+  display: flex;
+  padding: 0 $padding;
+}
+.History__date {
+  flex: 0 0 65px;
+  border-right: 1px solid $border-color-dark;
+  text-align: right;
+  padding: 0 $padding 0 0;
+}
+.History__description {
+  flex: 1 1;
+  padding: 0 0 0 $padding;
+}
+.History__username {
+  font-weight: bold;
+}
 
 
 
