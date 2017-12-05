@@ -9,6 +9,7 @@ function Label(props) {
     inline,
     size,
     small,
+    medium,
     large,
     info,
     success,
@@ -26,6 +27,7 @@ function Label(props) {
     className,
     {
       'small': small,
+      'medium': medium,
       'large': large,
       'inline': inline,
       'text-info': info,
