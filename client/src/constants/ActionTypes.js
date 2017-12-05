@@ -6,6 +6,8 @@ import {
 
 // UI
 export const UI = createConstants('UI', [
+  'SHOW_FAQ',
+  'CLOSE_FAQ',
   'SET_INCLUDE_ARCHIVED',
   'SET_SORTING_CRITERIA',
   'SET_SORTING_REVERSE',

@@ -8,6 +8,7 @@ import Sort from '../constants/sorting'
 import uniq from '../utils/uniq'
 
 const initialState = {
+  showFAQ: false,
   loggedIn: {
     isLoading: false,
     value: false,
@@ -45,6 +46,11 @@ export default function ui(state = initialState, action) {
       return { ...state, loggedIn: { isLoading: false, value: action.payload } }
     case LOGGED_IN.ERROR:
       return { ...state, loggedIn: { isLoading: false, value: false } }
+
+    case UI.SHOW_FAQ:
+      return { ...state, showFAQ: true }
+    case UI.CLOSE_FAQ:
+      return { ...state, showFAQ: false }
 
     case UI.SET_SORTING_CRITERIA:
       return { ...state, sorting: { ...state.sorting, criteria: action.payload } }

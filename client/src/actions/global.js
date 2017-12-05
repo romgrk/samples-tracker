@@ -11,7 +11,6 @@ import * as requests from '../requests'
 import openCentered from '../utils/open-centered'
 import { getNewSample, getNewCompletionFunction } from '../models'
 import completionFunctions from './completion-functions'
-import global from './global'
 import samples from './samples'
 import settings from './settings'
 import templates from './templates'
@@ -19,12 +18,14 @@ import users from './users'
 
 const createPayload = (message, details) => ({ message, details })
 
-
 export const showNotification = createAction(SHOW_NOTIFICATION)
 export const showInfo         = createAction(SHOW.INFO, createPayload)
 export const showSuccess      = createAction(SHOW.SUCCESS, createPayload)
 export const showWarning      = createAction(SHOW.WARNING, createPayload)
 export const showError        = createAction(SHOW.ERROR, createPayload)
+
+export const showFAQ  = createAction(UI.SHOW_FAQ)
+export const closeFAQ = createAction(UI.CLOSE_FAQ)
 
 export const checkIsLoggedIn = createFetchActions(LOGGED_IN, requests.isLoggedIn)
 export const logIn = () => {
