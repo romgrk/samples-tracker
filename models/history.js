@@ -10,12 +10,13 @@ module.exports = {
   findById,
   findBySampleId,
   create,
-  log,
+  deleteBySampleId,
 }
 
 const columns = `
     date
   , description
+  , step_index as "stepIndex"
   , user_id as "userId"
 `
 
@@ -28,10 +29,12 @@ function findById(id) {
 }
 
 function findBySampleId(sampleId) {
-  return db.selectOne(`
-    SELECT ${columns}
-      FROM history
-     WHERE sample_id = @sampleId`, { sampleId })
+  return db.selectAll(`
+      SELECT ${columns}
+        FROM history
+       WHERE sample_id = @sampleId
+    ORDER BY date
+    `, { sampleId })
 }
 
 function create(entry) {
@@ -46,12 +49,8 @@ function create(entry) {
       )`, entry)
 }
 
-function log(entry) {
-  return result => {
-    create(entry)
-      .catch(err => console.error(err))
-    return result
-  }
+function deleteBySampleId(sampleId) {
+  return db.query('DELETE FROM history WHERE sample_id = @sampleId', { sampleId })
 }
 
 module.exports.delete = function(id) {
