@@ -74,6 +74,7 @@ function updateStatus(id, status, started = null) {
     UPDATE steps
        SET status = @status
          , started = @started
+         , alerted = NULL
      WHERE id = @id
   `, { id, status, started })
 }
