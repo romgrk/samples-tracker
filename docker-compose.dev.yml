@@ -17,7 +17,7 @@ services:
     links:
       - db
     environment:
-      PGHOST: '172.17.0.1'
+      PGHOST: 'db'
       PGDATABASE: postgres
       PGUSER: postgres
       PGPASSWORD: postgres
