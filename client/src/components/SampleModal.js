@@ -329,7 +329,7 @@ class SampleModal extends React.Component {
                       <td>
                         <Dropdown trigger={
                           <Button flat style={{ width: '120px'}}>
-                            <StatusIcon name={step.status} />&nbsp;&nbsp; <Text>{ step.status }</Text>
+                            <StatusIcon name={step.status} showInProgress />&nbsp;&nbsp; <Text>{ step.status }</Text>
                           </Button>
                         }>
                           {
