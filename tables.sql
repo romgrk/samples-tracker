@@ -24,7 +24,7 @@ CREATE TABLE settings (
 INSERT INTO settings VALUES
     ('alertDelay', '"2 weeks"'),                -- postgres interval
     ('alertEmails',  '["rom7011@gmail.com"]'),  -- emails alerted when step is overdue
-    ('whitelist',  '["rom7011@gmail.com"]'),    -- users allowed to login/signup
+    ('whitelist',  '["rom7011@gmail.com","david.bujold@mail.mcgill.ca"]'),    -- users allowed to login/signup
     ('archiveInterval', '"6 months"')           -- delay after which completed samples are not shown
 ;
 
