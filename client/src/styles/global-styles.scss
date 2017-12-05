@@ -122,8 +122,11 @@ html, body {
   line-height: 20px;
   height: 20px;
 }
+.label.medium {
+  font-size: 14px;
+}
 .label.large {
-  font-size: 18px;
+  font-size: 16px;
 }
 .label.editable.full {
   width: 100%;
@@ -171,8 +174,11 @@ input.label.editable {
   font-size: 12px;
   line-height: 25px;
 }
+.text.medium {
+  font-size: 14px;
+}
 .text.large {
-  font-size: 18px;
+  font-size: 16px;
 }
 .text.editable {
   position: relative;
@@ -505,6 +511,11 @@ textarea.text.editable:focus {
   border-bottom: 1px solid var(--light-border-color);
 }
 
+.Image {
+  display: block;
+  border: 1px solid $light-border-color;
+  border-radius: 2px;
+}
 
 
 table {
@@ -1064,3 +1075,13 @@ $step-width: 40px;
 }
 
 
+.Question {
+  position: relative;
+  padding: 0 6*$padding;
+  margin-bottom: 4*$padding;
+}
+.Question > .Icon {
+  position: absolute;
+  top:  8px;
+  left: $padding;
+}

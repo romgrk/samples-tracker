@@ -76,8 +76,8 @@ class Modal extends React.Component {
     return createPortal(
       <div id={this.id} className={modalClassName} ref={this.onRef} tabIndex='-1' onKeyDown={this.onKeyDown}>
         <div className='Modal__background' onClick={this.onClickBackground} />
-        <div className='Modal__scrollArea'>
-          <div className='Modal__container vbox' style={style}>
+        <div className='Modal__scrollArea' onClick={this.onClickBackground}>
+          <div className='Modal__container vbox' style={style} onClick={ev => ev.stopPropagation()}>
 
             {
               showHeader &&

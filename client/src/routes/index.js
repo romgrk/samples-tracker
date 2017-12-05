@@ -12,6 +12,7 @@ import { createStructuredSelector, createSelector } from 'reselect'
 import GlobalActions from '../actions/global'
 import Sidebar from '../components/Sidebar'
 import CompletionFunctionsContainer from '../containers/CompletionFunctionsContainer'
+import FAQContainer from '../containers/FAQContainer'
 import IndexContainer from '../containers/IndexContainer'
 import NotificationsContainer from '../containers/NotificationsContainer'
 import SamplesContainer from '../containers/SamplesContainer'
@@ -25,7 +26,7 @@ const items = [
   { type: 'item', icon: 'code',  path: '/completions', title: 'Completion Functions', showTitle: false },
 ]
 
-function Routes({ isLoggedIn, logOut }) {
+function Routes({ isLoggedIn, logOut, showFAQ }) {
   return (
     <Router>
       <div className='App hbox'>
@@ -46,7 +47,7 @@ function Routes({ isLoggedIn, logOut }) {
               index={items.findIndex(i => props.location.pathname.startsWith(i.path))}
               items={items}
             >
-              <Sidebar.Button icon='question-circle' onClick={undefined} />
+              <Sidebar.Button icon='question-circle' onClick={showFAQ} />
               <Sidebar.Button icon='sign-out' onClick={logOut} />
             </Sidebar>
 
@@ -79,6 +80,7 @@ function Routes({ isLoggedIn, logOut }) {
 
         <NotificationsContainer />
         <IndexContainer />
+        <FAQContainer />
       </div>
     </Router>
   )

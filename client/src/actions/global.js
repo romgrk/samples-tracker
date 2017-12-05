@@ -140,6 +140,8 @@ export default {
   showSuccess,
   showWarning,
   showError,
+  showFAQ,
+  closeFAQ,
   checkIsLoggedIn,
   logIn,
   logOut,
