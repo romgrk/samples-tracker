@@ -20,7 +20,7 @@ client.connect((err) => {
   query(fs.readFileSync('./tables.sql').toString())
 })
 
-const NOW = `to_char (now()::timestamp at time zone 'UTC', 'YYYY-MM-DD"T"HH24:MI:SS"Z"')`
+const NOW = `to_char (now()::timestamp at time zone 'UTC', 'YYYY-MM-DD"T"HH24:MI:SS"Z"')::timestamp`
 
 module.exports = {
   client,
