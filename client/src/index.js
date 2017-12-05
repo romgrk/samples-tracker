@@ -29,7 +29,7 @@ render(
 
 
 
-if (process.env.NODE_ENV === 'development') {
+if (process.env.NODE_ENV === 'development' || true) {
   store.dispatch(global.checkIsLoggedIn.receive(true))
   store.dispatch(global.fetchAll())
 }
