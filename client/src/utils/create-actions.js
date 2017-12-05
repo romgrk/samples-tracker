@@ -5,7 +5,6 @@
 import { createAction } from 'redux-actions'
 import isObject from 'is-object'
 
-const I = x => x
 const A = (state, ...args) => args
 
 export function createModelConstants(namespace, others = []) {
