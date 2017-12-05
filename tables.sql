@@ -120,12 +120,12 @@ CREATE TABLE completion_functions (
 
 
 CREATE TABLE history (
-    id          serial    primary key,
-    sample_id   integer   not null,
-    step_index  integer       null,
-    user_id     integer   not null,
-    date        timestamp not null,
-    description jsonb     not null
+    id          serial      primary key,
+    sample_id   integer     not null,
+    step_index  integer         null,
+    user_id     varchar(50) not null,
+    date        timestamp   not null,
+    description text        not null
 );
 
 

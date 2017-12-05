@@ -3,6 +3,7 @@ const router = express.Router()
 
 const { dataHandler, errorHandler } = require('../helpers/handlers.js')
 const Sample = require('../models/sample.js')
+const History = require('../models/history.js')
 
 /* GET samples list */
 router.get('/list', (req, res, next) => {
@@ -21,6 +22,15 @@ router.get('/get/:id', (req, res, next) => {
 /* POST create sample */
 router.use('/create', (req, res, next) => {
   Sample.create(req.body)
+  .then(sample => {
+    History.create({
+      sampleId: sample.id,
+      stepIndex: null,
+      userId: req.user.id,
+      description: `created sample`
+    })
+    return sample
+  })
   .then(dataHandler(res))
   .catch(errorHandler(res))
 })
@@ -28,18 +38,35 @@ router.use('/create', (req, res, next) => {
 /* POST update sample */
 router.use('/update/:id', (req, res, next) => {
   Sample.update({ ...req.body, id: req.params.id })
+  .then(sample => {
+    History.create({
+      sampleId: sample.id,
+      stepIndex: null,
+      userId: req.user.id,
+      description: `updated sample`
+    })
+    return sample
+  })
   .then(dataHandler(res))
   .catch(errorHandler(res))
 })
 
 /* POST complete sample step */
-router.use('/update-step-status/:id/:index/:value', (req, res, next) => {
-  Sample.updateStepStatus(
-    req.params.id,
-    Number(req.params.index),
-    req.params.value,
-    req.user
-  )
+router.use('/update-step-status/:id/:index/:status', (req, res, next) => {
+  const sampleId = req.params.id
+  const stepIndex = Number(req.params.index)
+  const status = req.params.status
+
+  Sample.updateStepStatus(sampleId, stepIndex, status, req.user)
+  .then(sample => {
+    History.create({
+      sampleId: sampleId,
+      stepIndex: stepIndex,
+      userId: req.user.id,
+      description: `changed step ${stepIndex} status to ${status}`
+    })
+    return sample
+  })
   .then(dataHandler(res))
   .catch(errorHandler(res))
 })
@@ -47,6 +74,7 @@ router.use('/update-step-status/:id/:index/:value', (req, res, next) => {
 /* POST delete sample */
 router.use('/delete/:id', (req, res, next) => {
   Sample.delete(req.params.id)
+  .then
   .then(dataHandler(res))
   .catch(errorHandler(res))
 })

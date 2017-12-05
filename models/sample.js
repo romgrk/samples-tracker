@@ -7,6 +7,7 @@ const { rejectMessage } = require('../helpers/promise')
 const db = require('../database.js')
 const Completion = require('./completion-function')
 const File = require('./file')
+const History = require('./history')
 const Settings = require('./settings')
 const Step = require('./step')
 
@@ -33,15 +34,17 @@ const columns = `
 function addDetails(sample) {
   return Promise.all([
     Step.findBySampleId(sample.id),
-    File.findBySampleId(sample.id)
+    File.findBySampleId(sample.id),
+    History.findBySampleId(sample.id)
   ])
-  .then(([steps, files]) => {
+  .then(([steps, files, history]) => {
 
     files.forEach(file =>
       steps[file.stepIndex].files.push(file)
     )
 
     sample.steps = steps
+    sample.history = history
 
     return sample
   })

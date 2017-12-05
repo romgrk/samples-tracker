@@ -4,6 +4,7 @@ const router = express.Router()
 const { dataHandler, errorHandler } = require('../helpers/handlers.js')
 const parseForm = require('../helpers/parse-form')
 const File = require('../models/file.js')
+const History = require('../models/history.js')
 
 /* GET files list */
 router.get('/list', (req, res, next) => {
@@ -51,23 +52,46 @@ router.get('/download/:id', (req, res, next) => {
 
 /* POST create file */
 router.use('/create/:sampleId/:stepIndex', (req, res, next) => {
+  const sampleId  = req.params.sampleId
+  const stepIndex = Number(req.params.stepIndex)
+
   parseForm(req)
   .then(({ fields, files: { file } }) =>
-    console.log(file.toJSON()) ||
     File.create({
-      sampleId: req.params.sampleId,
-      stepIndex: req.params.stepIndex,
+      sampleId,
+      stepIndex,
       name: file.name,
       mime: file.type,
     }, file.path)
   )
+  .then(file => {
+    History.create({
+      sampleId: sampleId,
+      stepIndex: stepIndex,
+      userId: req.user.id,
+      description: `added file ${file.name} to step ${stepIndex}`
+    })
+    return file
+  })
   .then(dataHandler(res))
   .catch(errorHandler(res))
 })
 
 /* POST delete file */
 router.use('/delete/:id', (req, res, next) => {
-  File.delete(req.params.id)
+  File.findById(req.params.id)
+  .then(file =>
+    File.delete(req.params.id)
+    .then(file => {
+      History.create({
+        sampleId: file.sampleId,
+        stepIndex: file.stepIndex,
+        userId: req.user.id,
+        description: `deleted file ${file.name} from step ${stepIndex}`
+      })
+      return sample
+    })
+  )
   .then(dataHandler(res))
   .catch(errorHandler(res))
 })
