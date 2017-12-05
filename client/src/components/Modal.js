@@ -76,31 +76,33 @@ class Modal extends React.Component {
     return createPortal(
       <div id={this.id} className={modalClassName} ref={this.onRef} tabIndex='-1' onKeyDown={this.onKeyDown}>
         <div className='Modal__background' onClick={this.onClickBackground} />
-        <div className='Modal__container vbox' style={style}>
+        <div className='Modal__scrollArea'>
+          <div className='Modal__container vbox' style={style}>
 
-          {
-            showHeader &&
-              <div className='Modal__header hbox'>
-                <div className='Modal__title title fill'>
-                  { title }
+            {
+              showHeader &&
+                <div className='Modal__header hbox'>
+                  <div className='Modal__title title fill'>
+                    { title }
+                  </div>
+                  {
+                    showClose &&
+                      <Button
+                        className='Modal__close'
+                        round
+                        icon='close'
+                        onClick={this.props.onClose}
+                      />
+                  }
                 </div>
-                {
-                  showClose &&
-                    <Button
-                      className='Modal__close'
-                      round
-                      icon='close'
-                      onClick={this.props.onClose}
-                    />
-                }
-              </div>
-          }
+            }
 
-          <div className='Modal__content'>
-            { this.props.children }
-          </div>
+            <div className='Modal__content'>
+              { this.props.children }
+            </div>
 
-          <div className='Modal__actions'>
+            <div className='Modal__actions'>
+            </div>
           </div>
         </div>
       </div>
