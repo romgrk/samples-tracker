@@ -61,7 +61,7 @@ function Button(props) {
       onClick={onClick}
       disabled={loading || disabled}
     >
-      { icon !== undefined && <Icon name={icon} marginRight={5} className='Button__icon' /> }
+      { icon !== undefined && <Icon name={icon} marginRight={(round || square) ? 0 : 5} className='Button__icon' /> }
       {
         children &&
           <span>{ children }</span>
