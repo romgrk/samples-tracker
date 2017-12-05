@@ -61,7 +61,6 @@ export const logIn = () => {
       .then(isLoggedIn => isLoggedIn ? dispatch(fetchAll()) : undefined)
   }
 }
-
 export const logOut = () => {
   return (dispatch, getState) => {
     const { ui: { loggedIn } } = getState()
@@ -97,6 +96,11 @@ export const logOut = () => {
 
 export const fetchAll = () => {
   return (dispatch, getState) => {
+
+    const { ui: { loggedIn } } = getState()
+
+    if (loggedIn.value === false && process.env.NODE_ENV !== 'development')
+      return
 
     return Promise.all([
       dispatch(completionFunctions.fetch()),

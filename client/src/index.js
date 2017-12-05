@@ -35,12 +35,10 @@ if (process.env.NODE_ENV === 'development') {
 }
 else /* production */ {
   store.dispatch(global.checkIsLoggedIn())
-  .then(isLoggedIn => {
-    if (isLoggedIn)
-      return store.dispatch(global.fetchAll())
-  })
+  .then(() => store.dispatch(global.fetchAll()))
 }
 
+const updateInterval = setInterval(() => store.dispatch(global.fetchAll()), 60 * 1000)
 
 
 
