@@ -1,8 +1,8 @@
 /*
- * icon-for-mime-type.js
+ * mime-type.js
  */
 
-export default function iconForMimeType(mime) {
+export function iconFor(mime) {
   if (mime.startsWith('image/'))
     return 'file-image-o'
 
@@ -42,4 +42,8 @@ export default function iconForMimeType(mime) {
     return 'file-text'
 
   return 'file'
+}
+
+export function isImage(mime) {
+  return mime.startsWith('image/')
 }

@@ -6,7 +6,7 @@ import classname from 'classname'
 
 import openFile from '../utils/open-file'
 import humanReadableTime from '../utils/human-readable-time'
-import iconForMimeType from '../utils/icon-for-mime-type'
+import * as MimeType from '../utils/mime-type'
 import Status from '../constants/status'
 import Badge from './Badge'
 import Button from './Button'
@@ -411,7 +411,7 @@ class SampleModal extends React.Component {
                                     <span>
                                       {
                                         !file.hasError ?
-                                          <Icon name={iconForMimeType(file.mime)} /> :
+                                          <Icon name={MimeType.iconFor(file.mime)} /> :
                                           <Icon name='warning' error />
                                       } <Link href={`/api/file/read/${file.id}`}>
                                         { file.name }
