@@ -544,6 +544,13 @@ a.link:visited {
 a.link:hover {
   //border-bottom: 1px solid $link-color;
 }
+a.link.text-normal {
+  color: white;
+  border-bottom: 1px solid rgba(white, 0.5);
+}
+a.link.text-normal:visited {
+  color: white;
+}
 
 
 .table {

@@ -507,7 +507,7 @@ function renderFile(file) {
         !file.hasError ?
         <Icon name={MimeType.iconFor(file.mime)} /> :
         <Icon name='warning' error />
-      } <Link href={`/api/file/download/${file.id}`}>
+      } <Link href={`/api/file/download/${file.id}`} normal>
         { file.name }
       </Link>
     </span>

@@ -8,6 +8,7 @@ function Link(props) {
     className,
     small,
     large,
+    normal,
     info,
     success,
     warning,
@@ -24,6 +25,7 @@ function Link(props) {
     {
       'small': small,
       'large': large,
+      'text-normal': normal,
       'text-info': info,
       'text-success': success,
       'text-warning': warning,
