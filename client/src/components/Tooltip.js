@@ -68,6 +68,7 @@ class Tooltip extends React.Component {
     const box = this.element.getBoundingClientRect()
 
     const position = this.props.position || 'top'
+    const height = this.props.height || 30 /* we're hardcoding the tooltip height here */
 
     let style
 
@@ -83,9 +84,12 @@ class Tooltip extends React.Component {
       }
     else // default: if (position === 'top')
       style = {
-        top:  size(box.top - 30), /* we're hardcoding the tooltip height here */
+        top:  size(box.top - height),
         left: size(box.left),
       }
+
+    if (this.props.height)
+      style.height = this.props.height
 
     if (this.props.minWidth === 'parent')
       style.minWidth = box.width
