@@ -2,7 +2,7 @@ import React from 'react'
 import pure from 'recompose/pure'
 import classname from 'classname'
 
-import humanReadableTime from '../utils/human-readable-time'
+import humanReadableTime, { humanDetailedTime } from '../utils/human-readable-time'
 import Tooltip from './Tooltip'
 
 function Time(props) {
@@ -40,7 +40,7 @@ function Time(props) {
   )
 
   return (
-    <Tooltip content={children} offset='15px 0'>
+    <Tooltip content={humanDetailedTime(children)} offset='15px 0'>
       <abbr className={timeClassName} { ...rest }>
         { humanReadableTime(children) }
       </abbr>
