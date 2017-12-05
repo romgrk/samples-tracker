@@ -7,7 +7,7 @@ import {
   assoc,
   dissoc
 } from 'ramda'
-import { TEMPLATES } from 'constants/ActionTypes'
+import { TEMPLATES } from '../constants/ActionTypes'
 
 import toLoadable from '../utils/to-loadable'
 

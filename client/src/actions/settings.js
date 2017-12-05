@@ -1,4 +1,4 @@
-import { SETTINGS } from 'constants/ActionTypes'
+import { SETTINGS } from '../constants/ActionTypes'
 
 import { createFetchActions } from '../utils/create-actions'
 import * as requests from '../requests'

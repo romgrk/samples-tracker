@@ -7,7 +7,7 @@ import {
   assoc,
   dissoc
 } from 'ramda'
-import { USERS } from 'constants/ActionTypes'
+import { USERS } from '../constants/ActionTypes'
 
 import toLoadable from '../utils/to-loadable'
 

@@ -1,5 +1,5 @@
 import { get, set, lensPath } from 'ramda'
-import { SETTINGS } from 'constants/ActionTypes'
+import { SETTINGS } from '../constants/ActionTypes'
 
 import toLoadable from '../utils/to-loadable'
 

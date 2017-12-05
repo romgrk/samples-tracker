@@ -7,7 +7,7 @@ import {
   assoc,
   dissoc
 } from 'ramda'
-import { COMPLETION_FUNCTIONS } from 'constants/ActionTypes'
+import { COMPLETION_FUNCTIONS } from '../constants/ActionTypes'
 
 import toLoadable from '../utils/to-loadable'
 

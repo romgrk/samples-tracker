@@ -1,4 +1,4 @@
-import { COMPLETION_FUNCTIONS } from 'constants/ActionTypes'
+import { COMPLETION_FUNCTIONS } from '../constants/ActionTypes'
 
 import { createFetchActions } from '../utils/create-actions'
 import * as requests from '../requests'
