@@ -341,43 +341,57 @@ class SampleModal extends React.Component {
                               </table>
 
                               <div className='row'>
-                                <Label>Alert delay</Label>
-                                <IntervalInput
-                                  value={step.alertDelay}
-                                  onChange={(alertDelay) => this.setAlertDelay(stepIndex, alertDelay)}
-                                  onAccept={this.update}
-                                />
-
-                                <div className='fill' />
-
-                                <Label>Completion Function</Label>
-                                <Dropdown label={
-                                  step.completionFn ?
-                                    completionFunctions.data[step.completionFn].name :
-                                    <em>None</em>
-                                } icons>
-                                  <Dropdown.Item
-                                    icon={ step.completionFn === null ? 'dot-circle-o' : 'circle-o'}
-                                    onClick={() => this.setStepCompletion(stepIndex, null)}
-                                  >
-                                    <em>None</em>
-                                  </Dropdown.Item>
-                                  {
-                                    Object.values(completionFunctions.data).map(completion =>
-                                      <Dropdown.Item
-                                        icon={ step.completionFn === completion.id ? 'dot-circle-o' : 'circle-o'}
-                                        onClick={() => this.setStepCompletion(stepIndex, completion.id)}
-                                      >
-                                        { completion.name }
-                                      </Dropdown.Item>
-                                    )
-                                  }
-                                  <Dropdown.Separator />
-                                  <Dropdown.Item icon='plus' onClick={this.createNewFunction}>
-                                    Create new
-                                  </Dropdown.Item>
-                                </Dropdown>
+                                <table className='StepsModal__controlsTable'>
+                                <tbody>
+                                  <tr>
+                                    <td>
+                                      <Label>Alert delay</Label>
+                                    </td>
+                                    <td>
+                                      <IntervalInput
+                                        value={step.alertDelay}
+                                        onChange={(alertDelay) => this.setAlertDelay(stepIndex, alertDelay)}
+                                        onAccept={this.update}
+                                      />
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td>
+                                      <Label>Completion Function</Label>
+                                    </td>
+                                    <td>
+                                      <Dropdown label={
+                                        step.completionFn ?
+                                          completionFunctions.data[step.completionFn].name :
+                                          <em>None</em>
+                                      } icons>
+                                        <Dropdown.Item
+                                          icon={ step.completionFn === null ? 'dot-circle-o' : 'circle-o'}
+                                          onClick={() => this.setStepCompletion(stepIndex, null)}
+                                        >
+                                          <em>None</em>
+                                        </Dropdown.Item>
+                                        {
+                                          Object.values(completionFunctions.data).map(completion =>
+                                            <Dropdown.Item
+                                              icon={ step.completionFn === completion.id ? 'dot-circle-o' : 'circle-o'}
+                                              onClick={() => this.setStepCompletion(stepIndex, completion.id)}
+                                            >
+                                              { completion.name }
+                                            </Dropdown.Item>
+                                          )
+                                        }
+                                        <Dropdown.Separator />
+                                        <Dropdown.Item icon='plus' onClick={this.createNewFunction}>
+                                          Create new
+                                        </Dropdown.Item>
+                                      </Dropdown>
+                                    </td>
+                                  </tr>
+                                </tbody>
+                                </table>
                               </div>
+
 
                               <div className='row'>
                                 <EditableText

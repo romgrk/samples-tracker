@@ -271,6 +271,7 @@ textarea.text.editable:focus {
   border-radius: 2px;
   padding: 0 8px;
   height: 30px;
+  width: 180px;
   transition: box-shadow .25s;
 }
 .Input__element:active,
@@ -899,6 +900,9 @@ $step-width: 40px;
 }
 .StepsModal__status td:nth-child(2) {
   text-align: right;
+}
+.StepsModal__controlsTable td {
+  padding: $padding 2*$padding $padding 0;
 }
 
 
