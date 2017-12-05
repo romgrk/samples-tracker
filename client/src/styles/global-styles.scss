@@ -295,6 +295,9 @@ textarea.text.editable:focus {
 .Input.error .Input__element {
   box-shadow: 0 0 0 1px $bg-color-error;
 }
+.Input.badge {
+  height: 25px;
+}
 .Input.badge .Input__element {
   border-radius: 15px;
   height: 25px;
