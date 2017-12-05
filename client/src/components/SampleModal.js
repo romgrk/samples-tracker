@@ -407,17 +407,7 @@ class SampleModal extends React.Component {
                                   values={step.files}
                                   onAdd={() => {/* nop */}}
                                   onDelete={file => this.onDeleteFile(stepIndex, file)}
-                                  render={file =>
-                                    <span>
-                                      {
-                                        !file.hasError ?
-                                          <Icon name={MimeType.iconFor(file.mime)} /> :
-                                          <Icon name='warning' error />
-                                      } <Link href={`/api/file/read/${file.id}`}>
-                                        { file.name }
-                                      </Link>
-                                    </span>
-                                  }
+                                  render={renderFile}
                                   emptyMessage={<Label small muted>No files attached</Label>}
                                   control={
                                     <div>
@@ -456,6 +446,30 @@ class SampleModal extends React.Component {
       </Modal>
     )
   }
+}
+
+
+function renderFile(file) {
+  const element = (
+    <span>
+      {
+        !file.hasError ?
+        <Icon name={MimeType.iconFor(file.mime)} /> :
+        <Icon name='warning' error />
+      } <Link href={`/api/file/download/${file.id}`}>
+        { file.name }
+      </Link>
+    </span>
+  )
+
+  if (!MimeType.isImage(file.mime))
+    return element
+
+  return (
+    <Tooltip content={<img src={`/api/file/read/${file.id}`} height={300} />} height={300}>
+      { element }
+    </Tooltip>
+  )
 }
 
 function contentStyle(stepIndex, stepWidth) {
