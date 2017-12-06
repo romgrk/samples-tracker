@@ -115,9 +115,9 @@ class Dropdown extends React.Component {
     const isControlled = 'open' in this.props
 
     if (isControlled)
-      this.setState({ open: false })
-    else
       this.props.onClose && this.props.onClose()
+    else
+      this.setState({ open: false })
   }
 
   toggle = () => {
