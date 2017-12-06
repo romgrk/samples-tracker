@@ -1079,6 +1079,8 @@ $step-width: 40px;
 }
 .CompletionFunctions__list > .item > .delete-icon {
   padding: $padding;
+  width: unset;
+  height: unset;
   border-radius: 2px;
   opacity: 0;
   transition: all .25s;
