@@ -1,10 +1,12 @@
 import React from 'react'
-import pure from 'recompose/pure'
 import classname from 'classname'
-
-import has from '../utils/has'
+import { equals } from 'ramda'
 
 class Input extends React.Component {
+
+  shouldComponentUpdate(nextProps) {
+    return !equals(this.props, nextProps)
+  }
 
   accept(ev) {
     this.props.onEnter && this.props.onEnter(ev.target.value, ev)
@@ -29,7 +31,7 @@ class Input extends React.Component {
   }
 
   onFocus = (ev) => {
-    if (has(this.props, 'autoSelect'))
+    if (this.props.autoSelect)
       ev.target.select()
     this.props.onFocus && this.props.onFocus(ev)
   }
@@ -73,4 +75,4 @@ class Input extends React.Component {
 
 
 
-export default pure(Input)
+export default Input
