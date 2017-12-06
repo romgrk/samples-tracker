@@ -26,13 +26,13 @@ const items = [
   { type: 'item', icon: 'code',  path: '/completions', title: 'Completion Functions', showTitle: false },
 ]
 
-function Routes({ isLoggedIn, logOut, showFAQ }) {
+function Routes({ isLoggedIn, isLoggingIn, logOut, showFAQ }) {
   return (
     <Router>
       <div className='App hbox'>
 
         <Route render={(props) =>
-          (!isLoggedIn && props.location.pathname !== '/') ?
+          (!isLoggedIn && !isLoggingIn && props.location.pathname !== '/') ?
             <Redirect to='/' /> :
           (isLoggedIn && props.location.pathname === '/') ?
             <Redirect to='/samples' /> :
@@ -88,6 +88,7 @@ function Routes({ isLoggedIn, logOut, showFAQ }) {
 
 const mapStateToProps = createStructuredSelector({
   isLoggedIn: createSelector(state => state.ui.loggedIn.value, state => state),
+  isLoggingIn: createSelector(state => state.ui.loggedIn.isLoading, state => state),
 })
 
 function mapDispatchToProps(dispatch) {
