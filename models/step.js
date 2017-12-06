@@ -69,7 +69,8 @@ function update(step) {
      WHERE id = @id`, step)
 }
 
-function updateStatus(id, status, started = null) {
+function updateStatus(id, status) {
+  const started = status === 'DONE' ? new Date() : null
   return db.query(`
     UPDATE steps
        SET status = @status
