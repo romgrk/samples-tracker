@@ -220,7 +220,7 @@ function create(sample) {
   return db.insert(`
     INSERT INTO samples (name, tags, notes, created)
       VALUES (
-        @name,
+        'Sample ' || currval('samples_id_seq'),
         @tags,
         @notes,
         CURRENT_TIMESTAMP
