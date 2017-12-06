@@ -100,7 +100,12 @@ class Dropdown extends React.Component {
   }
 
   close = () => {
-    this.setState({ open: false })
+    const isControlled = 'open' in this.props
+
+    if (isControlled)
+      this.setState({ open: false })
+    else
+      this.props.onClose && this.props.onClose()
   }
 
   toggle = () => {
@@ -108,8 +113,17 @@ class Dropdown extends React.Component {
   }
 
   render() {
-    const { className, value, loading, trigger  } = this.props
-    const { open } = this.state
+    const {
+      className,
+      value,
+      loading,
+      inline,
+      trigger,
+      onClick,
+    } = this.props
+
+    const isControlled = 'open' in this.props
+    const open = isControlled ? this.props.open : this.state.open
 
     const dropdownClassName = classname(
       'Dropdown',
@@ -117,6 +131,7 @@ class Dropdown extends React.Component {
       {
         'open': open,
         'with-icons': this.props.icons,
+        'inline': inline,
       })
 
     const menuClassName = classname(
@@ -131,8 +146,12 @@ class Dropdown extends React.Component {
       React.cloneElement(
         trigger || <Button iconAfter='chevron-down'>{ this.props.label }</Button>,
         {
-          ref: this.onRef,
-          onClick: this.toggle,
+          ref: ref => {
+            this.onRef(ref)
+            if (trigger && typeof trigger.ref === 'function')
+              trigger.ref(ref)
+          },
+          ...(isControlled ? { onClick: onClick } : { onClick: this.toggle }),
         }
       )
 
@@ -160,6 +179,10 @@ class Dropdown extends React.Component {
       </div>
     )
   }
+}
+
+function getEventProps(props) {
+
 }
 
 const defaultExport = pure(Dropdown)
