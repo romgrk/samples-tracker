@@ -13,6 +13,7 @@ import EditableList from './EditableList'
 import Help from './Help'
 import Icon from './Icon'
 import IntervalInput from './IntervalInput'
+import Text from './Text'
 import Title from './Title'
 
 
@@ -124,9 +125,9 @@ class Settings extends React.Component {
         <div className='Settings__left fill'>
           <Group>
             <Title>Archive-Interval</Title>
-            <p>
+            <Text block muted>
               Delay after which completed samples are hidden from the list.
-            </p>
+            </Text>
             <IntervalInput
               value={archiveInterval.data}
               loading={archiveInterval.isLoading}
@@ -137,9 +138,9 @@ class Settings extends React.Component {
 
           <Group>
             <Title>Alert-Delay</Title>
-            <p>
+            <Text block muted>
               Default interval of time after which emails are sent when there is no activity.
-            </p>
+            </Text>
             <IntervalInput
               value={alertDelay.data}
               loading={alertDelay.isLoading}
@@ -150,7 +151,9 @@ class Settings extends React.Component {
 
           <Group>
             <Title>Alert-Emails</Title>
-            <p>Emails in this list will receive notifications when a sample is overdue.</p>
+            <Text block muted>
+              Emails in this list will receive notifications when a sample is overdue.
+            </Text>
             <EditableList
               help='Multiple emails allowed. Press <Enter> to submit.'
               placeHolder='Add email…'
@@ -163,7 +166,9 @@ class Settings extends React.Component {
 
           <Group>
             <Title>Whitelist</Title>
-            <p>Emails in this list are allowed to log-in/sign-up to this application.</p>
+            <Text block muted>
+              Emails in this list are allowed to log-in/sign-up to this application.
+            </Text>
             <EditableList
               help='Multiple emails allowed. Press <Enter> to submit.'
               placeHolder='Add email…'
@@ -177,9 +182,9 @@ class Settings extends React.Component {
         <div className='Settings__right fill'>
 
           <Title>Users</Title>
-          <p>
+          <Text block muted>
             This is the list of users with an account. <br/>
-          </p>
+          </Text>
 
           <table className='table'>
             <thead>
