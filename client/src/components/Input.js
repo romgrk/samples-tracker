@@ -63,6 +63,7 @@ class Input extends React.Component {
           onChange={this.onChange}
           onKeyDown={this.props.onKeyDown || this.onKeyDown}
           onFocus={this.onFocus}
+          ref={ref => ref && (this.element = ref)}
         />
         { loading && <span className='loading-spinner-tiny'/> }
       </div>
