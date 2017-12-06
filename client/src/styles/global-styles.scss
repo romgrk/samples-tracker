@@ -446,15 +446,25 @@ textarea.text.editable:focus {
 .Tooltip,
 .Dropdown__inner {
   position: absolute;
-  /* top & left set by tether */
-  min-width: 180px;
-  padding: calc(2 * var(--padding) - 2px) 0;
-  border: 1px solid var(--light-border-color);
-  border-radius: 2px;
-  color: var(--light-color);
-  background-color: var(--bg-color-dark);
-  box-shadow: 1px 2px 6px 1px rgba(0, 0, 0, 0.3);
   cursor: default;
+  /* top & left set by js */
+  box-shadow: 1px 2px 6px 1px rgba(0, 0, 0, 0.3);
+}
+.Popup,
+.Dropdown__inner {
+  min-width: 180px;
+  padding: (2*$padding - 2px) 0;
+  border: 1px solid $light-border-color;
+  border-radius: 2px;
+  color: $light-color;
+  background-color: $bg-color-dark;
+}
+.Tooltip {
+  color: $text-color-highlight;
+  background-color: rgba(black, 0.7);
+  border: 1px solid $border-color;
+  padding: ($padding - 1px) 2*$padding;
+  border-radius: 4px;
 }
 .Dropdown__inner {
   opacity: 0;
@@ -474,7 +484,6 @@ textarea.text.editable:focus {
 .Tooltip {
   pointer-events: none;
   padding: 0 $padding;
-  height: 30px;
   line-height: 30px;
   min-width: unset;
 }
@@ -1071,7 +1080,7 @@ $step-width: 40px;
 
 
 .CompletionFunctions__list {
-  border-left: 1px solid $bg-color;
+  border-left: 1px solid $bg-color-default;
   background-color: $bg-color-dark;
 }
 .CompletionFunctions__list > .item {

@@ -11,10 +11,10 @@
 
 $color: #909090;
 $light-color: #ccc;
-$bg-color: #3D3D3D;
+$bg-color-default: #3D3D3D;
 $border-color: #2E2E2E;
 $bg-color-dark: #292929;
-$border-color-dark: $bg-color;
+$border-color-dark: $bg-color-default;
 $hover-color: #ddd;
 $hover-bg-color: #353535;
 $hover-light-bg-color: rgba(255, 255, 255, 0.05);
@@ -28,7 +28,7 @@ $light-accent-color: #a6cbff;
 $dark-accent-color: #003580;
 $selection-color: rgba(255, 255, 255, 0.2);
 
-$text-color:         $color;
+$text-color-default: $color;
 $text-color-normal:  #d7dae0;
 $text-color-info:    rgb(100, 148, 237);
 $text-color-success: rgb(115, 201, 144);

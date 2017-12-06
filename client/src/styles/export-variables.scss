@@ -3,7 +3,7 @@
 html {
   --color: $color;
   --light-color: $light-color;
-  --bg-color: $bg-color;
+  --bg-color-default: $bg-color-default;
   --border-color: $border-color;
   --bg-color-dark: $bg-color-dark;
   --border-color-dark: $border-color-dark;
@@ -20,7 +20,7 @@ html {
   --dark-accent-color: $dark-accent-color;
   --selection-color: $selection-color;
 
-  --text-color: $text-color;
+  --text-color-default: $text-color-default;
   --text-color-normal: $text-color-normal;
   --text-color-info: $text-color-info;
   --text-color-success: $text-color-success;
