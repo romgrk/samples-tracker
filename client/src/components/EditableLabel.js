@@ -27,10 +27,31 @@ class EditableLabel extends React.Component {
     }
   }
 
+  onRefInput = (ref) => {
+    if (!ref)
+      return
+
+    this.input = ref
+    this.input.select()
+  }
+
+  onRefButton = (ref) => {
+    if (!ref)
+      return
+
+    this.button = ref
+
+    if (this.shouldFocusButton) {
+      this.shouldFocusButton = false
+      this.button.focus()
+    }
+  }
+
   accept = (ev) => {
     if (ev.target.value !== this.props.value)
       this.props.onEnter && this.props.onEnter(ev.target.value, ev)
     this.setNotEditing()
+    this.shouldFocusButton = true
   }
 
   setNotEditing = () => {
@@ -50,6 +71,7 @@ class EditableLabel extends React.Component {
       children,
       onEnter,
       inline,
+      block,
       size,
       small,
       large,
@@ -72,6 +94,7 @@ class EditableLabel extends React.Component {
         'small': small,
         'large': large,
         'inline': inline,
+        'block': block,
         'text-info': info,
         'text-success': success,
         'text-warning': warning,
@@ -93,18 +116,19 @@ class EditableLabel extends React.Component {
           onChange={this.onChange}
           onKeyDown={this.onKeyDown}
           onBlur={this.accept}
-          ref={ref => ref ? ref.select() : undefined}
+          ref={this.onRefInput}
         />
       )
     }
 
     return (
-      <div className={labelClassName}
+      <button className={labelClassName}
           { ...rest }
           onClick={this.setEditing}
+          ref={this.onRefButton}
         >
         <span>{ value }{ children }</span> <Icon name='pencil' />
-      </div>
+      </button>
     )
   }
 }

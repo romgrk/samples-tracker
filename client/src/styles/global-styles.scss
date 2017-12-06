@@ -143,21 +143,21 @@ html, body {
 .label.editable.full {
   width: 100%;
 }
-div.label.editable {
+button.label.editable {
   transition: all .25s;
   cursor: pointer;
   text-transform: none;
 }
-div.label.editable:hover {
+button.label.editable:hover {
   background-color: var(--hover-light-bg-color);
 }
-div.label.editable span {
+button.label.editable span {
   flex: 1;
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
 }
-div.label.editable .Icon {
+button.label.editable .Icon {
   margin: var(--padding);
   height: 100%;
   opacity: 0;
@@ -165,7 +165,7 @@ div.label.editable .Icon {
   transition: opacity .25s;
   flex: 0 0;
 }
-div.label.editable:hover .Icon {
+button.label.editable:hover .Icon {
   opacity: 1;
 }
 input.label.editable {
@@ -1049,7 +1049,13 @@ $step-width: 40px;
 .TemplateStep .label.editable {
   width: 0;
   flex: 1 1;
+  width: -webkit-max-content;
+  width:    -moz-max-content;
+  width:         max-content;
   //display: inline;
+}
+.TemplateStep input.label.editable {
+  width: 100px;
 }
 .TemplateStep .Dropdown {
   flex: 0 0 auto;
