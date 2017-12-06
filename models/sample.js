@@ -112,7 +112,7 @@ function updateStepStatus(id, index, status, user) {
       .then(() => {
         if (status === 'DONE') {
 
-          if (!previousSteps.every(step => step.status === 'DONE'))
+          if (!previousSteps.every(isDoneOrSkip))
             return rejectMessage(`Can't complete step before completing those before.`)
 
           if (step.completionFn !== null) {
@@ -128,9 +128,13 @@ function updateStepStatus(id, index, status, user) {
         else if (step.status === 'IN_PROGRESS' && status === 'NOT_DONE') {
           return rejectMessage(`Step will stay in progress.`)
         }
-        else /* if (status !== 'DONE' && step.status !== 'IN_PROGRESS') */ {
-          if (nextSteps.some(step => step.status === 'DONE'))
-            return rejectMessage(`Can't switch status back to ${status} because some step after is already completed.`)
+        else if (status === 'SKIP') {
+          return true
+        }
+        else {
+          if (nextSteps.some(isDoneOrSkip))
+            return rejectMessage(
+              `Can't switch status back to ${status} because some step after is already completed or skipped.`)
         }
 
         return true
@@ -141,24 +145,59 @@ function updateStepStatus(id, index, status, user) {
        */
       .then(() => {
         const actions = []
-        actions.push(Step.updateStatus(step.id, status, null))
+
+        /*
+         * Set the step status to it's new value
+         */
+        actions.push(Step.updateStatus(step.id, status))
+
+
+        /*
+         * This procedure sets the next step that needs to be set to IN_PROGRESS to
+         * that. It's only used when we're changing a status to either DONE or SKIP.
+         */
+        const setNextStepInProgress = () => {
+          let indexTodo = index
+          let nextStepTodo = nextStep
+
+          while(indexTodo < sample.steps.length && nextStepTodo.status === 'SKIP')
+            nextStepTodo = sample.steps[++indexTodo]
+
+          /*
+           * If there are more steps, we set the last undone step to IN_PROGRESS, except
+           * when status is != NOT_DONE (because if the status is ERROR or ON_HOLD, we
+           * want it to stay that way).
+           */
+          if (nextStepTodo
+            && nextStepTodo.status === 'NOT_DONE'
+          )
+            actions.push(Step.updateStatus(nextStepTodo.id, 'IN_PROGRESS', new Date()))
+          /*
+           * If there are no more steps, we set the completion date
+           */
+          else if (indexTodo === sample.steps.length)
+            actions.push(complete(sample.id, true))
+        }
+
 
         if (status === 'DONE') {
 
-          if (nextSteps.length === 0)
-            actions.push(complete(sample.id, true))
+          setNextStepInProgress()
 
-          if (nextStep !== undefined && nextStep.status === 'NOT_DONE')
-            actions.push(Step.updateStatus(nextStep.id, 'IN_PROGRESS', new Date()))
+        }
+        else if (status === 'SKIP') {
+
+          if (previousSteps.every(isDoneOrSkip))
+            setNextStepInProgress()
         }
         else {
           if (nextStep !== undefined && nextStep.status === 'IN_PROGRESS')
             actions.push(Step.updateStatus(nextStep.id, 'NOT_DONE', null))
 
-          if (previousSteps.every(step => step.status === 'DONE') && status === 'NOT_DONE')
+          if (previousSteps.every(isDoneOrSkip) && status === 'NOT_DONE')
             actions.push(Step.updateStatus(step.id, 'IN_PROGRESS', new Date()))
 
-          if (step.status === 'DONE' && nextSteps.length === 0 && sample.completed)
+          if (isDoneOrSkip(step) && nextSteps.length === 0 && sample.completed)
             actions.push(complete(sample.id, false))
         }
 
@@ -196,4 +235,11 @@ function create(sample) {
 
 module.exports.delete = function(id) {
   return db.query('DELETE FROM samples WHERE id = @id', { id })
+}
+
+
+// Helpers
+
+function isDoneOrSkip(step) {
+  return step.status === 'DONE' || step.status === 'SKIP'
 }
