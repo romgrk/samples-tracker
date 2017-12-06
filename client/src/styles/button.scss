@@ -63,8 +63,12 @@
   border-radius: 50%;
 }
 .Button.square {
+  padding: 0;
+  width: 30px;
   height: 30px;
   min-width: 30px;
+  text-align: center;
+  justify-content: center;
 }
 
 .Button.small {
