@@ -13,7 +13,8 @@ CREATE TYPE Status AS ENUM (
     'DONE',
     'IN_PROGRESS',
     'ERROR',
-    'ON_HOLD'
+    'ON_HOLD',
+    'SKIP'
 );
 
 
@@ -136,10 +137,10 @@ INSERT INTO templates (name) VALUES ('request');
 INSERT INTO template_steps (template_id, index, name, "alertDelay", "completionFn") VALUES
     (2, 0, 'Write',    '2 weeks', NULL),
     (2, 1, 'Review',   '2 weeks', NULL),
-    (2, 2, 'Send',     '2 weeks', 1),
+    (2, 2, 'Send',     '2 weeks', NULL),
     (2, 3, 'Response', '2 weeks', NULL),
     (2, 4, 'Read',     '2 weeks', NULL),
-    (2, 5, 'Archive',  '2 weeks', NULL),
+    (2, 5, 'Archive',  '2 weeks', 1),
     (2, 6, 'Sleep',    '2 weeks', NULL)
 ;
 INSERT INTO users (id, token, name, email) VALUES (
