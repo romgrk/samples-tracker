@@ -237,7 +237,7 @@ class SampleModal extends React.Component {
       <Modal
         className='SampleModal'
         title={
-          <EditableLabel value={sample ? sample.data.name : ''} onEnter={this.setName} />
+          <EditableLabel className='fill' value={sample ? sample.data.name : ''} onEnter={this.setName} />
         }
         width={this.modalWidth}
         open={id !== undefined}

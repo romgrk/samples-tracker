@@ -82,7 +82,7 @@ class Modal extends React.Component {
             {
               showHeader &&
                 <div className='Modal__header hbox'>
-                  <div className='Modal__title title fill'>
+                  <div className='Modal__title title fill hbox'>
                     { title }
                   </div>
                   {
