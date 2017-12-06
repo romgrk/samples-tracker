@@ -70,7 +70,7 @@ function update(step) {
 }
 
 function updateStatus(id, status) {
-  const started = status === 'DONE' ? new Date() : null
+  const started = status === 'IN_PROGRESS' ? new Date() : null
   return db.query(`
     UPDATE steps
        SET status = @status

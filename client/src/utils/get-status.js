@@ -5,6 +5,10 @@
 import Status from '../constants/status'
 
 export default function getStatus(sample) {
+
+  if (sample.completed)
+    return Status.DONE
+
   let i = 0;
 
   for (; i < sample.steps.length; i++) {
@@ -13,7 +17,8 @@ export default function getStatus(sample) {
       break
   }
 
-  const lastStep = sample.steps[i - 1]
+  const lastStep   = sample.steps[i - 1]
+  const lastStatus = lastStep.status.nextValue || lastStep.status
 
-  return lastStep.status.nextValue || lastStep.status
+  return lastStatus
 }

@@ -160,7 +160,7 @@ function updateStepStatus(id, index, status, user) {
           let indexTodo = index
           let nextStepTodo = nextStep
 
-          while(indexTodo < sample.steps.length && nextStepTodo.status === 'SKIP')
+          while(indexTodo < sample.steps.length - 1 && nextStepTodo.status === 'SKIP')
             nextStepTodo = sample.steps[++indexTodo]
 
           /*
@@ -175,7 +175,7 @@ function updateStepStatus(id, index, status, user) {
           /*
            * If there are no more steps, we set the completion date
            */
-          else if (indexTodo === sample.steps.length)
+          else if (indexTodo >= sample.steps.length - 1)
             actions.push(complete(sample.id, true))
         }
 
