@@ -278,6 +278,11 @@ textarea.text.editable:focus {
   border-bottom: 1px solid var(--light-border-color);
 }
 
+.Icon {
+  width: 15px;
+  height: 15px;
+}
+
 .Input {
   display: inline-block;
 }
@@ -787,7 +792,10 @@ $step-width: 40px;
     background-color: $hover-light-bg-color;
   }
   &.overdue {
-    background-color: rgba($bg-light-color-warning, 0.15);
+    background-color: rgba(lighten($bg-color-warning, 10%), 0.35);
+  }
+  &.DONE {
+    background-color: rgba($bg-color-success, 0.25);
   }
 }
 .Sample__empty {

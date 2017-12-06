@@ -4,6 +4,7 @@ import pure from 'recompose/pure'
 import classname from 'classname'
 import { withRouter } from 'react-router'
 
+import getStatus from '../utils/get-status'
 import humanReadableTime from '../utils/human-readable-time'
 import STATUS from '../constants/status'
 import Badge from './Badge'
@@ -64,9 +65,10 @@ class Sample extends React.Component {
   render() {
     const { isLoading } = this.props.sample
     const sample = this.state.data
+    const status = getStatus(sample)
     const isOverdue = sample.steps.some(step => step.isOverdue)
 
-    const className = classname('Sample', {
+    const className = classname('Sample', status, {
       'overdue': isOverdue,
     })
 
@@ -79,7 +81,12 @@ class Sample extends React.Component {
             onEnter={this.setName}
           />
           <Badge info>{sample.tags[0]}</Badge>
-          <Spinner visible={isLoading} />
+          {
+            isLoading || (!isLoading && !isOverdue) ?
+              <Spinner visible={isLoading} />
+              :
+              <Icon name='warning' warning marginRight={5} marginLeft={5} />
+          }
         </div>
         {
           sample.steps.map((step, index) =>

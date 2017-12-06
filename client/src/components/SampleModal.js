@@ -294,7 +294,7 @@ class SampleModal extends React.Component {
                       highlight={stepIndex === this.state.stepIndex}
                       onClick={() => this.gotoStep(stepIndex)}
                     >
-                      { step.name }
+                      { step.name } { step.isOverdue && <Icon name='warning' warning /> }
                     </Button>
                   </Tooltip>
                 )
@@ -396,9 +396,6 @@ class SampleModal extends React.Component {
                       <td></td>
                       <td>
                         {
-                          step.isOverdue &&
-                            <Icon name='warning' warning />
-                        } {
                           step.isOverdue &&
                             <Text>Overdue since:</Text>
                         }
