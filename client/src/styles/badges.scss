@@ -15,6 +15,12 @@
 
   display: inline-flex;
   align-items: center;
+
+  max-width: 120px;
+}
+.Badge > span {
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .Badge > .Button {
   color: inherit;
