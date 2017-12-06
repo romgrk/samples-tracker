@@ -6,6 +6,7 @@ import classname from 'classname'
 
 import humanReadableTime from '../utils/human-readable-time'
 import openFile from '../utils/open-file'
+import uniq from '../utils/uniq'
 import * as MimeType from '../utils/mime-type'
 import Status from '../constants/status'
 import Badge from './Badge'
@@ -113,6 +114,19 @@ class SampleModal extends React.Component {
     }
   }
 
+  onBlurBadgeInput = (ev) => {
+    if (ev.target.value !== '') {
+      this.addTag(ev.target.value, false)
+      ev.target.value = ''
+    }
+    else {
+      setTimeout(() => {
+        if (this.badgeInput.element !== document.activeElement)
+          this.closeBadgeDropdown()
+      }, 200)
+    }
+  }
+
   closeModal = () => {
     this.props.history.push('/samples')
   }
@@ -143,13 +157,17 @@ class SampleModal extends React.Component {
     this.update(newData)
   }
 
-  addTag = (tag) => {
+  addTag = (tag, refocus = true) => {
     const data = this.state.sample.data
-    const newData = { ...data, tags: data.tags.concat(tag) }
+    const newData = { ...data, tags: uniq(data.tags.concat(tag)) }
     this.update(newData)
 
-    this.badgeInput.element.focus()
-    this.openBadgeDropdown()
+    if (refocus) {
+      this.badgeInput.element.focus()
+      this.openBadgeDropdown()
+    } else {
+      this.closeBadgeDropdown()
+    }
   }
 
   setName = (name) => {
@@ -264,7 +282,7 @@ class SampleModal extends React.Component {
                       clearOnEnter
                       onEnter={this.addTag}
                       onFocus={this.openBadgeDropdown}
-                      onBlur={ev => setTimeout(() => this.badgeInput.element !== document.activeElement && this.closeBadgeDropdown(), 200)}
+                      onBlur={this.onBlurBadgeInput}
                       ref={ref => ref && (this.badgeInput = ref)}
                     />
                   }
