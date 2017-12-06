@@ -1,4 +1,5 @@
 import React from 'react'
+import pure from 'recompose/pure'
 import MonacoEditor from 'react-monaco-editor'
 import classname from 'classname'
 
@@ -23,17 +24,23 @@ class Editor extends React.Component {
   }
 
   componentDidUpdate() {
-    if (this.element) {
-      const width  = this.element.clientWidth
-      const height = Math.max(this.element.clientHeight, 500)
-
-      if (width !== this.state.width)
-        this.setState({ width, height })
-    }
-
+    this.updateDimensions()
     if (this.editor) {
       this.editor.layout()
     }
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    const state = this.state
+    const props = this.props
+
+    const stateEqual = state === nextState
+    const propsEqual = props.value === nextProps.value
+                    && props.className === nextProps.className
+
+    const shouldUpdate = !stateEqual || !propsEqual
+
+    return shouldUpdate
   }
 
   editorDidMount = (editor, monaco) => {
@@ -65,6 +72,16 @@ class Editor extends React.Component {
     monaco.languages.typescript.javascriptDefaults.addExtraLib(DECLARATIONS, 'facts.d.ts')
   }
 
+  updateDimensions() {
+    if (this.element) {
+      const width  = this.element.clientWidth
+      const height = Math.max(this.element.clientHeight, 500)
+
+      if (width !== this.state.width || height !== this.state.height)
+        this.setState({ width, height })
+    }
+  }
+
   getValue() {
     return this.editor.getModel().getValue()
   }
@@ -81,7 +98,11 @@ class Editor extends React.Component {
   }
 
   render() {
-    const { className, value } = this.props
+    const {
+      className,
+      value,
+      ...rest
+    } = this.props
     const { width, height } = this.state
 
     const editorClassName = classname('Editor', className)
@@ -98,6 +119,7 @@ class Editor extends React.Component {
           requireConfig={this.config}
           editorWillMount={this.editorWillMount}
           editorDidMount={this.editorDidMount}
+          {...rest}
         />
       </div>
     )

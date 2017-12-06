@@ -2,10 +2,11 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { withRouter } from 'react-router'
 
-import { getNewCompletionFunction } from '../models'
+import { getNewCompletionFunction, testingSample } from '../models'
 import Button from './Button'
 import EditableLabel from './EditableLabel'
 import Editor from './Editor'
+import Gap from './Gap'
 import Icon from './Icon'
 import Label from './Label'
 import Spinner from './Spinner'
@@ -14,7 +15,9 @@ class CompletionFunctions extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      selectedFunction: undefined
+      selectedFunction: undefined,
+      testingPanelOpen: false,
+      testingSample: testingSample,
     }
     this.componentWillReceiveProps(props)
   }
@@ -33,6 +36,18 @@ class CompletionFunctions extends React.Component {
         , 10)
       }
     }
+  }
+
+  componentDidUpdate() {
+    this.codeEditor && this.codeEditor.updateDimensions()
+    this.dataEditor && this.dataEditor.updateDimensions()
+  }
+
+  onClickTestingPanel = (ev) => {
+    if (isButtonClick(ev))
+      return
+
+    this.setState({ testingPanelOpen: !this.state.testingPanelOpen })
   }
 
   update(selectedFunction) {
@@ -65,9 +80,43 @@ class CompletionFunctions extends React.Component {
   }
 
   setCode = () => {
-    const code = this.editor.getValue()
+    const code = this.codeEditor.getValue()
     const completion = this.getSelectedFunction().data
     this.update({ ...completion, code })
+  }
+
+  runTest = () => {
+    const code = this.codeEditor.getValue()
+    const data = this.dataEditor.getValue()
+
+    let result
+    try {
+      eval(data)
+    } catch(err) {
+      this.props.onError(`Got an error while evaluating the data:`, err.message)
+      return
+    }
+
+    try {
+      result = eval(`(function() {
+          ${data}
+          return (${code})(sample.steps[stepIndex], sample, user, stepIndex)
+        })()
+      `)
+    } catch(err) {
+      this.props.onError(`Got an error while evaluating the code:`, err.message)
+      return
+    }
+
+    if (result === true) {
+      this.props.onSuccess('Function completed successfully')
+      return
+    }
+
+    this.props.onInfo(`Function completed with message:`, result)
+
+    if (!this.state.testingPanelOpen)
+      this.setState({ testingPanelOpen: true })
   }
 
   render() {
@@ -78,12 +127,16 @@ class CompletionFunctions extends React.Component {
       selectedId,
       onError,
       onInfo,
-      onSuccess
+      onSuccess,
     } = this.props
 
     const completionFunctions = Object.values(data)
 
-    const { selectedFunction } = this.state
+    const {
+      selectedFunction,
+      testingPanelOpen,
+      testingSample,
+    } = this.state
 
     return (
       <section className='CompletionFunctions hbox'>
@@ -159,15 +212,45 @@ class CompletionFunctions extends React.Component {
 
           <Editor
             className='fill'
-            ref={ref => ref && (this.editor = ref)}
+            ref={ref => ref && (this.codeEditor = ref)}
             value={selectedFunction ? selectedFunction.data.code : ''}
             onSave={this.setCode}
           />
+
+          <div className='row vcenter clickable' onClick={this.onClickTestingPanel}>
+            <Gap fill={5}/>
+            <Icon name={ testingPanelOpen ? 'chevron-down' : 'chevron-up' } />
+
+            <div className='fill' />
+
+            <Button info onClick={this.runTest} disabled={selectedId === undefined}>
+              Test it
+            </Button>
+          </div>
+
+          <Editor
+            className={testingPanelOpen ? 'fill' : 'flex-hidden'}
+            ref={ref => ref && (this.dataEditor = ref)}
+            value={testingSample}
+            onSave={testingSample => this.setState({ testingSample })}
+          />
+
         </div>
 
       </section>
     )
   }
+}
+
+function isButtonClick(ev) {
+  let target = ev.target
+  do {
+    if (target.tagName === 'BUTTON')
+      return true
+  }
+  while(target = target.parentNode)
+
+  return false
 }
 
 CompletionFunctions.propTypes = {
