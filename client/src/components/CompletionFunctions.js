@@ -147,9 +147,9 @@ class CompletionFunctions extends React.Component {
           </div>
           {
             completionFunctions.map(({ isLoading, data: { id, name }}) =>
-              <a key={id}
+              <a key={id} href='#'
                 className={'item' + (id === +selectedId ? ' active' : '')}
-                onClick={() => this.setSelectedFunction(id)}
+                onClick={ev => (ev.preventDefault(), this.setSelectedFunction(id))}
               >
                 <div className='content'>
                   <Label inline>{ name }</Label>
@@ -187,10 +187,12 @@ class CompletionFunctions extends React.Component {
 
         <div className='CompletionFunctions__editor vbox'>
           <div className='row'>
-            <div className='CompletionFunctions__name fill'>
+            <div className='CompletionFunctions__name fill hbox'>
               {
                 selectedFunction !== undefined &&
                 <EditableLabel
+                  className='fill'
+                  block
                   value={selectedFunction.data.name}
                   onEnter={this.setName}
                 />

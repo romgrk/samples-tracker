@@ -147,6 +147,8 @@ button.label.editable {
   transition: all .25s;
   cursor: pointer;
   text-transform: none;
+  text-align: left;
+  display: flex;
 }
 button.label.editable:hover {
   background-color: var(--hover-light-bg-color);

@@ -128,6 +128,7 @@
   .Button.#{$level}:focus {
     color: #fff;
     background-color: darken(map-get($values, bg), 4%);
+    box-shadow: 0 0 0 1px mix(map-get($values, bg), #fff, 50%);
   }
   .Button.#{$level}[disabled] {
     color: #bbb;
