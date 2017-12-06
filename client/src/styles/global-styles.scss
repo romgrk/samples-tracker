@@ -1010,6 +1010,10 @@ $step-width: 40px;
   background-color: var(--bg-color-dark);
   width: 175px;
 }
+.Template__info .label.editable {
+  width: 0;
+  flex: 1 1;
+}
 .Template__info .delete,
 .Template__info .Spinner {
   flex: 0 0 auto;
@@ -1035,8 +1039,10 @@ $step-width: 40px;
 .TemplateStep.add:hover {
   background-color: var(--hover-light-bg-color);
 }
-.TemplateStep input.label.editable {
+.TemplateStep .label.editable {
   width: 0;
+  flex: 1 1;
+  //display: inline;
 }
 .TemplateStep .Dropdown {
   flex: 0 0 auto;
