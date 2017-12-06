@@ -2,9 +2,12 @@ import React from 'react'
 import pure from 'recompose/pure'
 import classname from 'classname'
 
+import Tooltip from './Tooltip'
+
 function Badge(props) {
   const {
     children,
+    button,
     className,
     type,
     size,
@@ -40,9 +43,14 @@ function Badge(props) {
   )
 
   return (
-    <span className={badgeClassName} { ...rest }>
-      { children }
-    </span>
+    <Tooltip content={children} delay={500}>
+      <span className={badgeClassName} { ...rest }>
+        <span>
+          { children }
+        </span>
+        { button }
+      </span>
+    </Tooltip>
   )
 }
 
