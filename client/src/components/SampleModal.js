@@ -249,9 +249,10 @@ class SampleModal extends React.Component {
               <div className='SampleModal__badges'>
                 {
                   sample.data.tags.map(tag =>
-                    <Badge info key={tag}>
-                      { tag }
+                    <Badge info key={tag} button={
                       <Button round flat icon='close' onClick={() => this.removeTag(tag)} />
+                    }>
+                      { tag }
                     </Badge>
                   )
                 }
