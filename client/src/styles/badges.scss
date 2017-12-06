@@ -18,7 +18,8 @@
 }
 .Badge > .Button {
   color: inherit;
-  transform: scale(0.6);
+  transform: scale(0.5);
+  margin-right: -$padding;
 }
 .Badge > .Button:hover {
   color: var(--color);
@@ -30,5 +31,13 @@
     color: #fff;
     background-color: map-get($values, bg);
     --color: map-get($values, bg);
+  }
+
+  .Badge.#{$level} > .Button:not([disabled]) {
+    color: #fff;
+  }
+  .Badge.#{$level} > .Button:not([disabled]):hover {
+    color: map-get($values, bg);
+    background-color: rgba(#fff, 0.6);;
   }
 }
