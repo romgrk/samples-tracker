@@ -69,7 +69,7 @@ router.use('/create/:sampleId/:stepIndex', (req, res, next) => {
       sampleId: sampleId,
       stepIndex: stepIndex,
       userId: req.user.id,
-      description: `added file ${file.name} to step ${stepIndex}`
+      description: `added file ${file.name}`
     })
     return file
   })
