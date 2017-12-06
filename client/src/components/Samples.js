@@ -58,7 +58,7 @@ class Samples extends React.Component {
 
     const selectedSample = data[selectedId]
 
-    const tags = Array.from(allSamples.map(s => s.data.tags).reduce((acc, cur) => (cur.forEach(tag => acc.add(tag)), acc), new Set()))
+    const allTags = Array.from(allSamples.map(s => s.data.tags).reduce((acc, cur) => (cur.forEach(tag => acc.add(tag)), acc), new Set()))
     const filteredTags = new Set(ui.filtering.tags)
 
     const newSampleButton =
@@ -102,7 +102,7 @@ class Samples extends React.Component {
           Clear all
         </Dropdown.Content>
         {
-          alphabeticalSort(tags).map(tag =>
+          alphabeticalSort(allTags).map(tag =>
             <Dropdown.Content key={tag}
               onClick={() => filteredTags.has(tag) ?
                 this.props.deleteFilteringTag(tag) :
@@ -191,6 +191,7 @@ class Samples extends React.Component {
           sample={selectedSample}
           users={users}
           completionFunctions={completionFunctions}
+          tags={allTags}
           onChange={onChange}
           onChangeStatus={onChangeStatus}
           onDelete={onDelete}

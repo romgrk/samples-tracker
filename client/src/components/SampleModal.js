@@ -47,6 +47,7 @@ class SampleModal extends React.Component {
       stepIndex: undefined,
       sample: undefined,
       step: undefined,
+      badgeDropdownOpen: false,
     }
   }
 
@@ -146,6 +147,9 @@ class SampleModal extends React.Component {
     const data = this.state.sample.data
     const newData = { ...data, tags: data.tags.concat(tag) }
     this.update(newData)
+
+    this.badgeInput.element.focus()
+    this.openBadgeDropdown()
   }
 
   setName = (name) => {
@@ -203,6 +207,14 @@ class SampleModal extends React.Component {
     return this.props.users.data[userId].name
   }
 
+  openBadgeDropdown = () => {
+    this.setState({ badgeDropdownOpen: true })
+  }
+
+  closeBadgeDropdown = () => {
+    this.setState({ badgeDropdownOpen: false })
+  }
+
   render() {
     const {
       completionFunctions,
@@ -215,8 +227,11 @@ class SampleModal extends React.Component {
       id,
       stepIndex,
       sample,
-      step
+      step,
+      badgeDropdownOpen,
     } = this.state
+
+    const tags = sample ? this.props.tags.filter(t => !sample.data.tags.includes(t)) : []
 
     return (
       <Modal
@@ -230,24 +245,41 @@ class SampleModal extends React.Component {
       >
         {
           sample !== undefined &&
-            <div>
+            <div className='vbox'>
               <div className='SampleModal__badges'>
                 {
                   sample.data.tags.map(tag =>
-                    <Badge info>
+                    <Badge info key={tag}>
                       { tag }
                       <Button round flat icon='close' onClick={() => this.removeTag(tag)} />
                     </Badge>
                   )
                 }
-                <Input
-                  className='badge'
-                  clearOnEnter
-                  onEnter={this.addTag}
-                />
+                <Dropdown inline open={badgeDropdownOpen && tags.length > 0}
+                  onClose={this.closeBadgeDropdown}
+                  trigger={
+                    <Input
+                      className='badge'
+                      clearOnEnter
+                      onEnter={this.addTag}
+                      onFocus={this.openBadgeDropdown}
+                      onBlur={ev => setTimeout(() => this.badgeInput.element !== document.activeElement && this.closeBadgeDropdown(), 200)}
+                      ref={ref => ref && (this.badgeInput = ref)}
+                    />
+                  }
+                >
+                  {
+                    tags.map(tag =>
+                      <Dropdown.Item key={tag} onClick={() => this.addTag(tag)}>
+                        <Badge info>{tag}</Badge>
+                      </Dropdown.Item>
+                    )
+                  }
+                </Dropdown>
               </div>
 
               <EditableText
+                className='fill'
                 placeHolder='Enter sample notes...'
                 value={sample.data.notes}
                 onEnter={this.setNotes}
