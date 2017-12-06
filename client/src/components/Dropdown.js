@@ -52,6 +52,10 @@ class Dropdown extends React.Component {
     super(props)
     this.state = {
       open: false,
+      position: {
+        top: 0,
+        left: 0
+      },
     }
   }
 
@@ -68,6 +72,14 @@ class Dropdown extends React.Component {
   componentWillUnmount() {
     dropdowns.splice(dropdowns.findIndex(x => x === this), 1)
     this.mountNode.removeChild(this.domNode)
+  }
+
+  componentDidUpdate() {
+    const position = this.getPosition()
+
+    if (position.left !== this.state.position.left
+      || position.top !== this.state.position.top)
+      this.setState({ position })
   }
 
   onDocumentClick(ev) {
@@ -89,13 +101,13 @@ class Dropdown extends React.Component {
 
   getPosition() {
     if (!this.element)
-      return { top: size(0), left: size(0) }
+      return { top: 0, left: 0 }
 
     const box = this.element.getBoundingClientRect()
 
     return {
-      top:  size(box.top + box.height),
-      left: size(box.left),
+      top:  box.top + box.height,
+      left: box.left,
     }
   }
 
@@ -169,7 +181,7 @@ class Dropdown extends React.Component {
         { button }
         {
           createPortal(
-            <div className={menuClassName} style={this.getPosition()} ref={ref => ref && (this.menu = ref)}>
+            <div className={menuClassName} style={this.state.position} ref={ref => ref && (this.menu = ref)}>
               <div className='Dropdown__inner'>
                 { children }
               </div>
