@@ -490,6 +490,9 @@ class SampleModal extends React.Component {
 
               <div className='StepsModalStep__history'>
                 <div className='History'>
+                  <div className='History__title'>
+                    History
+                  </div>
                   {
                     sample.data.history
                       .filter(entry => entry.stepIndex === null || entry.stepIndex === stepIndex)
