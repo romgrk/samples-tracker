@@ -896,6 +896,9 @@ $step-width: 40px;
 .SampleModal .ButtonGroup .Button {
   height: 30px;
 }
+.SampleModal .Modal__content {
+  border-bottom: 1px solid $border-color-dark;
+}
 
 .StepsModal {
   position: absolute;
