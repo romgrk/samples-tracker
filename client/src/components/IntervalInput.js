@@ -9,16 +9,22 @@ class IntervalInput extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      value: props.defaultValue || '',
+      value: props.defaultValue || props.value || '',
     }
   }
 
   componentWillReceiveProps(props) {
     if (props.defaultValue !== this.props.defaultValue)
       this.setState({ value: props.defaultValue })
+
+    if (('value' in props) && !('defaultValue' in props))
+      this.setState({ value: props.value })
   }
 
   onAccept = (ev) => {
+    if (this.state.value === this.props.value)
+      return;
+
     if (this.props.value) {
       this.props.onAccept()
     }
