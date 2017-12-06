@@ -900,7 +900,9 @@ $step-width: 40px;
 }
 .StepsModal__content {
   position: absolute;
-  width: max-content;
+  width: -webkit-max-content;
+  width:    -moz-max-content;
+  width:         max-content;
   transition: all .5s ease-in-out;
 }
 .StepsModal__left,

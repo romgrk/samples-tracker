@@ -45,7 +45,9 @@
   display: flex;
 
   width: 500px;
-  height: max-content;
+  height: -webkit-max-content;
+  height:    -moz-max-content;
+  height:         max-content;
   margin: 0 auto;
 
   box-shadow: 1px 2px 20px 10px rgba(0, 0, 0, 0.3);
