@@ -913,31 +913,6 @@ $step-width: 40px;
   width:         max-content;
   transition: all .5s ease-in-out;
 }
-.StepsModal__left,
-.StepsModal__right {
-  position: absolute;
-  z-index: 3;
-  top: 75px;
-  background-color: rgba(white, 0.2);
-  border-radius: 50%;
-  width: 30px;
-  height: 30px;
-  &[disabled] {
-    opacity: 0.6;
-  }
-  &:not([disabled]):hover {
-    background-color: rgba(white, 0.4);
-  }
-}
-.StepsModal__left {
-  padding-right: 12px;
-  padding-left: 9px;
-  left: -30px;
-}
-.StepsModal__right {
-  padding-left: 12px;
-  right: -30px;
-}
 .StepsModal__step {
   background: $bg-color-dark;
   border-bottom-right-radius: 2px;

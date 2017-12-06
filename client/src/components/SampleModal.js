@@ -308,18 +308,6 @@ class SampleModal extends React.Component {
                     sample.data.steps.map(this.renderStepModal)
                   }
                 </div>
-                <Button large
-                  className='StepsModal__left'
-                  icon='chevron-left'
-                  onClick={() => this.gotoStep(stepIndex - 1)}
-                  disabled={stepIndex <= 0}
-                />
-                <Button large
-                  className='StepsModal__right'
-                  icon='chevron-right'
-                  onClick={() => this.gotoStep(stepIndex + 1)}
-                  disabled={stepIndex >= this.state.sample.data.steps.length - 1}
-                />
               </div>
 
             </div>
