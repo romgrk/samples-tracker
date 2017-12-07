@@ -783,6 +783,9 @@ section.Samples {
 
 $step-width: 40px;
 
+.Samples__tableContainer {
+  background-color: var(--table-bg-color);
+}
 .Samples__table {
   flex: 1 1;
   width: 100%;

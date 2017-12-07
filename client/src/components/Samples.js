@@ -139,37 +139,39 @@ class Samples extends React.Component {
           </Checkbox>
         </div>
 
-        <table className='Samples__table bordered'>
-          <tr className='Samples__header Sample'>
-            <td className='Sample__icon'></td>
-            <td className='Sample__name'>Name</td>
-            <td className='Sample__badges'></td>
-            <td className='Sample__steps'></td>
-            <td className='Sample__created'>Created</td>
-            <td className='Sample__modified'>Modified</td>
-            <td className='Sample__notes'>Notes</td>
-          </tr>
+        <div className='Samples__tableContainer fill'>
+          <table className='Samples__table bordered'>
+            <tr className='Samples__header Sample'>
+              <td className='Sample__icon'></td>
+              <td className='Sample__name'>Name</td>
+              <td className='Sample__badges'></td>
+              <td className='Sample__steps'></td>
+              <td className='Sample__created'>Created</td>
+              <td className='Sample__modified'>Modified</td>
+              <td className='Sample__notes'>Notes</td>
+            </tr>
 
-          {
-            samples.map(sample =>
-              <Sample
-                key={sample.data.id}
-                sample={sample}
-                onChange={onChange}
-                onChangeStatus={onChangeStatus}
-                onDelete={onDelete}
-              />
-            )
-          }
-          {
-            samples.length === 0 &&
-              <tr className='Sample__empty text-muted'>
-                <td>
-                  No sample to display here.
-                </td>
-              </tr>
-          }
-        </table>
+            {
+              samples.map(sample =>
+                <Sample
+                  key={sample.data.id}
+                  sample={sample}
+                  onChange={onChange}
+                  onChangeStatus={onChangeStatus}
+                  onDelete={onDelete}
+                />
+              )
+            }
+            {
+              samples.length === 0 &&
+                <tr className='Sample__empty text-muted'>
+                  <td>
+                    No sample to display here.
+                  </td>
+                </tr>
+            }
+          </table>
+        </div>
 
         <div className='row bg-dark border-left border-top'>
           <div className='fill' />
