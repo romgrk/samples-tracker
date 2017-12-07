@@ -24,11 +24,25 @@
   color: var(--hover-color);
   background-color: var(--hover-bg-color);
 }
+.activable {
+  transition: all .15s;
+}
 .Button.active,
 .Button:active,
-.Button:focus {
+.Button:focus,
+.activable.active,
+.activable:active,
+.activable:focus {
   outline: none;
   box-shadow: 0 0 0 1px $focus-color;
+}
+.Dropdown.open > .Button,
+.Button.active,
+.Button:active {
+  background-color: rgba(black, 0.1);
+  &:hover {
+    background-color: rgba(black, 0.1);
+  }
 }
 .Button > .Icon:not(:first-child):last-child {
   margin-left: var(--padding);
@@ -52,10 +66,18 @@
   color: var(--hover-color);
   background-color: var(--hover-light-bg-color);
 }
+.Button.flat.active,
 .Button.flat:active,
 .Button.flat:focus {
   outline: none;
   box-shadow: 0 0 0 1px $focus-color;
+}
+.Button.flat.active,
+.Button.flat:active {
+  background-color: rgba(black, 0.1);
+  &:hover {
+    background-color: rgba(black, 0.1);
+  }
 }
 
 .Button.round {
@@ -114,7 +136,9 @@
 @each $level, $values in $colors {
   .Button.#{$level} {
     color: #fff;
-    background-color: map-get($values, bg);
+    background: map-get($values, bg);
+    border-color: lighten(map-get($values, bg), 10%);
+
     & .Spinner::after {
 
     }
@@ -126,12 +150,20 @@
   .Button.#{$level}.active,
   .Button.#{$level}:active,
   .Button.#{$level}:focus {
-    color: #fff;
-    background-color: darken(map-get($values, bg), 4%);
     box-shadow: 0 0 0 1px mix(map-get($values, bg), #fff, 50%);
+    border-color: map-get($values, bg);
+    background-color: darken(map-get($values, bg), 2%);
+  }
+  .Dropdown.open > .Button.#{$level},
+  .Button.#{$level}.active,
+  .Button.#{$level}:active {
+    color: mix(map-get($values, bg), #fff, 30%);
+    box-shadow: 0 0 0 1px mix(map-get($values, bg), #fff, 75%);
+    background-color: darken(map-get($values, bg), 8%);
   }
   .Button.#{$level}[disabled] {
     color: #bbb;
+    border-color: mix(grey, map-get($values, bg), 50%);
     background-color: mix(grey, map-get($values, bg), 50%);
   }
 }

@@ -87,7 +87,7 @@ class EditableLabel extends React.Component {
     const { editing } = this.state
 
     const labelClassName = classname(
-      'label editable vcenter',
+      'label editable vcenter activable',
       size,
       className,
       {

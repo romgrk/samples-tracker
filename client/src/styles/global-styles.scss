@@ -444,13 +444,6 @@ textarea.text.editable:focus {
   text-align: left;
   width: 180px;
 }
-.Dropdown.open > .Button {
-  border: 1px solid var(--light-border-color);
-  border-bottom: 1px solid transparent;;
-  background-color: var(--bg-color-dark);
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0;
-}
 .Popup.open,
 .Tooltip.visible {
   display: block;
@@ -1004,6 +997,7 @@ $step-width: 40px;
 
 .StepsModalStep__controls {
   flex: 1 1;
+  overflow-y: auto;
 }
 .StepsModalStep__history {
   flex: 0 0 auto;

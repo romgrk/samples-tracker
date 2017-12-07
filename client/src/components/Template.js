@@ -185,7 +185,7 @@ class Template extends React.Component {
               </div>
             )
           }
-          <button className='TemplateStep add center' onClick={this.addStep}>
+          <button className='TemplateStep add center activable' onClick={this.addStep}>
             <Icon name='plus' />
           </button>
         </div>
