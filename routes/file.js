@@ -89,7 +89,7 @@ router.use('/delete/:id', (req, res, next) => {
         userId: req.user.id,
         description: `deleted file ${file.name}`
       })
-      return sample
+      return file
     })
   )
   .then(dataHandler(res))
