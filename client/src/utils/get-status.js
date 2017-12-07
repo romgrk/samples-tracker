@@ -17,7 +17,7 @@ export default function getStatus(sample) {
       break
   }
 
-  const lastStep   = sample.steps[i - 1]
+  const lastStep   = sample.steps[i == 0 ? i : i - 1]
   const lastStatus = lastStep.status.nextValue || lastStep.status
 
   return lastStatus
