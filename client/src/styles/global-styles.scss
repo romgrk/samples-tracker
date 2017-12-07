@@ -170,7 +170,6 @@ button.label.editable span {
 }
 button.label.editable .Icon {
   margin: var(--padding);
-  height: 100%;
   opacity: 0;
   color: #ddd;
   transition: opacity .25s;
@@ -230,7 +229,8 @@ div.text.editable:hover {
 div.text.editable > div {
   flex: 1;
   text-overflow: ellipsis;
-  overflow: hidden;
+  overflow: auto;
+  height: calc(3 * var(--line-height));
 }
 div.text.editable > .Icon {
   position: absolute;
@@ -1018,7 +1018,7 @@ $step-width: 40px;
 }
 .History__title,
 .History__entry {
-  font-size: 11px;
+  font-size: 12px;
   line-height: 20px;
   position: relative;
   &::after {
