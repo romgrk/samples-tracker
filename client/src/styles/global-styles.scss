@@ -834,19 +834,22 @@ $step-width: 40px;
   text-overflow: ellipsis;
   overflow: hidden;
 }
+.Sample__icon {
+  width: 30px;
+  text-align: center;
+  border-left: 1px solid var(--table-border-color);
+}
 .Sample__name {
   width: 150px;
   padding: 0 $padding;
-  border-left: 1px solid var(--table-border-color);
+  border-left: none;
 }
 .Sample__badges {
   width: 120px;
   border-left: none;
 }
-.Sample__icon {
-  width: 30px;
-  text-align: center;
-  border-left: none;
+.Sample__badges > * {
+  margin-right: $padding;
 }
 .Sample__steps {
   width: auto;

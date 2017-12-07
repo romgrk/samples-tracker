@@ -74,6 +74,14 @@ class Sample extends React.Component {
 
     return (
       <tr className={className} onClick={this.onClick}>
+        <td className='Sample__icon'>
+        {
+          isLoading || (!isLoading && !isOverdue) ?
+            <Spinner visible={isLoading} />
+            :
+            <Icon name='warning' warning marginRight={5} marginLeft={5} />
+        }
+        </td>
         <td className='Sample__name'>
           <EditableLabel small inline
             className='full-width'
@@ -82,15 +90,11 @@ class Sample extends React.Component {
           />
         </td>
         <td className='Sample__badges'>
-          <Badge info>{sample.tags[0]}</Badge>
-        </td>
-        <td className='Sample__icon'>
-        {
-          isLoading || (!isLoading && !isOverdue) ?
-            <Spinner visible={isLoading} />
-            :
-            <Icon name='warning' warning marginRight={5} marginLeft={5} />
-        }
+          {
+            sample.tags.map(tag =>
+              <Badge info>{tag}</Badge>
+            )
+          }
         </td>
         <td className='Sample__steps'>
           <div>

@@ -141,9 +141,9 @@ class Samples extends React.Component {
 
         <table className='Samples__table bordered'>
           <tr className='Samples__header Sample'>
+            <td className='Sample__icon'></td>
             <td className='Sample__name'>Name</td>
             <td className='Sample__badges'></td>
-            <td className='Sample__icon'></td>
             <td className='Sample__steps'></td>
             <td className='Sample__created'>Created</td>
             <td className='Sample__modified'>Modified</td>
