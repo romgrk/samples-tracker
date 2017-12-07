@@ -976,14 +976,19 @@ $step-width: 40px;
   transition: all .25s;
   //transform: translateY(-20px);
 }
-.StepsModal__status td {
+.StepsModalStep__table td {
   padding: 0 2 * $padding;
+  height: 7 * $padding;
 }
-.StepsModal__status td:nth-child(2) {
-  text-align: right;
+.StepsModalStep__table td:nth-child(2) {
 }
-.StepsModal__controlsTable td {
-  padding: $padding 2*$padding $padding 0;
+.StepsModalStep__icon {
+  font-size: 14px;
+  line-height: 20px;
+}
+.StepsModalStep__icon > span {
+  font-size: 16px;
+  line-height: 20px;
 }
 
 .StepsModalStep__controls {

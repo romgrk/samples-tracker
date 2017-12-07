@@ -371,14 +371,17 @@ class SampleModal extends React.Component {
             >
 
               <div className='StepsModalStep__controls'>
-                <table className='StepsModal__status'>
+                <table className='StepsModalStep__table'>
                   <tbody>
                     <tr>
                       <td>
-                        <Dropdown trigger={
-                          <Button flat style={{ width: '120px'}}>
-                            <StatusIcon name={step.status} showInProgress />&nbsp;&nbsp; <Text>{ step.status }</Text>
-                          </Button>
+                        <Label>Status</Label>
+                      </td>
+                      <td>
+                        <Dropdown label={
+                          <span className='StepsModalStep__icon'>
+                            <StatusIcon name={step.status} size='lg' showInProgress />&nbsp;&nbsp; <Text bold>{ step.status }</Text>
+                          </span>
                         }>
                           {
                             Object.values(Status)
@@ -392,51 +395,47 @@ class SampleModal extends React.Component {
                           }
                         </Dropdown>
                       </td>
-                      <td>
-                        { step.status === Status.IN_PROGRESS &&
-                            <Text>&nbsp;&nbsp; Since:</Text>
-                        }
-                      </td>
-                      <td>
-                        {
-                          step.status === Status.IN_PROGRESS &&
-                            <Time>{ step.started }</Time>
-                        } {
-                          step.status === Status.IN_PROGRESS &&
-                            <Button small onClick={() => this.setStepStarted(stepIndex)}>Reset</Button>
-                        }
-                      </td>
+
                     </tr>
 
-                    <tr>
-                      <td></td>
-                      <td>
-                        {
-                          step.isOverdue &&
-                            <Text>Overdue since:</Text>
-                        }
-                        {
-                          step.isOverdue === false &&
-                            <Text>Will be overdue on:</Text>
-                        }
-                      </td>
-                      <td>
-                        {
-                          step.isOverdue &&
-                            <Time>{ step.overdueAt }</Time>
-                        }
-                        {
-                          step.isOverdue === false &&
-                            <Time>{ step.overdueAt }</Time>
-                        }
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
+                    {
+                      step.status === Status.IN_PROGRESS &&
+                        <tr>
+                          <td>
+                              <Label>Since</Label>
+                          </td>
+                          <td>
+                            <Time>{ step.started }</Time> <Button small onClick={() => this.setStepStarted(stepIndex)}>Reset</Button>
+                          </td>
+                        </tr>
+                    }
 
-                <div className='row'>
-                  <table className='StepsModal__controlsTable'>
-                  <tbody>
+                    {
+                      (step.isOverdue || step.isOverdue === false) &&
+                        <tr>
+                          <td>
+                            {
+                              step.isOverdue &&
+                                <Label>Overdue since</Label>
+                            }
+                            {
+                              step.isOverdue === false &&
+                                <Label>Will be overdue on</Label>
+                            }
+                          </td>
+                          <td>
+                            {
+                              step.isOverdue &&
+                                <Time>{ step.overdueAt }</Time>
+                            }
+                            {
+                              step.isOverdue === false &&
+                                <Time>{ step.overdueAt }</Time>
+                            }
+                          </td>
+                        </tr>
+                    }
+
                     <tr>
                       <td>
                         <Label>Alert delay</Label>
@@ -482,9 +481,9 @@ class SampleModal extends React.Component {
                         </Dropdown>
                       </td>
                     </tr>
+
                   </tbody>
-                  </table>
-                </div>
+                </table>
 
                 <div className='row'>
                   <EditableText
