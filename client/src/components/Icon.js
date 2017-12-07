@@ -8,6 +8,7 @@ function Icon(props) {
   const {
     name,
     type,
+    size,
     className,
     small,
     large,
@@ -27,6 +28,7 @@ function Icon(props) {
   const iconClassName = classname(
     'Icon fa',
     `fa-${name}`,
+    size ? `fa-${size}` : '',
     className,
     {
       [`text-${type}`] : type !== undefined,
