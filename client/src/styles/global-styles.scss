@@ -210,7 +210,7 @@ input.label.editable {
 .text.editable {
   position: relative;
   width: 100%;
-  min-height: calc(3 * var(--line-height));
+  height: calc(3 * var(--line-height));
 }
 div.text.editable {
   transition: all .25s;
