@@ -1052,13 +1052,17 @@ $step-width: 40px;
 .TemplateStep {
   height: calc(8 * var(--padding));
   padding: calc(var(--padding) - 1px);
-  min-width: 100px;
+  //min-width: 100px;
   border: 1px solid var(--light-border-color);
   border-radius: 2px;
   cursor: pointer;
 }
 .TemplateStep:not(:last-child) {
   margin-right: var(--padding);
+}
+.TemplateStep.add {
+  min-width: 50px;
+  transition: all .25s;
 }
 .TemplateStep.add:hover {
   background-color: var(--hover-light-bg-color);

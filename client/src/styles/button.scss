@@ -50,7 +50,7 @@
 }
 .Button.flat:not([disabled]):hover {
   color: var(--hover-color);
-  background-color: var(--hover-bg-color);
+  background-color: var(--hover-light-bg-color);
 }
 .Button.flat:active,
 .Button.flat:focus {
