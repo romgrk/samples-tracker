@@ -16,6 +16,7 @@ import DropZone from 'react-drop-zone'
 import EditableLabel from './EditableLabel'
 import EditableList from './EditableList'
 import EditableText from './EditableText'
+import Gap from './Gap'
 import Help from './Help'
 import Icon from './Icon'
 import Input from './Input'
@@ -255,7 +256,15 @@ class SampleModal extends React.Component {
       <Modal
         className='SampleModal'
         title={
-          <EditableLabel className='fill' value={sample ? sample.data.name : ''} onEnter={this.setName} />
+          <div className='fill hbox'>
+            <span>Sample:</span>
+            <Gap fill={10}/>
+            <EditableLabel
+              className='fill'
+              value={sample ? sample.data.name : ''}
+              onEnter={this.setName}
+            />
+          </div>
         }
         width={this.modalWidth}
         open={id !== undefined}
