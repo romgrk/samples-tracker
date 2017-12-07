@@ -408,7 +408,7 @@ class SampleModal extends React.Component {
                         }
                         {
                           step.isOverdue === false &&
-                            <Text>Will be overdue at:</Text>
+                            <Text>Will be overdue on:</Text>
                         }
                       </td>
                       <td>
