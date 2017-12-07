@@ -217,6 +217,7 @@ div.text.editable {
   cursor: pointer;
   text-transform: none;
   white-space: pre;
+  overflow: auto;
 }
 div.text.editable:hover {
   background-color: var(--hover-light-bg-color);
