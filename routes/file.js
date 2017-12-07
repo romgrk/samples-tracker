@@ -82,7 +82,7 @@ router.use('/delete/:id', (req, res, next) => {
   File.findById(req.params.id)
   .then(file =>
     File.delete(req.params.id)
-    .then(file => {
+    .then(() => {
       History.create({
         sampleId: file.sampleId,
         stepIndex: file.stepIndex,
