@@ -2,8 +2,6 @@ import React from 'react'
 import pure from 'recompose/pure'
 import classname from 'classname'
 
-import size from '../utils/size'
-
 function Icon(props) {
   const {
     name,
@@ -46,8 +44,8 @@ function Icon(props) {
   )
 
   const style = {
-    marginLeft: size(marginLeft),
-    marginRight: size(marginRight),
+    marginLeft: marginLeft,
+    marginRight: marginRight,
     ...props.style
   }
 
