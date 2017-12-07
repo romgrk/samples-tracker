@@ -87,7 +87,7 @@ router.use('/delete/:id', (req, res, next) => {
         sampleId: file.sampleId,
         stepIndex: file.stepIndex,
         userId: req.user.id,
-        description: `deleted file ${file.name} from step ${stepIndex}`
+        description: `deleted file ${file.name}`
       })
       return sample
     })
