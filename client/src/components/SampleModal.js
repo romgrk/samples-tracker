@@ -100,7 +100,7 @@ class SampleModal extends React.Component {
   }
 
   onDeleteFile = (stepIndex, file) => {
-    this.props.deleteFile(this.state.id, stepIndex, file.id)
+    this.props.deleteFile(file.id)
   }
 
   onMouseOverStep(stepIndex) {
