@@ -4,13 +4,15 @@ import pure from 'recompose/pure'
 import STATUS from '../constants/status'
 import Icon from './Icon'
 
-const StatusIcon = ({ name, showInProgress }) =>
-  name.isLoading              ?  <Icon name='circle-o-notch' info spin /> :
-  name === STATUS.NOT_DONE    ?  <Icon name='circle' subtle /> :
-  name === STATUS.IN_PROGRESS ?  (showInProgress ? <Icon name='circle-o-notch' info /> : <Icon name='circle' subtle />) :
-  name === STATUS.DONE        ?  <Icon name='check' success /> :
-  name === STATUS.ERROR       ?  <Icon name='warning' error /> :
-  name === STATUS.ON_HOLD     ?  <Icon name='hourglass-2' warning /> :
-  name === STATUS.SKIP        ?  <Icon name='forward' muted /> : null
+const StatusIcon = ({ name, showInProgress, size }) =>
+  name.isLoading              ?  <Icon name='circle-o-notch' info spin size={size} /> :
+  name === STATUS.NOT_DONE    ?  <Icon name='circle' subtle size={size} /> :
+  name === STATUS.IN_PROGRESS ?  (showInProgress ?
+                                    <Icon name='circle-o-notch' info size={size} /> :
+                                    <Icon name='circle' subtle size={size} />) :
+  name === STATUS.DONE        ?  <Icon name='check' success size={size} /> :
+  name === STATUS.ERROR       ?  <Icon name='warning' error size={size} /> :
+  name === STATUS.ON_HOLD     ?  <Icon name='hourglass-2' warning size={size} /> :
+  name === STATUS.SKIP        ?  <Icon name='forward' muted size={size} /> : null
 
 export default pure(StatusIcon)
