@@ -65,7 +65,7 @@ export const files = {
   list: () => GET('/file/list'),
   get: (id) => GET(`/file/get/${id}`),
   create: (sampleId, stepIndex, file) => POST(`/file/create/${sampleId}/${stepIndex}`, createFormData(file)),
-  delete: (id) => POST(`/file/delete/${id}`),
+  delete: (sampleId, stepIndex, fileId) => POST(`/file/delete/${fileId}`),
 }
 
 
