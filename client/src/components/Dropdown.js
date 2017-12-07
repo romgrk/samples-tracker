@@ -103,11 +103,18 @@ class Dropdown extends React.Component {
     if (!this.element)
       return { top: 0, left: 0 }
 
-    const box = this.element.getBoundingClientRect()
+    const element = this.element.getBoundingClientRect()
+    const inner    = this.inner.getBoundingClientRect()
+
+    if (this.props.position === 'left')
+      return {
+        top:  element.top + element.height,
+        left: element.left - inner.width + element.width,
+      }
 
     return {
-      top:  box.top + box.height,
-      left: box.left,
+      top:  element.top + element.height,
+      left: element.left,
     }
   }
 
@@ -181,8 +188,11 @@ class Dropdown extends React.Component {
         { button }
         {
           createPortal(
-            <div className={menuClassName} style={this.state.position} ref={ref => ref && (this.menu = ref)}>
-              <div className='Dropdown__inner'>
+            <div className={menuClassName}
+                style={this.state.position}
+                ref={ref => ref && (this.menu = findDOMNode(ref))}
+            >
+              <div className='Dropdown__inner' ref={ref => ref && (this.inner = findDOMNode(ref))}>
                 { children }
               </div>
             </div>

@@ -144,7 +144,7 @@ class Template extends React.Component {
                       <span className='text-info'> *</span>
                   }
                 </EditableLabel>
-                <Dropdown trigger={<Button square center flat icon='ellipsis-v' />} icons>
+                <Dropdown position='left' trigger={<Button square center flat icon='ellipsis-v' />} icons>
                   <Dropdown.Item icon='trash' onClick={() => this.deleteStep(i)}>
                     Delete
                   </Dropdown.Item>
