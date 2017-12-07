@@ -28,7 +28,7 @@ class Index extends React.Component {
 
     return (
       <Modal width='900px' height='60%' open={!isLoggedIn} showHeader={false}>
-        <div className='vbox fill parent-size'>
+        <div className='vbox fill full'>
 
           <h1 className='hcenter'>Tracking app</h1>
 

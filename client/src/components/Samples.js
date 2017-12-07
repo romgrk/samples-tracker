@@ -139,14 +139,17 @@ class Samples extends React.Component {
           </Checkbox>
         </div>
 
-        <div className='Samples__table bordered'>
-          <div className='Samples__header Sample'>
-            <div className='Sample__name'>Name</div>
-            <div className='fill'>&nbsp;</div>
-            <div className='Sample__created'>Created</div>
-            <div className='Sample__modified'>Modified</div>
-            <div className='Sample__notes'>Notes</div>
-          </div>
+        <table className='Samples__table bordered'>
+          <tr className='Samples__header Sample'>
+            <td className='Sample__name'>Name</td>
+            <td className='Sample__badges'></td>
+            <td className='Sample__icon'></td>
+            <td className='Sample__steps'></td>
+            <td className='Sample__created'>Created</td>
+            <td className='Sample__modified'>Modified</td>
+            <td className='Sample__notes'>Notes</td>
+          </tr>
+
           {
             samples.map(sample =>
               <Sample
@@ -160,11 +163,13 @@ class Samples extends React.Component {
           }
           {
             samples.length === 0 &&
-              <div className='Sample__empty text-muted'>
-                No sample to display here.
-              </div>
+              <tr className='Sample__empty text-muted'>
+                <td>
+                  No sample to display here.
+                </td>
+              </tr>
           }
-        </div>
+        </table>
 
         <div className='row bg-dark border-left border-top'>
           <div className='fill' />

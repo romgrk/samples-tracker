@@ -7,7 +7,7 @@
   border-radius: 15px;
   font-size: 0.8em;
   font-weight: bold;
-  max-height: 20px;
+  height: 20px;
   user-select: none;
   color: $text-color-normal;
   background-color: $bg-color-normal;
@@ -21,6 +21,8 @@
 .Badge > span {
   overflow: hidden;
   text-overflow: ellipsis;
+  height: 20px;
+  line-height: 20px;
 }
 .Badge > .Button {
   color: inherit;

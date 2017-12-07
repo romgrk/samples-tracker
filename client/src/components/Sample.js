@@ -73,45 +73,52 @@ class Sample extends React.Component {
     })
 
     return (
-      <div className={className} onClick={this.onClick}>
-        <div className='Sample__name'>
-          <EditableLabel small
-            className='fill'
+      <tr className={className} onClick={this.onClick}>
+        <td className='Sample__name'>
+          <EditableLabel small inline
+            className='full-width'
             value={sample.name}
             onEnter={this.setName}
           />
+        </td>
+        <td className='Sample__badges'>
           <Badge info>{sample.tags[0]}</Badge>
-          {
-            isLoading || (!isLoading && !isOverdue) ?
-              <Spinner visible={isLoading} />
-              :
-              <Icon name='warning' warning marginRight={5} marginLeft={5} />
-          }
-        </div>
+        </td>
+        <td className='Sample__icon'>
         {
-          sample.steps.map((step, index) =>
-            <Step key={index}
-              step={step}
-              sampleId={sample.id}
-              index={index}
-              onChange={data => this.updateStep(index, data)}
-              onChangeStatus={status => this.updateStepStatus(index, status)}
-            />
-          )
+          isLoading || (!isLoading && !isOverdue) ?
+            <Spinner visible={isLoading} />
+            :
+            <Icon name='warning' warning marginRight={5} marginLeft={5} />
         }
-        <div className='Sample__fill' />
-        <div className='Sample__created line text-center'>
+        </td>
+        <td className='Sample__steps'>
+          <div>
+          {
+            sample.steps.map((step, index) =>
+              <Step key={index}
+                step={step}
+                sampleId={sample.id}
+                index={index}
+                onChange={data => this.updateStep(index, data)}
+                onChangeStatus={status => this.updateStepStatus(index, status)}
+              />
+            )
+          }
+          </div>
+        </td>
+        <td className='Sample__created'>
           <small>{ humanReadableTime(sample.created) }</small>
-        </div>
-        <div className='Sample__modified line text-center'>
+        </td>
+        <td className='Sample__modified'>
           <small>{ humanReadableTime(sample.modified) }</small>
-        </div>
-        <div className='Sample__notes'>
+        </td>
+        <td className='Sample__notes'>
           <Label small>
             { sample.notes }
           </Label>
-        </div>
-      </div>
+        </td>
+      </tr>
     )
   }
 }

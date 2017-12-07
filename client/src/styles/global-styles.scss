@@ -67,8 +67,14 @@ html, body {
 .block {
   display: block;
 }
-.parent-size {
+.full {
   width: 100%;
+  height: 100%;
+}
+.full-width {
+  width: 100%;
+}
+.full-height {
   height: 100%;
 }
 
@@ -149,6 +155,9 @@ button.label.editable {
   text-transform: none;
   text-align: left;
   display: flex;
+}
+button.label.editable.inline {
+  display: inline-flex;
 }
 button.label.editable:hover {
   background-color: var(--hover-light-bg-color);
@@ -777,6 +786,9 @@ $step-width: 40px;
 .Samples__table {
   flex: 1 1;
   width: 100%;
+  table-layout: fixed;
+  border-collapse: collapse;
+
   color: var(--table-color);
   background-color: var(--table-bg-color);
   border-left: 1px solid var(--table-border-color);
@@ -792,14 +804,12 @@ $step-width: 40px;
 .Samples__table > .Sample:not(.empty) {
   border-bottom: 1px solid var(--table-border-color);
 }
+
+.Sample {
+  height: 25px;
+}
 .Sample:nth-child(2n + 1) { /* skip header */
   background-color: var(--table-bg-alt-color);
-}
-.Sample {
-  display: flex;
-  flex-direction: row;
-  align-items: stretch;
-  height: 25px;
 }
 .Sample:not(.Samples__header) {
   cursor: pointer;
@@ -814,43 +824,55 @@ $step-width: 40px;
   }
 }
 .Sample__empty {
-  display: flex;
-  flex-direction: row;
-  align-items: stretch;
   font-size: 2.5em;
   font-weight: bold;
   padding: 5em 0;
-  justify-content: center;
   user-select: none;
 }
-.Sample > * {
-  padding: 0 5px;
-}
-.Sample > *:first-child {
-  width: 250px;
-  flex: 0 0 auto;
-  padding: 0 calc(2 * var(--padding));
-}
-.Sample > *:not(:first-child) {
-  border-left: 1px solid var(--table-border-color);
+.Sample td {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 .Sample__name {
-  @include vcenter;
+  width: 150px;
+  padding: 0 $padding;
+  border-left: 1px solid var(--table-border-color);
 }
-.Sample__fill {
-  flex: 1 1;
+.Sample__badges {
+  width: 120px;
+  border-left: none;
+}
+.Sample__icon {
+  width: 30px;
+  text-align: center;
+  border-left: none;
+}
+.Sample__steps {
+  width: auto;
+  overflow: hidden;
+  border-left: 1px solid var(--table-border-color);
+}
+.Sample__steps > div {
+  display: flex;
 }
 .Sample__created {
   width: 100px;
+  padding: 0 $padding;
+  border-left: 1px solid var(--table-border-color);
 }
 .Sample__modified {
   width: 100px;
+  padding: 0 $padding;
+  border-left: 1px solid var(--table-border-color);
 }
 .Sample__notes {
   width: 200px;
+  padding: 0 $padding;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  border-left: 1px solid var(--table-border-color);
 }
 
 .Step {
@@ -862,6 +884,8 @@ $step-width: 40px;
   transition: all .25s;
   cursor: pointer;
   padding: 0;
+  flex: 0 0 $step-width;
+  border-right: 1px solid var(--table-border-color);
 }
 .Step:hover {
   background-color: $hover-light-bg-color;
