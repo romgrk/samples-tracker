@@ -185,6 +185,11 @@ input.label.editable {
   border: none;
   padding: 0;
 }
+input.label.editable:active,
+input.label.editable:focus {
+  outline: none;
+  box-shadow: 0 0 0 1px $focus-color;
+}
 
 .text {
   --line-height: 20px;
@@ -1113,9 +1118,6 @@ $step-width: 40px;
   width:    -moz-max-content;
   width:         max-content;
   //display: inline;
-}
-.TemplateStep input.label.editable {
-  width: 100px;
 }
 .TemplateStep .Dropdown {
   flex: 0 0 auto;
