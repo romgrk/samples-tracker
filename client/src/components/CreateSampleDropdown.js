@@ -93,6 +93,7 @@ class CreateSampleDropdown extends React.Component {
                     <Input
                       small
                       placeHolder='Enter names'
+                      clearOnBlur
                       clearOnEnter
                       onEnter={names => {
                         this.props.createManySamples(names, template)

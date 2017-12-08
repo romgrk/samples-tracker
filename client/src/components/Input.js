@@ -36,6 +36,12 @@ class Input extends React.Component {
     this.props.onFocus && this.props.onFocus(ev)
   }
 
+  onBlur = (ev) => {
+    if (this.props.clearOnBlur)
+      ev.target.value = ''
+    this.props.onBlur && this.props.onBlur(ev)
+  }
+
   render() {
     const {
       className,
@@ -45,6 +51,7 @@ class Input extends React.Component {
       loading,
       autoSelect,
       clearOnEnter,
+      clearOnBlur,
       hasError,
       onEnter,
       ...rest
@@ -69,6 +76,7 @@ class Input extends React.Component {
           onChange={this.onChange}
           onKeyDown={this.props.onKeyDown || this.onKeyDown}
           onFocus={this.onFocus}
+          onBlur={this.onBlur}
           ref={ref => ref && (this.element = ref)}
         />
         { loading && <span className='loading-spinner-tiny'/> }
