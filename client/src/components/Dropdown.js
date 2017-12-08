@@ -15,35 +15,35 @@ document.addEventListener('click', ev => {
 })
 
 
-function Item({ icon, children, ...rest }) {
+function Item({ icon, className, children, ...rest }) {
   return (
-    <div className='item' { ...rest }>
+    <div className={classname('item', className)} { ...rest }>
       { icon && <Icon name={icon} className='menu' /> }
       { children }
     </div>
   )
 }
 
-function SegmentedItem({ icon, children, ...rest }) {
+function SegmentedItem({ icon, children, className, ...rest }) {
   return (
-    <div className={classname('item segmented hbox')} { ...rest }>
+    <div className={classname('item segmented hbox', className)} { ...rest }>
       { children }
     </div>
   )
 }
 
-function SegmentMain({ icon, children, ...rest }) {
+function SegmentMain({ icon, className, children, ...rest }) {
   return (
-    <button className='main-button segment fill'>
+    <button className={classname('main-button segment fill', className)}>
       { icon && <Icon name={icon} className='menu' /> }
       { children }
     </button>
   )
 }
 
-function Segment({ icon, children, center, tooltip, ...rest }) {
+function Segment({ icon, className, children, center, tooltip, ...rest }) {
   const segment = (
-    <button className={classname('segment', { 'text-center': center })} { ...rest }>
+    <button className={classname('segment', className, { 'text-center': center })} { ...rest }>
       { icon && <Icon name={icon} className='menu' /> }
       { children }
     </button>
@@ -59,18 +59,18 @@ function Segment({ icon, children, center, tooltip, ...rest }) {
   )
 }
 
-function Content({ icon, children, ...rest }) {
+function Content({ icon, className, children, ...rest }) {
   return (
-    <div className='item' { ...rest }>
+    <div className={classname('item', className)} { ...rest }>
       { icon && <Icon name={icon} className='menu' /> }
       { children }
     </div>
   )
 }
 
-function Group({ children }) {
+function Group({ className, children }) {
   return (
-    <div className='group'>
+    <div className={classname('group', className)}>
       { children }
     </div>
   )
