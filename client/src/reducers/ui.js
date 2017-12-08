@@ -34,12 +34,22 @@ export default function ui(state = initialState, action) {
   if (action.error === true) {
     console.error(action.payload)
 
+    const message =
+      action.payload.type === 'COMPLETION_FUNCTION_FAILED' ?
+        'Completion function returned message:' :
+        action.payload.message.replace(/^Error: /, '')
+
+    const details =
+      action.payload.type === 'COMPLETION_FUNCTION_FAILED' ?
+        action.payload.message.replace(/^Error: /, '') :
+        undefined
+
     state = {
       ...state,
       notifications: state.notifications.concat({
         type: 'error',
-        message: action.payload.message.replace(/^Error: /, ''),
-        //details: stack.join('\n'),
+        message: message,
+        details: details,
         //stack: getStack(action.payload),
       })
     }
