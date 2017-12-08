@@ -97,17 +97,17 @@ class Samples extends React.Component {
       </Dropdown>
 
     const tagsDropdown =
-    <Dropdown label={
+    <Dropdown closeOnClick={false} label={
       ui.filtering.tags.join(', ') || <span>&nbsp;</span>
     }>
-        <Dropdown.Content
+        <Dropdown.Item
           onClick={() => this.props.setFilteringTags([])  }
         >
           Clear all
-        </Dropdown.Content>
+        </Dropdown.Item>
         {
           alphabeticalSort(allTags).map(tag =>
-            <Dropdown.Content key={tag}
+            <Dropdown.Item key={tag}
               onClick={() => filteredTags.has(tag) ?
                 this.props.deleteFilteringTag(tag) :
                 this.props.addFilteringTag(tag)
@@ -117,7 +117,7 @@ class Samples extends React.Component {
                 name={filteredTags.has(tag) ? 'check-square' : 'square'}
                 marginRight={10}
               /> <Badge info>{ tag }</Badge>
-            </Dropdown.Content>
+            </Dropdown.Item>
           )
         }
       </Dropdown>

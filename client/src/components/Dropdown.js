@@ -188,7 +188,7 @@ class Dropdown extends React.Component {
       loading,
       inline,
       trigger = <Button iconAfter='chevron-down'>{ this.props.label }</Button>,
-      onClick,
+      closeOnClick = true,
     } = this.props
 
     const isControlled = 'open' in this.props
@@ -232,8 +232,10 @@ class Dropdown extends React.Component {
         React.cloneElement(
           child,
           { onClick: (ev) => {
-              this.close(ev)
               child.props.onClick && child.props.onClick(ev)
+              if (closeOnClick) {
+                this.close(ev)
+              }
             }
           }
         )
