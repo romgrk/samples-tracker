@@ -44,6 +44,7 @@ class SampleModal extends React.Component {
     this.stepWidth = this.modalWidth + 100
 
     this.state = this.getStateFromProps(props)
+    this.state.badgeDropdownOpen = false
   }
 
   componentWillReceiveProps(props) {
@@ -92,7 +93,6 @@ class SampleModal extends React.Component {
       stepIndex,
       sample,
       step,
-      badgeDropdownOpen: false,
     }
   }
 
@@ -122,10 +122,7 @@ class SampleModal extends React.Component {
       ev.target.value = ''
     }
     else {
-      setTimeout(() => {
-        if (this.badgeInput.element !== document.activeElement)
-          this.closeBadgeDropdown()
-      }, 200)
+      this.closeBadgeDropdown()
     }
   }
 
@@ -236,7 +233,12 @@ class SampleModal extends React.Component {
   }
 
   closeBadgeDropdown = () => {
-    this.setState({ badgeDropdownOpen: false })
+    setTimeout(() => {
+      if (this.badgeInput.element !== document.activeElement) {
+        console.log(document.activeElement)
+        this.setState({ badgeDropdownOpen: false })
+      }
+    }, 200)
   }
 
   render() {
