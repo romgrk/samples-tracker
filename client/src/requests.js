@@ -103,6 +103,7 @@ function POST(url, params, options = {}) { return fetchAPI(url, params, { method
 
 function createError(data) {
   const e = new Error(data.message)
+  e.type = data.type
   e.stack = data.stack
   return e
 }
