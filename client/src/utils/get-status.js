@@ -9,6 +9,11 @@ export default function getStatus(sample) {
   if (sample.completed)
     return Status.DONE
 
+  if (sample.steps.length === 0) {
+    console.error('Sample with no steps', sample)
+    return Status.ERROR
+  }
+
   let i = 0;
 
   for (; i < sample.steps.length; i++) {
