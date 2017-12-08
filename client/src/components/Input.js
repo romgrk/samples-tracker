@@ -39,6 +39,8 @@ class Input extends React.Component {
   render() {
     const {
       className,
+      small,
+      large,
       value,
       loading,
       autoSelect,
@@ -52,6 +54,8 @@ class Input extends React.Component {
       'Input',
       className,
       {
+        small,
+        large,
         error: hasError,
       }
     )

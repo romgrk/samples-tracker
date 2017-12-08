@@ -476,6 +476,9 @@ textarea.text.editable:focus {
   color: $light-color;
   background-color: $bg-color-dark;
 }
+.Dropdown__menu.compact > .Dropdown__inner {
+  padding: 0;
+}
 .Tooltip {
   color: $text-color-highlight;
   background-color: rgba(black, 0.7);
@@ -483,20 +486,28 @@ textarea.text.editable:focus {
   padding: ($padding - 1px) 2*$padding;
   border-radius: 4px;
 }
+.Dropdown__menu {
+  position: absolute;
+  z-index: 2;
+}
 .Dropdown__inner {
   opacity: 0;
   transform: translateY(-10px);
   transition: all .25s;
   pointer-events: none;
 }
-.Dropdown__menu {
-  position: absolute;
-  z-index: 2;
-}
 .Dropdown__menu.open > .Dropdown__inner {
   opacity: 1;
   transform: translateY(0);
   pointer-events: unset;
+}
+.Dropdown__menu.right {
+  & > .Dropdown__inner {
+    transform: translateX(-10px);
+  }
+  &.open > .Dropdown__inner {
+    transform: translateX(0);
+  }
 }
 .Tooltip {
   pointer-events: none;
@@ -505,6 +516,15 @@ textarea.text.editable:focus {
   min-width: unset;
 }
 .Dropdown__inner, .Popup {
+  &> .content {
+    position: relative;
+    display: flex;
+    width: 100%;
+    align-items: center;
+    height: 30px;
+    padding: 0 2*$padding;
+  }
+
   &> .item {
     position: relative;
     display: flex;
@@ -515,7 +535,7 @@ textarea.text.editable:focus {
   }
 
   &> .item[disabled] {
-    color: var(--text-color-muted);
+    color: $text-color-muted;
   }
   &> .item:not([disabled]):not(.segmented):hover {
     color: #fff;
@@ -538,7 +558,7 @@ textarea.text.editable:focus {
     line-height: 30px;
     text-align: left;
   }
-  &> .item.segmented > .segment:not(:first-child) {
+  &> .item.segmented > .segment:not(:first-of-type) {
     padding: 0 2*$padding;
     border-left: 1px solid $light-border-color;
   }
@@ -558,7 +578,7 @@ textarea.text.editable:focus {
   &> .item > .Icon.menu,
   &> .item.segmented > .main-button > .Icon.menu {
     position: absolute;
-    color: var(--color);
+    color: $color;
     width: 2*$padding;
     left: 2*$padding;
   }
@@ -815,6 +835,17 @@ section.Templates {
   padding: (2 * $padding) 0;
 }
 section.Samples {
+}
+
+
+
+.CreateSample__arrow {
+  position: relative;
+}
+.CreateSample__arrow > .Dropdown {
+  position: absolute;
+  top: 0;
+  right: 17px;
 }
 
 

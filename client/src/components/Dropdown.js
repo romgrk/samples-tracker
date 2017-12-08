@@ -61,7 +61,7 @@ function Segment({ icon, className, children, center, tooltip, ...rest }) {
 
 function Content({ icon, className, children, ...rest }) {
   return (
-    <div className={classname('item', className)} { ...rest }>
+    <div className={classname('content', className)} { ...rest }>
       { icon && <Icon name={icon} className='menu' /> }
       { children }
     </div>
@@ -124,7 +124,7 @@ class Dropdown extends React.Component {
       && !this.menu.contains(ev.target)
       && (this.state.open || this.props.open)
     ) {
-      this.close()
+      this.close(ev)
     }
   }
 
@@ -142,29 +142,35 @@ class Dropdown extends React.Component {
     const element = this.element.getBoundingClientRect()
     const inner   = this.inner.getBoundingClientRect()
 
+    let style
+
     if (this.props.position === 'bottom left')
-      return {
+      style = {
         top:  element.top + element.height,
         left: element.left - inner.width + element.width,
       }
-
-    if (this.props.position === 'right')
-      return {
+    else if (this.props.position === 'right')
+      style = {
         top:  element.top,
         left: element.right,
       }
+    else
+      style = {
+        top:  element.top + element.height,
+        left: element.left,
+      }
 
-    return {
-      top:  element.top + element.height,
-      left: element.left,
-    }
+    style.left += this.props.offset ? (this.props.offset.left || 0) : 0
+    style.top  += this.props.offset ? (this.props.offset.top || 0) : 0
+
+    return style
   }
 
-  close = () => {
+  close = (ev) => {
     const isControlled = 'open' in this.props
 
     if (isControlled)
-      this.props.onClose && this.props.onClose()
+      this.props.onClose && this.props.onClose(ev)
     else
       this.setState({ open: false })
   }
@@ -176,6 +182,8 @@ class Dropdown extends React.Component {
   render() {
     const {
       className,
+      position,
+      compact,
       value,
       loading,
       inline,
@@ -198,8 +206,10 @@ class Dropdown extends React.Component {
     const menuClassName = classname(
       'Dropdown__menu',
       className,
+      position,
       {
         'open': open,
+        'compact': compact,
         'with-icons': this.props.icons,
       })
 
@@ -221,7 +231,11 @@ class Dropdown extends React.Component {
         child :
         React.cloneElement(
           child,
-          { onClick: (ev) => { this.close(); child.props.onClick(ev)} }
+          { onClick: (ev) => {
+              this.close(ev)
+              child.props.onClick && child.props.onClick(ev)
+            }
+          }
         )
     )
 

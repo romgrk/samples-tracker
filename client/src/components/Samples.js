@@ -16,6 +16,7 @@ import Sort, {
 import Badge from './Badge'
 import Button from './Button'
 import Checkbox from './Checkbox'
+import CreateSampleDropdown from './CreateSampleDropdown'
 import Dropdown from './Dropdown'
 import Gap from './Gap'
 import Icon from './Icon'
@@ -32,6 +33,19 @@ class Samples extends React.Component {
 
   createNewSample = (template) => {
     this.props.onCreate(getNewSample(template))
+  }
+
+  createManySamples = (input, template) => {
+    const names = input.match(/\S+/g)
+
+    if (names === null)
+      return
+
+    names.forEach(name => {
+      const sample = getNewSample(template)
+      sample.name = name
+      this.props.onCreate(sample)
+    })
   }
 
   render() {
@@ -61,23 +75,13 @@ class Samples extends React.Component {
     const allTags = Array.from(allSamples.map(s => s.data.tags).reduce((acc, cur) => (cur.forEach(tag => acc.add(tag)), acc), new Set()))
     const filteredTags = new Set(ui.filtering.tags)
 
-    const newSampleButton =
-      <Button info
-        loading={templates.isLoading || isLoading}
-        iconAfter={ templates.isLoading ? undefined : 'chevron-down' } >
-        Create New Sample
-      </Button>
-
     const createSampleDropdown =
-      <Dropdown trigger={newSampleButton}>
-        {
-          templates.data.map(template =>
-            <Dropdown.Item key={template.id} onClick={() => this.createNewSample(template)}>
-              { template.name }
-            </Dropdown.Item>
-          )
-        }
-      </Dropdown>
+      <CreateSampleDropdown
+        isLoading={isLoading}
+        templates={templates}
+        createNewSample={this.createNewSample}
+        createManySamples={this.createManySamples}
+      />
 
     const sortingDropdown =
       <Dropdown label={ui.sorting.criteria.map(getSortName).join(', ')}>

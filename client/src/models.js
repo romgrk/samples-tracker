@@ -18,7 +18,7 @@ export const getNewTemplateStep = (alertDelay) => ({
 })
 
 export const getNewSample = (template) => ({
-  name: `${template.name}`,
+  name: null,
   notes: '',
   tags: [template.name],
   steps: template.steps.map((step, i) => ({
