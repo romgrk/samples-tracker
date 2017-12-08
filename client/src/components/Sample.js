@@ -15,6 +15,7 @@ import Input from './Input'
 import Label from './Label'
 import Spinner from './Spinner'
 import Step from './Step'
+import Tooltip from './Tooltip'
 
 class Sample extends React.Component {
   constructor(props) {
@@ -91,13 +92,15 @@ class Sample extends React.Component {
             onEnter={this.setName}
           />
         </td>
+        <Tooltip content={sample.tags.join(', ')}>
         <td className='Sample__badges'>
           {
             sample.tags.map(tag =>
-              <Badge info>{tag}</Badge>
+              <Badge tooltip={false} info>{tag}</Badge>
             )
           }
         </td>
+        </Tooltip>
         <td className='Sample__steps'>
           <div>
           {
