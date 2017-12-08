@@ -471,11 +471,12 @@ class SampleModal extends React.Component {
                           </Dropdown.Item>
                           {
                             Object.values(completionFunctions.data).map(completion =>
-                              <Dropdown.SegmentedItem
-                                icon={ step.completionFn === completion.id ? 'dot-circle-o' : 'circle-o'}
-                                onClick={() => this.setStepCompletion(stepIndex, completion.id)}
-                              >
-                                { completion.name }
+                              <Dropdown.SegmentedItem>
+                                <Dropdown.SegmentMain
+                                  icon={ step.completionFn === completion.id ? 'dot-circle-o' : 'circle-o'}
+                                  onClick={() => this.setStepCompletion(stepIndex, completion.id)}>
+                                  { completion.name }
+                                </Dropdown.SegmentMain>
 
                                 <Dropdown.Segment tooltip='Edit' onClick={() => this.editFunction(completion.id)}>
                                   <Icon name='pencil-square-o' />
