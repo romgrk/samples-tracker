@@ -22,11 +22,11 @@ class IntervalInput extends React.Component {
   }
 
   onAccept = (ev) => {
-    if (this.state.value === this.props.value)
-      return;
-
     if (this.props.value) {
-      this.props.onAccept()
+      if (Interval.isValid(this.props.value))
+        this.props.onAccept && this.props.onAccept(this.props.value)
+      else
+        this.props.onError && this.props.onError(this.props.value)
     }
     else {
       if (Interval.isValid(this.state.value))

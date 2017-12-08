@@ -449,7 +449,7 @@ class SampleModal extends React.Component {
                         <IntervalInput
                           value={step.alertDelay}
                           onChange={(alertDelay) => this.setAlertDelay(stepIndex, alertDelay)}
-                          onAccept={this.update}
+                          onAccept={() => this.update()}
                         />
                       </td>
                     </tr>
