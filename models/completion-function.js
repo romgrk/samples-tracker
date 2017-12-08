@@ -6,6 +6,7 @@
 const vm = require('vm')
 const { rejectMessage } = require('../helpers/promise')
 const db = require('../database.js')
+const k = require('../constants')
 
 module.exports = {
   findAll,
@@ -45,7 +46,9 @@ function runById(id, context) {
   return findById(id).then(completion =>
     vm.runInContext(`(${completion.code})(sample.steps[index], sample, user, index)`, vm.createContext(context))
   )
-  .then(result => result === true ? Promise.resolve() : rejectMessage(result))
+  .then(result => result === true ?
+    Promise.resolve() :
+    rejectMessage(result, k.COMPLETION_FUNCTION_FAILED))
 }
 
 module.exports.delete = function(id) {
