@@ -8,6 +8,7 @@ function Badge(props) {
   const {
     children,
     button,
+    tooltip = true,
     className,
     type,
     size,
@@ -42,14 +43,20 @@ function Badge(props) {
     }
   )
 
+  const element =
+    <span className={badgeClassName} { ...rest }>
+      <span>
+        { children }
+      </span>
+      { button }
+    </span>
+
+  if (!tooltip)
+    return element
+
   return (
     <Tooltip content={children} delay={500}>
-      <span className={badgeClassName} { ...rest }>
-        <span>
-          { children }
-        </span>
-        { button }
-      </span>
+      { element }
     </Tooltip>
   )
 }
