@@ -33,7 +33,7 @@ document.addEventListener('click', ev => {
     steps.map(d => d.onDocumentClick(ev))
          .some(Boolean)
 
-  if (!isContained && steps.length > 0) {
+  if (ev.ctrlKey === false && !isContained && steps.length > 0) {
     if (steps[0].props.selectedSteps.size !== 0)
       steps[0].props.deselectAllSteps()
   }
