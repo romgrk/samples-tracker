@@ -122,7 +122,7 @@ class Dropdown extends React.Component {
     if (
          !this.element.contains(ev.target)
       && !this.menu.contains(ev.target)
-      && this.state.open
+      && (this.state.open || this.props.open)
     ) {
       this.close()
     }
@@ -140,12 +140,18 @@ class Dropdown extends React.Component {
       return { top: 0, left: 0 }
 
     const element = this.element.getBoundingClientRect()
-    const inner    = this.inner.getBoundingClientRect()
+    const inner   = this.inner.getBoundingClientRect()
 
     if (this.props.position === 'bottom left')
       return {
         top:  element.top + element.height,
         left: element.left - inner.width + element.width,
+      }
+
+    if (this.props.position === 'right')
+      return {
+        top:  element.top,
+        left: element.right,
       }
 
     return {
@@ -173,7 +179,7 @@ class Dropdown extends React.Component {
       value,
       loading,
       inline,
-      trigger,
+      trigger = <Button iconAfter='chevron-down'>{ this.props.label }</Button>,
       onClick,
     } = this.props
 
@@ -199,14 +205,14 @@ class Dropdown extends React.Component {
 
     const button =
       React.cloneElement(
-        trigger || <Button iconAfter='chevron-down'>{ this.props.label }</Button>,
+        trigger,
         {
           ref: ref => {
             this.onRef(ref)
             if (trigger && typeof trigger.ref === 'function')
               trigger.ref(ref)
           },
-          ...(isControlled ? { onClick: onClick } : { onClick: this.toggle }),
+          ...(isControlled ? { } : { onClick: this.toggle }),
         }
       )
 
