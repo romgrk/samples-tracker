@@ -17,6 +17,10 @@ export const addFilteringTag    = createAction(UI.ADD_FILTERING_TAG)
 export const deleteFilteringTag = createAction(UI.DELETE_FILTERING_TAG)
 export const setFilteringTags   = createAction(UI.SET_FILTERING_TAGS)
 
+export const selectStep       = createAction(UI.SELECT_STEP)
+export const deselectStep     = createAction(UI.DESELECT_STEP)
+export const deselectAllSteps = createAction(UI.DESELECT_ALL_STEPS)
+
 export default {
   setIncludeArchived,
   setSortingCriteria,
@@ -24,4 +28,7 @@ export default {
   addFilteringTag,
   deleteFilteringTag,
   setFilteringTags,
+  selectStep,
+  deselectStep,
+  deselectAllSteps,
 }

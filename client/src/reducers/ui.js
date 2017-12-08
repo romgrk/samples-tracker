@@ -4,6 +4,7 @@ import {
   SHOW_NOTIFICATION,
   UI
 } from '../constants/ActionTypes'
+import { Set } from 'immutable'
 import Sort from '../constants/sorting'
 import uniq from '../utils/uniq'
 
@@ -22,6 +23,7 @@ const initialState = {
     tags: [],
   },
   notifications: [],
+  selectedSteps: Set(),
 }
 
 export default function ui(state = initialState, action) {
@@ -66,6 +68,13 @@ export default function ui(state = initialState, action) {
       return { ...state, filtering: { ...state.filtering, tags: action.payload } }
     case UI.SET_INCLUDE_ARCHIVED:
       return { ...state, includeArchived: action.payload }
+
+    case UI.SELECT_STEP:
+      return { ...state, selectedSteps: state.selectedSteps.add(action.payload) }
+    case UI.DESELECT_STEP:
+      return { ...state, selectedSteps: state.selectedSteps.delete(action.payload) }
+    case UI.DESELECT_ALL_STEPS:
+      return { ...state, selectedSteps: state.selectedSteps.clear() }
 
     case SHOW_NOTIFICATION:
       return { ...state, notifications: state.notifications.concat(action.payload) }

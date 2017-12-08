@@ -15,6 +15,9 @@ export const UI = createConstants('UI', [
   'ADD_FILTERING_TAG',
   'DELETE_FILTERING_TAG',
   'SET_FILTERING_TAGS',
+  'SELECT_STEP',
+  'DESELECT_STEP',
+  'DESELECT_ALL_STEPS',
 ])
 export const LOGGED_IN = createNetworkConstants('LOGGED_IN')
 // Notifications
