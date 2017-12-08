@@ -933,7 +933,7 @@ $step-width: 40px;
 }
 .Sample__steps {
   width: auto;
-  overflow: hidden;
+  overflow: auto !important;
   border-left: 1px solid var(--table-border-color);
 }
 .Sample__steps > div {
