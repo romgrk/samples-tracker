@@ -142,7 +142,7 @@ class Dropdown extends React.Component {
     const element = this.element.getBoundingClientRect()
     const inner    = this.inner.getBoundingClientRect()
 
-    if (this.props.position === 'left')
+    if (this.props.position === 'bottom left')
       return {
         top:  element.top + element.height,
         left: element.left - inner.width + element.width,
