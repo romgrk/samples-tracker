@@ -146,7 +146,7 @@ class Step extends React.Component {
   }
 
   render() {
-    const { step } = this.props
+    const { step, selectedSteps } = this.props
 
     const tooltip = (
       <span>
@@ -192,7 +192,7 @@ class Step extends React.Component {
                 {
                   Object.values(STATUS)
                   .filter(status =>
-                    status !== step.status
+                    (status !== step.status || selectedSteps.size > 1)
                     && status !== STATUS.IN_PROGRESS
                   )
                   .map((status, i) =>
