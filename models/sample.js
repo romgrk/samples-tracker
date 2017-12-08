@@ -132,9 +132,9 @@ function updateStepStatus(id, index, status, user) {
           return true
         }
         else {
-          if (nextSteps.some(isDoneOrSkip))
+          if (nextSteps.some(step => step.status === 'DONE'))
             return rejectMessage(
-              `Can't switch status back to ${status} because some step after is already completed or skipped.`)
+              `Can't switch status back to ${status} because some step after is already completed.`)
         }
 
         return true
