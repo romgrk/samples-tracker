@@ -218,9 +218,10 @@ function complete(id, completed = true) {
 
 function create(sample) {
   return db.insert(`
-    INSERT INTO samples (name, tags, notes, created)
+    INSERT INTO samples (id, name, tags, notes, created)
       VALUES (
-        'Sample ' || currval('samples_id_seq'),
+        nextval('samples_id_seq'),
+        ${sample.name === null ? `'Sample ' || currval('samples_id_seq')` : `@name`},
         @tags,
         @notes,
         CURRENT_TIMESTAMP
