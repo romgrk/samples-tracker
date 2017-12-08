@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 
+const generateHistoryEntry = require('../helpers/generate-history-entry')
 const { dataHandler, errorHandler } = require('../helpers/handlers.js')
 const Sample = require('../models/sample.js')
 const History = require('../models/history.js')
@@ -37,15 +38,21 @@ router.use('/create', (req, res, next) => {
 
 /* POST update sample */
 router.use('/update/:id', (req, res, next) => {
-  Sample.update({ ...req.body, id: req.params.id })
+
+  Sample.findById(req.params.id)
   .then(sample => {
-    History.create({
-      sampleId: sample.id,
-      stepIndex: null,
-      userId: req.user.id,
-      description: `updated sample`
+
+    const entry = generateHistoryEntry(
+      req.user,
+      JSON.parse(JSON.stringify(sample)),
+      req.body
+    )
+
+    return Sample.update({ ...req.body, id: req.params.id })
+    .then(updatedSample => {
+      History.create(entry)
+      return updatedSample
     })
-    return sample
   })
   .then(dataHandler(res))
   .catch(errorHandler(res))
