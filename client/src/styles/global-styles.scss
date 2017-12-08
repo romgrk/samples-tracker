@@ -81,7 +81,7 @@ html, body {
 .row {
   display: flex;
   flex-direction: row;
-  padding: calc(2 * var(--padding));
+  padding: 2*$padding;
 }
 .row > * {
   flex: 0 0 auto;
@@ -102,7 +102,7 @@ html, body {
 .column {
   display: flex;
   flex-direction: column;
-  padding: calc(2 * var(--padding));
+  padding: 2*$padding;
 }
 
 .clickable {
@@ -276,14 +276,14 @@ textarea.text.editable:focus {
   width: 100%;
   align-items: center;
   height: 30px;
-  padding: 0 calc(2 * var(--padding));
+  padding: 0 2*$padding;
   color: var(--color);
   font-weight: bold;
 }
 .list > .item {
   display: block;
   color: $text-color-highlight;
-  padding: 0 calc(2 * var(--padding));
+  padding: 0 2*$padding;
 }
 .list > a.item:not(.disabled) {
   transition: all .25s;
@@ -299,8 +299,8 @@ textarea.text.editable:focus {
 }
 .list > .separator {
   width: 100%;
-  height: calc(2 * var(--padding));
-  margin-bottom: calc(2 * var(--padding));
+  height: 2*$padding;
+  margin-bottom: 2*$padding;
   border-bottom: 1px solid var(--light-border-color);
 }
 
@@ -504,34 +504,67 @@ textarea.text.editable:focus {
   line-height: 30px;
   min-width: unset;
 }
-.Popup > .item ,
-.Dropdown__inner > .item {
-  position: relative;
-  display: flex;
-  width: 100%;
-  align-items: center;
-  height: 30px;
-  padding: 0 calc(2 * var(--padding));
+.Dropdown__inner, .Popup {
+  &> .item {
+    position: relative;
+    display: flex;
+    width: 100%;
+    align-items: center;
+    height: 30px;
+    padding: 0 2*$padding;
+  }
+
+  &> .item[disabled] {
+    color: var(--text-color-muted);
+  }
+  &> .item:not([disabled]):not(.segmented):hover {
+    color: #fff;
+    background-color: $focus-color;
+  }
+
+  &> .item.segmented {
+    padding: 0 !important;
+    border-top:    1px solid rgba($light-border-color, 0.05);
+    border-bottom: 1px solid rgba($light-border-color, 0.05);
+  }
+  &> .item.segmented + .item.segmented {
+    border-top: none;
+  }
+  &> .item.segmented > .main-button {
+    padding-left: 2*$padding;
+  }
+  &> .item.segmented > .segment {
+    height: 100%;
+    line-height: 30px;
+    text-align: left;
+  }
+  &> .item.segmented > .segment:not(:first-child) {
+    padding: 0 2*$padding;
+    border-left: 1px solid $light-border-color;
+  }
+  &> .item.segmented > .segment:not([disabled]):hover {
+    color: #fff;
+    background-color: $focus-color;
+  }
 }
-.Popup.with-icons > .item ,
-.Dropdown__menu.with-icons > .Dropdown__inner > .item {
-  padding: 0 calc(2 * var(--padding)) 0 (6 * $padding);
-}
-.Popup > .item[disabled],
-.Dropdown__inner > .item[disabled] {
-  color: var(--text-color-muted);
-}
-.Popup > .item:not([disabled]):hover,
-.Dropdown__inner > .item:not([disabled]):hover {
-  background-color: $focus-color;
-  color: #fff;
-}
-.Popup > .item > .Icon.menu,
-.Dropdown__menu.with-icons > div > .item > .Icon.menu {
-  position: absolute;
-  color: var(--color);
-  width: calc(2 * var(--padding));
-  left: calc(2 * var(--padding));
+.Popup.with-icons,
+.Dropdown__menu.with-icons > .Dropdown__inner {
+  &> .item {
+    padding: 0 2*$padding 0 (6 * $padding);
+  }
+  &> .item.segmented > .main-button {
+    padding-left: 6*$padding;
+  }
+  &> .item > .Icon.menu,
+  &> .item.segmented > .main-button > .Icon.menu {
+    position: absolute;
+    color: var(--color);
+    width: 2*$padding;
+    left: 2*$padding;
+  }
+  &> .item.segmented > .main-button > .Icon.menu {
+    top: $padding + 2px;
+  }
 }
 .Popup > .item[disabled] > .Icon.menu,
 .Dropdown__inner > .item[disabled] > .Icon.menu {
@@ -544,15 +577,15 @@ textarea.text.editable:focus {
   width: 100%;
   align-items: center;
   height: 30px;
-  padding: 0 calc(2 * var(--padding));
+  padding: 0 2*$padding;
   color: var(--color);
   font-weight: bold;
 }
 .Popup > .separator ,
 .Dropdown__inner > .separator {
   width: 100%;
-  height: calc(2 * var(--padding));
-  margin-bottom: calc(2 * var(--padding));
+  height: 2*$padding;
+  margin-bottom: 2*$padding;
   border-bottom: 1px solid var(--light-border-color);
 }
 
@@ -719,7 +752,7 @@ a.link.text-normal:visited {
   flex-basis: auto;
 }
 .App__section {
-  padding: 0 calc(2 * var(--padding));
+  padding: 0 2*$padding;
 }
 
 
@@ -1077,7 +1110,7 @@ $step-width: 40px;
 }
 
 .Template__info {
-  padding: var(--padding) calc(2 * var(--padding));
+  padding: var(--padding) 2*$padding;
   background-color: var(--bg-color-dark);
   width: 175px;
 }

@@ -152,6 +152,10 @@ class SampleModal extends React.Component {
     this.props.history.push('/completions/new')
   }
 
+  editFunction = (id) => {
+    this.props.history.push(`/completions/${id}`)
+  }
+
   removeTag(tag) {
     const data = this.state.sample.data
     const newData = { ...data, tags: data.tags.filter(v => v !== tag) }
@@ -466,15 +470,18 @@ class SampleModal extends React.Component {
                           </Dropdown.Item>
                           {
                             Object.values(completionFunctions.data).map(completion =>
-                              <Dropdown.Item
+                              <Dropdown.SegmentedItem
                                 icon={ step.completionFn === completion.id ? 'dot-circle-o' : 'circle-o'}
                                 onClick={() => this.setStepCompletion(stepIndex, completion.id)}
                               >
                                 { completion.name }
-                              </Dropdown.Item>
+
+                                <Dropdown.Segment tooltip='Edit' onClick={() => this.editFunction(completion.id)}>
+                                  <Icon name='pencil-square-o' />
+                                </Dropdown.Segment>
+                              </Dropdown.SegmentedItem>
                             )
                           }
-                          <Dropdown.Separator />
                           <Dropdown.Item icon='plus' onClick={this.createNewFunction}>
                             Create new
                           </Dropdown.Item>

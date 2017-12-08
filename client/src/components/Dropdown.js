@@ -6,6 +6,7 @@ import classname from 'classname'
 import size from '../utils/size'
 import Button from './Button'
 import Icon from './Icon'
+import Tooltip from './Tooltip'
 
 const dropdowns = []
 
@@ -16,19 +17,57 @@ document.addEventListener('click', ev => {
 
 function Item({ icon, children, ...rest }) {
   return (
-    <button className='item' { ...rest }>
+    <div className='item' { ...rest }>
+      { icon && <Icon name={icon} className='menu' /> }
+      { children }
+    </div>
+  )
+}
+
+function SegmentedItem({ icon, children, ...rest }) {
+  const notSegments = []
+  const segments = []
+  React.Children.map(children, (child) => {
+    if (child.type === Segment)
+      segments.push(child)
+    else
+      notSegments.push(child)
+  })
+  return (
+    <div className={classname('item segmented hbox')} { ...rest }>
+      <button className='main-button segment fill'>
+        { icon && <Icon name={icon} className='menu' /> }
+        { notSegments }
+      </button>
+      { segments }
+    </div>
+  )
+}
+
+function Segment({ icon, children, tooltip, ...rest }) {
+  const segment = (
+    <button className='segment' { ...rest }>
       { icon && <Icon name={icon} className='menu' /> }
       { children }
     </button>
+  )
+
+  if (!tooltip)
+    return segment
+
+  return (
+    <Tooltip content={tooltip}>
+      { segment }
+    </Tooltip>
   )
 }
 
 function Content({ icon, children, ...rest }) {
   return (
-    <button className='item' { ...rest }>
+    <div className='item' { ...rest }>
       { icon && <Icon name={icon} className='menu' /> }
       { children }
-    </button>
+    </div>
   )
 }
 
@@ -175,7 +214,7 @@ class Dropdown extends React.Component {
       )
 
     const children = React.Children.map(this.props.children, child =>
-      child.type !== Item ?
+      child.type !== Item && child.type !== SegmentedItem ?
         child :
         React.cloneElement(
           child,
@@ -203,13 +242,13 @@ class Dropdown extends React.Component {
   }
 }
 
-function getEventProps(props) {
-
-}
 
 const defaultExport = pure(Dropdown)
 export default defaultExport
-defaultExport.Item      = Item
-defaultExport.Content   = Content
-defaultExport.Group     = Group
-defaultExport.Separator = Separator
+
+defaultExport.Item          = Item
+defaultExport.SegmentedItem = SegmentedItem
+defaultExport.Segment       = Segment
+defaultExport.Content       = Content
+defaultExport.Group         = Group
+defaultExport.Separator     = Separator

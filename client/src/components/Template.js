@@ -8,13 +8,14 @@ import * as _ from '../constants/text'
 import { getNewTemplateStep } from '../models'
 import Button from './Button'
 import Dropdown from './Dropdown'
+import EditableLabel from './EditableLabel'
 import Help from './Help'
 import Icon from './Icon'
 import Input from './Input'
 import IntervalInput from './IntervalInput'
 import Label from './Label'
 import Spinner from './Spinner'
-import EditableLabel from './EditableLabel'
+import Tooltip from './Tooltip'
 
 
 class Template extends React.Component {
@@ -108,6 +109,10 @@ class Template extends React.Component {
     this.props.history.push('/completions/new')
   }
 
+  editFunction = (id) => {
+    this.props.history.push(`/completions/${id}`)
+  }
+
   render() {
     const { template, completionFunctions, onChange, onCreate, onError } = this.props
     const { data: { name, steps } } = this.state
@@ -170,12 +175,16 @@ class Template extends React.Component {
                   </Dropdown.Item>
                   {
                     completionFunctions.map(completion =>
-                      <Dropdown.Item
+                      <Dropdown.SegmentedItem
                         icon={ step.completionFn === completion.id ? 'dot-circle-o' : 'circle-o'}
                         onClick={() => this.setStepCompletion(i, completion.id)}
                       >
                         { completion.name }
-                      </Dropdown.Item>
+
+                        <Dropdown.Segment tooltip='Edit' onClick={() => this.editFunction(completion.id)}>
+                          <Icon name='pencil-square-o' />
+                        </Dropdown.Segment>
+                      </Dropdown.SegmentedItem>
                     )
                   }
                   <Dropdown.Item icon='plus' onClick={this.createNewFunction}>
