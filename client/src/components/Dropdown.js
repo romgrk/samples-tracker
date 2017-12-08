@@ -226,20 +226,20 @@ class Dropdown extends React.Component {
         }
       )
 
-    const children = React.Children.map(this.props.children, child =>
-      child.type !== Item && child.type !== SegmentMain ?
+    const children = React.Children.map(this.props.children, child => {
+      return child.type !== Item && child.type !== SegmentedItem ?
         child :
         React.cloneElement(
           child,
           { onClick: (ev) => {
               child.props.onClick && child.props.onClick(ev)
-              if (closeOnClick) {
+              if (ev.target.className.includes('segment') && closeOnClick) {
                 this.close(ev)
               }
             }
           }
         )
-    )
+    })
 
     return (
       <div className={dropdownClassName}>
