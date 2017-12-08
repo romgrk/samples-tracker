@@ -84,7 +84,7 @@ export default function ui(state = initialState, action) {
       if (state.selectedSteps.has(action.payload))
         return { ...state, stepContextMenu: { step: action.payload, open: true } }
       else
-        return { ...state, selectedSteps: Set(action.payload),
+        return { ...state, selectedSteps: Set([action.payload]),
           stepContextMenu: {
             step: action.payload,
             open: true

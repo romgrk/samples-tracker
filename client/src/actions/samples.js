@@ -2,6 +2,7 @@ import { SAMPLES } from '../constants/ActionTypes'
 
 import { createFetchActions } from '../utils/create-actions'
 import * as requests from '../requests'
+import ui from './ui'
 
 const samples = {
   fetch:  createFetchActions(SAMPLES.FETCH,  requests.samples.list, {
@@ -31,6 +32,20 @@ const samples = {
     (data) => ({ data }),
     (res, id, data) => ({ id, data }),
     (err, id, data) => ({ id, data })),
+
+  updateSelectedStepsStatus: (status) => {
+    return (dispatch, getState) => {
+      const { ui: { selectedSteps } } = getState()
+
+      selectedSteps.forEach(step => {
+        const [sampleId, stepIndex] = step.split(':')
+
+        dispatch(samples.updateStepStatus(sampleId, stepIndex, status))
+      })
+
+      dispatch(ui.closeStepContextMenu())
+    }
+  },
 }
 
 export default samples

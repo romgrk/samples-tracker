@@ -3,8 +3,14 @@ import { createPortal } from 'react-dom'
 import PropTypes from 'prop-types'
 import pure from 'recompose/pure'
 import { withRouter } from 'react-router'
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
+import { createStructuredSelector, createSelector } from 'reselect'
+import classname from 'classname'
 
-import size from '../utils/size'
+import UIActions from '../actions/ui'
+import SampleActions from '../actions/samples'
+
 import STATUS from '../constants/status'
 import Badge from './Badge'
 import Button from './Button'
@@ -16,11 +22,23 @@ import Spinner from './Spinner'
 import StatusIcon from './StatusIcon'
 import Tooltip from './Tooltip'
 
+const { updateSelectedStepsStatus } = SampleActions
+
+
+// This is a global click listener, to close the popup menu
 const steps = []
 
 document.addEventListener('click', ev => {
-  steps.forEach(d => d.onDocumentClick(ev))
+  const isContained =
+    steps.map(d => d.onDocumentClick(ev))
+         .some(Boolean)
+
+  if (!isContained && steps.length > 0) {
+    if (steps[0].props.selectedSteps.size !== 0)
+      steps[0].props.deselectAllSteps()
+  }
 })
+
 
 class Step extends React.Component {
   constructor(props) {
@@ -49,33 +67,44 @@ class Step extends React.Component {
   }
 
   onDocumentClick(ev) {
-    if (!this.popup.contains(ev.target))
-      this.setContextMenuOpen(false)
-  }
+    if (this.isContextMenuOpen() && !this.popup.contains(ev.target))
+      this.props.closeStepContextMenu()
 
-  setContextMenuOpen(contextMenuOpen) {
-    this.setState({ contextMenuOpen })
+    return this.button.contains(ev.target) || this.popup.contains(ev.target)
   }
 
   onClick = (ev) => {
     ev.stopPropagation()
-    this.props.history.push(`/samples/${this.props.sampleId}/${this.props.index}`)
+    ev.preventDefault()
+
+    // Open sample modal
+    if (ev.ctrlKey === false) {
+      this.props.history.push(`/samples/${this.props.sampleId}/${this.props.index}`)
+    }
+    // Step selection
+    else {
+      if (this.isSelected())
+        this.props.deselectStep(this.getIdentifier())
+      else
+        this.props.selectStep(this.getIdentifier())
+    }
+  }
+
+  onMouseMove = (ev) => {
+    if (ev.ctrlKey && ev.buttons === 1 && !this.isSelected())
+      this.props.selectStep(this.getIdentifier())
   }
 
   onContextMenu = (ev) => {
     ev.preventDefault()
-    this.setContextMenuOpen(true)
 
-    steps.forEach(component => {
-      if (component !== this)
-        component.setContextMenuOpen(false)
-    })
+    this.props.openStepContextMenu(this.getIdentifier())
   }
 
-  onRef = (ref) => {
+  onRefButton = (ref) => {
     if (ref === null)
       return
-    this.element = ref
+    this.button = ref
   }
 
   onRefPopup = (ref) => {
@@ -84,26 +113,40 @@ class Step extends React.Component {
     this.popup = ref
   }
 
-  setStatus = (status) => {
-    this.props.onChangeStatus(status)
-    this.setContextMenuOpen(false)
+  onClickStatus = (status) => {
+    this.props.updateSelectedStepsStatus(status)
   }
 
   getPosition() {
-    if (!this.element)
-      return { top: size(0), left: size(0) }
+    if (!this.button)
+      return { top: 0, left: 0 }
 
-    const box = this.element.getBoundingClientRect()
+    const box = this.button.getBoundingClientRect()
 
     return {
-      top:  size(box.top),
-      left: size(box.left + 40),
+      top:  box.top,
+      left: box.left + 40,
     }
+  }
+
+  getIdentifier() {
+    return `${this.props.sampleId}:${this.props.index}`
+  }
+
+  isContextMenuOpen() {
+    const { contextMenu } = this.props
+    const id = this.getIdentifier()
+    return contextMenu.open && contextMenu.step === id
+  }
+
+  isSelected() {
+    const { selectedSteps } = this.props
+    const id = this.getIdentifier()
+    return selectedSteps.has(id)
   }
 
   render() {
     const { step } = this.props
-    const { contextMenuOpen } = this.state
 
     const tooltip = (
       <span>
@@ -111,14 +154,23 @@ class Step extends React.Component {
       </span>
     )
 
+    const className = classname('Step block', {
+      selected: this.isSelected()
+    })
+    const menuClassName = classname('Step__menu Popup', {
+      open: this.isContextMenuOpen()
+    })
+
     return (
-      <Tooltip position='top' offset='30px 0' content={tooltip}>
+      <Tooltip position='top' content={tooltip}>
         <button
-          className='Step block'
+          className={className}
           onContextMenu={this.onContextMenu}
           onClick={this.onClick}
+          onMouseMove={this.onMouseMove}
+          ref={this.onRefButton}
         >
-          <span className='content' ref={this.onRef}>
+          <span className='content'>
             <StatusIcon name={step.status} />
           </span>
           {
@@ -134,7 +186,7 @@ class Step extends React.Component {
             createPortal(
               <div
                 ref={this.onRefPopup}
-                className={'Step__menu Popup' + (contextMenuOpen ? ' open' : '')}
+                className={menuClassName}
                 style={this.getPosition()}
               >
                 {
@@ -144,7 +196,9 @@ class Step extends React.Component {
                     && status !== STATUS.IN_PROGRESS
                   )
                   .map((status, i) =>
-                    <button key={i} className='item' onClick={ev => ev.stopPropagation() || this.setStatus(status)}>
+                    <button key={i}
+                      className='item'
+                      onClick={ev => ev.stopPropagation() || this.onClickStatus(status)}>
                       <StatusIcon name={status} />
                     </button>
                   )
@@ -160,4 +214,13 @@ class Step extends React.Component {
   }
 }
 
-export default withRouter(pure(Step))
+const mapStateToProps = createStructuredSelector({
+  selectedSteps: createSelector(state => state.ui.selectedSteps, state => state),
+  contextMenu: createSelector(state => state.ui.stepContextMenu, state => state),
+})
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({ ...UIActions, updateSelectedStepsStatus }, dispatch)
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(pure(Step)))
