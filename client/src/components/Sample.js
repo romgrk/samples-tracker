@@ -32,8 +32,10 @@ class Sample extends React.Component {
     }
   }
 
-  onClick = () => {
-    this.props.history.push(`/samples/${this.state.data.id}`)
+  onClick = (ev) => {
+    // To avoid opening the modal while the user wants to select steps
+    if (ev.ctrlKey === false)
+      this.props.history.push(`/samples/${this.state.data.id}`)
   }
 
   update(data) {
