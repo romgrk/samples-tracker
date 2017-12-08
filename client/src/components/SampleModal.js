@@ -35,7 +35,7 @@ import Tooltip from './Tooltip'
 
 class SampleModal extends React.Component {
   constructor(props) {
-    super()
+    super(props)
 
     this.lastMouseOver = undefined
     this.canMouseOver = true
@@ -43,29 +43,24 @@ class SampleModal extends React.Component {
     this.modalWidth = 800
     this.stepWidth = this.modalWidth + 100
 
-
-    this.state = {
-      id: undefined,
-      stepIndex: undefined,
-      sample: undefined,
-      step: undefined,
-      badgeDropdownOpen: false,
-    }
+    this.state = this.getStateFromProps(props)
   }
 
   componentWillReceiveProps(props) {
-    let id = this.state.id
-    let stepIndex = this.state.stepIndex
-    let sample = this.state.sample
-    let step = this.state.step
+    this.setState(this.getStateFromProps(props))
+  }
 
-    if (props.id !== this.state.id
-    || props.stepIndex !== this.state.stepIndex) {
+  getStateFromProps(props) {
+    const state = this.state || {}
+    let { id, stepIndex, sample, step } = state
+
+    if (props.id !== state.id
+    || props.stepIndex !== state.stepIndex) {
       id = props.id
       stepIndex = props.stepIndex
     }
 
-    if (props.sample !== this.state.sample && props.sample !== undefined) {
+    if (props.sample !== state.sample && props.sample !== undefined) {
       if (props.sample.isLoading) {
         sample = { isLoading: true, data: sample.data }
       } else {
@@ -92,7 +87,13 @@ class SampleModal extends React.Component {
       }
     }
 
-    this.setState({ id, stepIndex, sample, step })
+    return {
+      id,
+      stepIndex,
+      sample,
+      step,
+      badgeDropdownOpen: false,
+    }
   }
 
   onAddFile = (stepIndex, file) => {
