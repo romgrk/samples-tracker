@@ -22,6 +22,7 @@ import Title from './Title'
 
 const Images = {
   sampleInterface: require('../assets/sample-interface.png'),
+  sampleMultiCreation: require('../assets/sample-multi-creation.png'),
   sampleRightClick: require('../assets/sample-right-click.png'),
   sampleCtrlClick: require('../assets/sample-ctrl-click.png'),
 }
@@ -52,9 +53,15 @@ class FAQ extends React.Component {
         <Title>Samples</Title>
 
         <div className='row'>
-          <div className='fill'>
-            <Label>The sample interface displays all the samples.</Label>
-            <Image src={Images.sampleInterface} height='250' />
+          <div className='fill vbox'>
+            <div>
+              <Label>The sample interface displays all the samples.</Label>
+              <Image src={Images.sampleInterface} height='250' />
+            </div>
+            <div>
+              <Label>Enter multiple sample names at once</Label>
+              <Image src={Images.sampleMultiCreation} height='100' />
+            </div>
           </div>
           <div className='static vbox'>
             <div className='fill'>
