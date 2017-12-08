@@ -17,9 +17,11 @@ export const addFilteringTag    = createAction(UI.ADD_FILTERING_TAG)
 export const deleteFilteringTag = createAction(UI.DELETE_FILTERING_TAG)
 export const setFilteringTags   = createAction(UI.SET_FILTERING_TAGS)
 
-export const selectStep       = createAction(UI.SELECT_STEP)
-export const deselectStep     = createAction(UI.DESELECT_STEP)
-export const deselectAllSteps = createAction(UI.DESELECT_ALL_STEPS)
+export const selectStep           = createAction(UI.SELECT_STEP)
+export const deselectStep         = createAction(UI.DESELECT_STEP)
+export const deselectAllSteps     = createAction(UI.DESELECT_ALL_STEPS)
+export const openStepContextMenu  = createAction(UI.OPEN_STEP_CONTEXT_MENU)
+export const closeStepContextMenu = createAction(UI.CLOSE_STEP_CONTEXT_MENU)
 
 export default {
   setIncludeArchived,
@@ -31,4 +33,6 @@ export default {
   selectStep,
   deselectStep,
   deselectAllSteps,
+  openStepContextMenu,
+  closeStepContextMenu,
 }

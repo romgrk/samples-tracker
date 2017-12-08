@@ -24,6 +24,10 @@ const initialState = {
   },
   notifications: [],
   selectedSteps: Set(),
+  stepContextMenu: {
+    step: undefined,
+    open: false,
+  }
 }
 
 export default function ui(state = initialState, action) {
@@ -75,6 +79,19 @@ export default function ui(state = initialState, action) {
       return { ...state, selectedSteps: state.selectedSteps.delete(action.payload) }
     case UI.DESELECT_ALL_STEPS:
       return { ...state, selectedSteps: state.selectedSteps.clear() }
+
+    case UI.OPEN_STEP_CONTEXT_MENU:
+      if (state.selectedSteps.has(action.payload))
+        return { ...state, stepContextMenu: { step: action.payload, open: true } }
+      else
+        return { ...state, selectedSteps: Set(action.payload),
+          stepContextMenu: {
+            step: action.payload,
+            open: true
+          }
+        }
+    case UI.CLOSE_STEP_CONTEXT_MENU:
+      return { ...state, stepContextMenu: { ...state.stepContextMenu, open: false } }
 
     case SHOW_NOTIFICATION:
       return { ...state, notifications: state.notifications.concat(action.payload) }
