@@ -25,28 +25,25 @@ function Item({ icon, children, ...rest }) {
 }
 
 function SegmentedItem({ icon, children, ...rest }) {
-  const notSegments = []
-  const segments = []
-  React.Children.map(children, (child) => {
-    if (child.type === Segment)
-      segments.push(child)
-    else
-      notSegments.push(child)
-  })
   return (
     <div className={classname('item segmented hbox')} { ...rest }>
-      <button className='main-button segment fill'>
-        { icon && <Icon name={icon} className='menu' /> }
-        { notSegments }
-      </button>
-      { segments }
+      { children }
     </div>
   )
 }
 
-function Segment({ icon, children, tooltip, ...rest }) {
+function SegmentMain({ icon, children, ...rest }) {
+  return (
+    <button className='main-button segment fill'>
+      { icon && <Icon name={icon} className='menu' /> }
+      { children }
+    </button>
+  )
+}
+
+function Segment({ icon, children, center, tooltip, ...rest }) {
   const segment = (
-    <button className='segment' { ...rest }>
+    <button className={classname('segment', { 'text-center': center })} { ...rest }>
       { icon && <Icon name={icon} className='menu' /> }
       { children }
     </button>
@@ -248,6 +245,7 @@ export default defaultExport
 
 defaultExport.Item          = Item
 defaultExport.SegmentedItem = SegmentedItem
+defaultExport.SegmentMain   = SegmentMain
 defaultExport.Segment       = Segment
 defaultExport.Content       = Content
 defaultExport.Group         = Group
