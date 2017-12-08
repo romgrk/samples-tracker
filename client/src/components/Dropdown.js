@@ -34,7 +34,7 @@ function SegmentedItem({ icon, children, className, ...rest }) {
 
 function SegmentMain({ icon, className, children, ...rest }) {
   return (
-    <button className={classname('main-button segment fill', className)}>
+    <button className={classname('main-button segment fill', className)} {...rest}>
       { icon && <Icon name={icon} className='menu' /> }
       { children }
     </button>
@@ -227,7 +227,7 @@ class Dropdown extends React.Component {
       )
 
     const children = React.Children.map(this.props.children, child =>
-      child.type !== Item && child.type !== SegmentedItem ?
+      child.type !== Item && child.type !== SegmentMain ?
         child :
         React.cloneElement(
           child,
