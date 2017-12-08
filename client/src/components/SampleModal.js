@@ -1,4 +1,5 @@
 import React from 'react'
+import { findDOMNode } from 'react-dom'
 import pure from 'recompose/pure'
 import { set, lensPath } from 'ramda'
 import { withRouter } from 'react-router'
@@ -32,7 +33,6 @@ import Time from './Time'
 import Title from './Title'
 import Tooltip from './Tooltip'
 
-
 class SampleModal extends React.Component {
   constructor(props) {
     super(props)
@@ -45,6 +45,8 @@ class SampleModal extends React.Component {
 
     this.state = this.getStateFromProps(props)
     this.state.badgeDropdownOpen = false
+
+    this.buttons = {}
   }
 
   componentWillReceiveProps(props) {
@@ -134,7 +136,8 @@ class SampleModal extends React.Component {
     if (stepIndex >= 0 && stepIndex <= this.state.sample.data.steps.length - 1) {
       this.props.history.push(`/samples/${this.state.id}/${stepIndex}`)
       this.canMouseOver = false
-      setTimeout(() => this.canMouseOver = true, 500)
+      setTimeout(() => this.canMouseOver = true, 750)
+      this.buttons[stepIndex] && this.buttons[stepIndex].scrollIntoView()
     }
   }
 
@@ -321,19 +324,22 @@ class SampleModal extends React.Component {
               />
 
               { /* Steps Button Bar */ }
-              <div className='ButtonGroup hcenter flex-fill'>
-              {
-                sample.data.steps.map((step, stepIndex) =>
-                  <Tooltip content={step.name} delay={500} minWidth='parent'>
-                    <Button small
-                      highlight={stepIndex === this.state.stepIndex}
-                      onClick={() => this.gotoStep(stepIndex)}
-                    >
-                      { step.name } { step.isOverdue && <Icon name='warning' warning /> }
-                    </Button>
-                  </Tooltip>
-                )
-              }
+              <div className='ButtonBar'>
+                <div className='ButtonGroup flex-fill'>
+                  {
+                    sample.data.steps.map((step, stepIndex) =>
+                      <Tooltip content={step.name} delay={500} minWidth='parent'>
+                        <Button small
+                          highlight={stepIndex === this.state.stepIndex}
+                          onClick={() => this.gotoStep(stepIndex)}
+                          ref={ref => ref && (this.buttons[stepIndex] = findDOMNode(ref))}
+                        >
+                          { step.name } { step.isOverdue && <Icon name='warning' warning /> }
+                        </Button>
+                      </Tooltip>
+                    )
+                  }
+                </div>
               </div>
 
               <div className='StepsModal'>
