@@ -161,7 +161,10 @@ class Tooltip extends React.Component {
     )
 
     return React.cloneElement(child, {
-      ref: this.onRefTarget,
+      ref: ref => {
+        this.onRefTarget(ref)
+        child.ref && child.ref(ref)
+      },
       onMouseOver: this.onMouseOver,
       onMouseOut: this.onMouseOut,
     }, childChildren)
