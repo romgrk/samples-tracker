@@ -166,7 +166,7 @@ class Template extends React.Component {
                     icon={ step.completionFn === null ? 'dot-circle-o' : 'circle-o'}
                     onClick={() => this.setStepCompletion(i, null)}
                   >
-                    <em>None</em>
+                    <em className='text-muted'>None</em>
                   </Dropdown.Item>
                   {
                     completionFunctions.map(completion =>
