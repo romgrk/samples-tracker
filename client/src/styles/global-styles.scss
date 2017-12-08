@@ -523,6 +523,9 @@ textarea.text.editable:focus {
     align-items: center;
     height: 30px;
     padding: 0 2*$padding;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   &> .item {
@@ -532,6 +535,9 @@ textarea.text.editable:focus {
     align-items: center;
     height: 30px;
     padding: 0 2*$padding;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   &> .item[disabled] {
@@ -557,6 +563,9 @@ textarea.text.editable:focus {
     height: 100%;
     line-height: 30px;
     text-align: left;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
   &> .item.segmented > .segment:not(:first-of-type) {
     padding: 0 2*$padding;
