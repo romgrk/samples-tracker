@@ -36,9 +36,9 @@ export default function ui(state = initialState, action) {
 
     const message =
       (action.payload.fromServer ? 'Server: ' : '') +
-      action.payload.type === 'COMPLETION_FUNCTION_FAILED' ?
+      (action.payload.type === 'COMPLETION_FUNCTION_FAILED' ?
         'Completion function returned message:' :
-        action.payload.message.replace(/^Error: /, '')
+        action.payload.message.replace(/^Error: /, ''))
 
     const details =
       action.payload.type === 'COMPLETION_FUNCTION_FAILED' ?
