@@ -99,7 +99,7 @@ class FAQ extends React.Component {
             </Text>
           </Question>
 
-        <Modal.Content>
+        </Modal.Content>
       </Modal>
     )
   }
