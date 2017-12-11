@@ -149,7 +149,7 @@ export default function samples(state = initialState, action) {
     case SAMPLES.DELETE.RECEIVE:
       return { ...state, data: dissoc(action.meta.id, state.data) }
     case SAMPLES.DELETE.ERROR:
-      return set(lensPath(['data', action.meta.id, 'isLoading']), true, state)
+      return set(lensPath(['data', action.meta.id, 'isLoading']), false, state)
 
     default:
       return state
