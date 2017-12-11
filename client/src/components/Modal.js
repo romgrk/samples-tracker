@@ -97,12 +97,8 @@ class Modal extends React.Component {
                 </div>
             }
 
-            <div className='Modal__content'>
-              { this.props.children }
-            </div>
+            { this.props.children }
 
-            <div className='Modal__actions'>
-            </div>
           </div>
         </div>
       </div>

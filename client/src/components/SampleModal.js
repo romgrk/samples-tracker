@@ -280,6 +280,7 @@ class SampleModal extends React.Component {
         open={id !== undefined}
         onClose={this.closeModal}
       >
+        <Modal.Content>
         {
           sample !== undefined &&
             <div className='vbox'>
@@ -353,6 +354,7 @@ class SampleModal extends React.Component {
 
             </div>
         }
+        </Modal.Content>
       </Modal>
     )
   }
