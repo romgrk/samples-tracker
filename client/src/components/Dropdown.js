@@ -183,7 +183,11 @@ class Dropdown extends React.Component {
   }
 
   toggle = () => {
-    this.setState({ open: !this.state.open })
+    const open = !this.state.open
+    this.setState({ open })
+
+    if (open && this.props.onOpen)
+      this.props.onOpen()
   }
 
   render() {
