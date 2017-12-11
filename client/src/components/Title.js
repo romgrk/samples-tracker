@@ -9,6 +9,13 @@ function Title(props) {
     keepCase,
     small,
     large,
+    info,
+    success,
+    warning,
+    error,
+    muted,
+    subtle,
+    highlight,
   } = props
 
   const titleClassName = classname(
@@ -18,6 +25,13 @@ function Title(props) {
       'keep-case': keepCase,
       'small': small,
       'large': large,
+      'text-info': info,
+      'text-success': success,
+      'text-warning': warning,
+      'text-error': error,
+      'text-muted': muted,
+      'text-subtle': subtle,
+      'text-highlight': highlight,
     }
   )
 
