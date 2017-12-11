@@ -58,10 +58,10 @@ class EditableList extends React.Component {
         onEnter={value => this.props.onAdd(value)}
       />
 
-    const className = classname('EditableList', className)
+    const listClassName = classname('EditableList', className)
 
     return (
-      <table className={className}>
+      <table className={listClassName}>
       <tbody>
         {
           values.map(value =>
