@@ -159,8 +159,16 @@ class Samples extends React.Component {
             {
               samples.length === 0 &&
                 <tr className='Sample__empty text-muted'>
-                  <td>
+                  <td colSpan='7'>
                     No sample to display here.
+                  </td>
+                </tr>
+            }
+            {
+              samples.length < allSamples.length &&
+                <tr className='Sample__message'>
+                  <td colSpan='7'>
+                    { allSamples.length - samples.length } samples filtered
                   </td>
                 </tr>
             }

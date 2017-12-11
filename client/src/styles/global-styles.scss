@@ -957,10 +957,16 @@ $step-width: 40px;
   }
 }
 .Sample__empty {
-  font-size: 2.5em;
+  font-size: 1.5em;
   font-weight: bold;
   padding: 5em 0;
   user-select: none;
+}
+.Sample__message {
+  color: $text-color-muted;
+  font-weight: bold;
+  user-select: none;
+  & td { padding: 0 $padding; }
 }
 .Sample td {
   white-space: nowrap;
