@@ -15,12 +15,12 @@ document.addEventListener('click', ev => {
 })
 
 
-function Item({ icon, className, children, ...rest }) {
+function Item({ icon, disabled, className, children, ...rest }) {
   return (
-    <div className={classname('item', className)} { ...rest }>
+    <button className={classname('item', className, { disabled })} disabled={disabled} { ...rest }>
       { icon && <Icon name={icon} className='menu' /> }
       { children }
-    </div>
+    </button>
   )
 }
 
@@ -32,18 +32,18 @@ function SegmentedItem({ icon, children, className, ...rest }) {
   )
 }
 
-function SegmentMain({ icon, className, children, ...rest }) {
+function SegmentMain({ icon, className, children, disabled, ...rest }) {
   return (
-    <button className={classname('main-button segment fill', className)} {...rest}>
+    <button className={classname('main-button segment fill', className, { disabled })} disabled={disabled} {...rest}>
       { icon && <Icon name={icon} className='menu' /> }
       { children }
     </button>
   )
 }
 
-function Segment({ icon, className, children, center, tooltip, ...rest }) {
+function Segment({ icon, className, children, center, tooltip, disabled, ...rest }) {
   const segment = (
-    <button className={classname('segment', className, { 'text-center': center })} { ...rest }>
+    <button className={classname('segment', className, { 'text-center': center, disabled })} disabled={disabled} { ...rest }>
       { icon && <Icon name={icon} className='menu' /> }
       { children }
     </button>
