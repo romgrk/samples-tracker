@@ -59,12 +59,12 @@ function Segment({ icon, className, children, center, tooltip, ...rest }) {
   )
 }
 
-function Content({ icon, className, children, ...rest }) {
+function Content({ icon, className, text, children, ...rest }) {
   const contentClassName = classname(
     'content',
     className,
     {
-      'text-overflow': typeof children === 'string',
+      'text-overflow': text || typeof children === 'string',
     }
   )
   return (
