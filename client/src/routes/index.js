@@ -60,7 +60,7 @@ function Routes({ isLoggedIn, isLoggingIn, logOut, showFAQ }) {
             if (!activeItem || activeItem.title === undefined)
               return <div/>
 
-            document.title = `Tracker - ${activeItem.title}`
+            document.title = `Follow - ${activeItem.title}`
 
             if (activeItem.showTitle === false)
               return <div/>

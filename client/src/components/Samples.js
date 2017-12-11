@@ -18,6 +18,7 @@ import Button from './Button'
 import Checkbox from './Checkbox'
 import CreateSampleDropdown from './CreateSampleDropdown'
 import Dropdown from './Dropdown'
+import EditableLabel from './EditableLabel'
 import Gap from './Gap'
 import Icon from './Icon'
 import Input from './Input'
@@ -26,7 +27,7 @@ import Modal from './Modal'
 import Sample from './Sample'
 import SampleModal from './SampleModal'
 import Spinner from './Spinner'
-import EditableLabel from './EditableLabel'
+import Title from './Title'
 
 
 class Samples extends React.Component {
@@ -126,6 +127,13 @@ class Samples extends React.Component {
       <section className='Samples vbox'>
 
         <div className='row bg-dark border-left'>
+
+          <Title large keepCase muted>
+            GenAP FOLLOW
+          </Title>
+
+          <Gap fill={10} />
+
           { createSampleDropdown }
 
           <div className='fill' />
