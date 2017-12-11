@@ -333,15 +333,11 @@ class SampleModal extends React.Component {
                 </Dropdown>
               </div>
 
-              <div className='row'>
-                <EditableText
-                  className='fill'
-                  placeHolder='Enter sample notes...'
-                  value={sample.data.notes}
-                  onEnter={this.setNotes}
-                />
-
-              </div>
+              <EditableText
+                placeHolder='Enter sample notes...'
+                value={sample.data.notes}
+                onEnter={this.setNotes}
+              />
 
               { /* Steps Button Bar */ }
               <div className='ButtonBar'>

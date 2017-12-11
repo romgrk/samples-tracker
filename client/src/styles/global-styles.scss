@@ -136,12 +136,13 @@ html, body {
 }
 
 .title {
-  margin-right: var(--padding);
   font-family: Ubuntu, Roboto, Arial, sans-serif;
   font-size: 14px;
   line-height: 30px;
   font-weight: bold;
   color: $text-color-highlight;
+  margin-right: var(--padding);
+  user-select: none;
   text-transform: uppercase;
 }
 .title.keep-case {

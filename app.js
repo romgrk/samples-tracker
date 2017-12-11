@@ -45,7 +45,7 @@ app.use(flash()) // use connect-flash for flash messages stored in session
 
 // API
 
-app.use('/api/is-logged-in',        require('./routes/is-logged-in'))
+app.use('/api/is-logged-in',                      require('./routes/is-logged-in'))
 app.use('/api/user',                apiProtected, require('./routes/user'))
 app.use('/api/settings',            apiProtected, require('./routes/settings'))
 app.use('/api/sample',              apiProtected, require('./routes/sample'))
