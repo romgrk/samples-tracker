@@ -23,12 +23,16 @@ class IntervalInput extends React.Component {
 
   onAccept = (ev) => {
     if (this.props.value) {
+      if (this.props.value === this.state.value)
+        return;
       if (Interval.isValid(this.props.value))
         this.props.onAccept && this.props.onAccept(this.props.value)
       else
         this.props.onError && this.props.onError(this.props.value)
     }
     else {
+      if (this.state.value === this.props.defaultValue)
+        return;
       if (Interval.isValid(this.state.value))
         this.props.onAccept && this.props.onAccept(this.state.value)
       else
