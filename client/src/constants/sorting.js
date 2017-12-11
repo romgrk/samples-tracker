@@ -2,7 +2,7 @@
  * sorting.js
  */
 
-import Status from '../constants/status'
+import { SampleStatus } from '../constants/status'
 import getStatus from '../utils/get-status'
 
 export const sortCriteria = [
@@ -52,10 +52,11 @@ function byTag(a, b) {
 
 
 const statusOrder = {
-  [Status.ERROR]: 1,
-  [Status.ON_HOLD]: 2,
-  [Status.IN_PROGRESS]: 3,
-  [Status.DONE]: 4,
+  [SampleStatus.OVERDUE]:     1,
+  [SampleStatus.ERROR]:       2,
+  [SampleStatus.ON_HOLD]:     3,
+  [SampleStatus.IN_PROGRESS]: 4,
+  [SampleStatus.DONE]:        5,
 }
 function byStatus(a, b) {
   const as = getStatus(a.data)
@@ -76,14 +77,26 @@ function byCreated(a, b) {
 
 
 function byModified(a, b) {
-  return Date.parse(a.data.modified) - Date.parse(a.data.modified)
+  const da = a.data.modified
+  const db = b.data.modified
+
+  return dateCompare(da, db)
 }
 
 
 function byCompleted(a, b) {
-  if (a.data.completed === null || b.data.completed === null) {
-    return a.data.completed === null && b.data.completed !== null ? -1 :
-           a.data.completed !== null && b.data.completed === null ? +1 : 0
+  const da = a.data.completed
+  const db = b.data.completed
+
+  return dateCompare(da, db)
+}
+
+
+function dateCompare(a, b) {
+  if (a === null || b === null) {
+    return a === null && b !== null ? -1 :
+           a !== null && b === null ? +1 : 0
   }
-  return Date.parse(a.data.completed) - Date.parse(a.data.completed)
+
+  return Date.parse(a) - Date.parse(b)
 }

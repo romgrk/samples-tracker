@@ -626,6 +626,7 @@ textarea.text.editable:focus {
   padding: 0 2*$padding;
   color: var(--color);
   font-weight: bold;
+  white-space: nowrap;
 }
 .Popup > .separator ,
 .Dropdown__inner > .separator {
@@ -872,6 +873,13 @@ section.Samples {
   position: absolute;
   top: 0;
   right: 17px;
+  height: 100%;
+}
+.CreateSample__arrow > .Dropdown > span {
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 
 .FilterTags__input {
@@ -986,7 +994,6 @@ $step-width: 40px;
   justify-content: center;
   align-items: center;
   min-width: $step-width;
-  transition: all .25s;
   cursor: pointer;
   padding: 0;
   flex: 0 0 $step-width;

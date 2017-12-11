@@ -67,7 +67,9 @@ class Step extends React.Component {
   }
 
   onDocumentClick(ev) {
-    if (this.isContextMenuOpen() && !this.popup.contains(ev.target))
+    if (this.isContextMenuOpen()
+      && !this.popup.contains(ev.target)
+      && !this.button.contains(ev.target))
       this.props.closeStepContextMenu()
 
     return this.button.contains(ev.target) || this.popup.contains(ev.target)
@@ -146,7 +148,7 @@ class Step extends React.Component {
   }
 
   render() {
-    const { step, selectedSteps } = this.props
+    const { step, selectedSteps, contextMenu } = this.props
 
     const tooltip = (
       <span>
@@ -155,7 +157,7 @@ class Step extends React.Component {
     )
 
     const className = classname('Step block', {
-      selected: this.isSelected()
+      selected: this.isSelected() && !(selectedSteps.size === 1 && contextMenu.open)
     })
     const menuClassName = classname('Step__menu Popup', {
       open: this.isContextMenuOpen()
