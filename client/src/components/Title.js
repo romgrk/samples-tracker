@@ -7,6 +7,8 @@ function Title(props) {
     children,
     className,
     keepCase,
+    small,
+    large,
   } = props
 
   const titleClassName = classname(
@@ -14,6 +16,8 @@ function Title(props) {
     className,
     {
       'keep-case': keepCase,
+      'small': small,
+      'large': large,
     }
   )
 

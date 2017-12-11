@@ -140,6 +140,15 @@ html, body {
   color: $text-color-highlight;
   text-transform: uppercase;
 }
+.title.keep-case {
+  text-transform: none;
+}
+.title.small {
+  font-size: 12px;
+}
+.title.large {
+  font-size: 18px;
+}
 
 .label {
   font-family: Ubuntu, Roboto, Arial, sans-serif;
