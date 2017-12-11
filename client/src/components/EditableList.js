@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import pure from 'recompose/pure'
+import classname from 'classname'
 
 import arrayEquals from '../utils/array-equals'
 import Button from './Button'
@@ -44,7 +45,7 @@ class EditableList extends React.Component {
   }
 
   render() {
-    const { values, loading, placeHolder } = this.props
+    const { values, loading, placeHolder, className } = this.props
     const { value } = this.state
 
     const control = this.props.control ||
@@ -57,8 +58,10 @@ class EditableList extends React.Component {
         onEnter={value => this.props.onAdd(value)}
       />
 
+    const className = classname('EditableList', className)
+
     return (
-      <table className='EditableList'>
+      <table className={className}>
       <tbody>
         {
           values.map(value =>
