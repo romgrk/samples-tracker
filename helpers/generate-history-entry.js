@@ -8,6 +8,9 @@ module.exports = function generateHistoryEntry(user, a, b) {
 
   let differences = diff(a, b)
 
+  if (!differences)
+    return undefined
+
   differences = differences.filter(d => {
     return (d.path[0] !== 'history')
   })
