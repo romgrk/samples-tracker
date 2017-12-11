@@ -238,7 +238,7 @@ class Dropdown extends React.Component {
       )
 
     const children = React.Children.map(this.props.children, child => {
-      return child.type !== Item && child.type !== SegmentedItem ?
+      return child === null || (child.type !== Item && child.type !== SegmentedItem) ?
         child :
         React.cloneElement(
           child,
