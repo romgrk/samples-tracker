@@ -81,7 +81,6 @@ router.use('/update-step-status/:id/:index/:status', (req, res, next) => {
 /* POST delete sample */
 router.use('/delete/:id', (req, res, next) => {
   Sample.delete(req.params.id)
-  .then
   .then(dataHandler(res))
   .catch(errorHandler(res))
 })
