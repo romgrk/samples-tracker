@@ -57,6 +57,7 @@ class Modal extends React.Component {
       height,
       showHeader = true,
       showClose = true,
+      minimal = false,
     } = this.props
 
     const modalClassName = classname(
@@ -66,6 +67,7 @@ class Modal extends React.Component {
         open: open,
         small: small,
         large: large,
+        minimal: minimal,
       })
 
     const style = {
@@ -90,6 +92,7 @@ class Modal extends React.Component {
                       <Button
                         className='Modal__close'
                         round
+                        flat={minimal}
                         icon='close'
                         onClick={this.props.onClose}
                       />
