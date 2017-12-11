@@ -60,8 +60,15 @@ function Segment({ icon, className, children, center, tooltip, ...rest }) {
 }
 
 function Content({ icon, className, children, ...rest }) {
+  const contentClassName = classname(
+    'content',
+    className
+    {
+      'text-overflow': typeof children === 'string',
+    }
+  )
   return (
-    <div className={classname('content', className)} { ...rest }>
+    <div className={contentClassName} { ...rest }>
       { icon && <Icon name={icon} className='menu' /> }
       { children }
     </div>

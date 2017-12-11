@@ -66,6 +66,10 @@ html, body {
 .text-center {
   text-align: center !important;
 }
+.text-overflow {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 
 .inline {
   display: inline-block;
@@ -538,8 +542,6 @@ textarea.text.editable:focus {
     align-items: center;
     height: 30px;
     padding: 0 2*$padding;
-    overflow: hidden;
-    text-overflow: ellipsis;
     white-space: nowrap;
   }
 
