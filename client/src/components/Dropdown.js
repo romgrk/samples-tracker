@@ -244,7 +244,10 @@ class Dropdown extends React.Component {
           child,
           { onClick: (ev) => {
               child.props.onClick && child.props.onClick(ev)
-              if (ev.target.className.includes('segment') && closeOnClick) {
+              if ((ev.target.className.includes('segment')
+                  || ev.target.className.includes('item'))
+                && closeOnClick
+              ) {
                 this.close(ev)
               }
             }
