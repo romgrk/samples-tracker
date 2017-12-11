@@ -1,13 +1,21 @@
 import React from 'react'
 import pure from 'recompose/pure'
+import classname from 'classname'
 
 function Title(props) {
-  const { children, className } = props
+  const {
+    children,
+    className,
+    keepCase,
+  } = props
 
-  const titleClassName = [
+  const titleClassName = classname(
     'title',
-    className
-  ].join(' ')
+    className,
+    {
+      'keep-case': keepCase,
+    }
+  )
 
   return (
     <div className={titleClassName}>
