@@ -509,7 +509,11 @@ class SampleModal extends React.Component {
                       <td>
                         <Dropdown label={
                           step.completionFn ?
-                            completionFunctions.data[step.completionFn].name :
+                            completionFunctions.data[step.completionFn] ?
+                              completionFunctions.data[step.completionFn].name
+                              :
+                              (() => { debugger; return step.completionFn })
+                            :
                             <em>None</em>
                         } icons>
                           <Dropdown.Item

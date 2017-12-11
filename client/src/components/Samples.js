@@ -4,7 +4,6 @@ import pure from 'recompose/pure'
 import styled from 'styled-components'
 import { withRouter } from 'react-router'
 
-import alphabeticalSort from '../utils/alphabetical-sort'
 import filterTags from '../utils/filter-tags'
 import uniq from '../utils/uniq'
 import { getNewSample } from '../models'
@@ -19,6 +18,7 @@ import Checkbox from './Checkbox'
 import CreateSampleDropdown from './CreateSampleDropdown'
 import Dropdown from './Dropdown'
 import EditableLabel from './EditableLabel'
+import FilterTagsDropdown from './FilterTagsDropdown'
 import Gap from './Gap'
 import Icon from './Icon'
 import Input from './Input'
@@ -74,7 +74,6 @@ class Samples extends React.Component {
     const selectedSample = data[selectedId]
 
     const allTags = Array.from(allSamples.map(s => s.data.tags).reduce((acc, cur) => (cur.forEach(tag => acc.add(tag)), acc), new Set()))
-    const filteredTags = new Set(ui.filtering.tags)
 
     const createSampleDropdown =
       <CreateSampleDropdown
@@ -98,30 +97,13 @@ class Samples extends React.Component {
       </Dropdown>
 
     const tagsDropdown =
-    <Dropdown closeOnClick={false} label={
-      ui.filtering.tags.join(', ') || <span>&nbsp;</span>
-    }>
-        <Dropdown.Item
-          onClick={() => this.props.setFilteringTags([])  }
-        >
-          Clear all
-        </Dropdown.Item>
-        {
-          alphabeticalSort(allTags).map(tag =>
-            <Dropdown.Item key={tag}
-              onClick={() => filteredTags.has(tag) ?
-                this.props.deleteFilteringTag(tag) :
-                this.props.addFilteringTag(tag)
-              }
-            >
-              <Icon
-                name={filteredTags.has(tag) ? 'check-square' : 'square'}
-                marginRight={10}
-              /> <Badge info>{ tag }</Badge>
-            </Dropdown.Item>
-          )
-        }
-      </Dropdown>
+      <FilterTagsDropdown
+        tags={allTags}
+        selectedTags={ui.filtering.tags}
+        addFilteringTag={this.props.addFilteringTag}
+        deleteFilteringTag={this.props.deleteFilteringTag}
+        setFilteringTags={this.props.setFilteringTags}
+      />
 
     return (
       <section className='Samples vbox'>
