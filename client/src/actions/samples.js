@@ -29,9 +29,9 @@ const samples = {
     (res, data) => ({ id: res.id, data: res }),
     (err, data) => ({ data })),
   delete: createFetchActions(SAMPLES.DELETE, requests.samples.delete,
-    (data) => ({ data }),
-    (res, id, data) => ({ id, data }),
-    (err, id, data) => ({ id, data })),
+    (id) => ({ id }),
+    (res, id) => ({ id }),
+    (err, id) => ({ id })),
 
   updateSelectedStepsStatus: (status) => {
     return (dispatch, getState) => {

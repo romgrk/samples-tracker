@@ -45,6 +45,7 @@ class SampleModal extends React.Component {
 
     this.state = this.getStateFromProps(props)
     this.state.badgeDropdownOpen = false
+    this.state.confirmDeletion = false
 
     this.buttons = {}
   }
@@ -128,8 +129,16 @@ class SampleModal extends React.Component {
     }
   }
 
+  onClickDelete = () => {
+    this.setState({ confirmDeletion: true })
+  }
+
   closeModal = () => {
     this.props.history.push('/samples')
+  }
+
+  closeConfirmModal = () => {
+    this.setState({ confirmDeletion: false })
   }
 
   gotoStep = (stepIndex) => {
@@ -143,6 +152,12 @@ class SampleModal extends React.Component {
 
   update = (data = this.state.sample.data) => {
     this.props.onChange(data.id, data)
+  }
+
+  deleteSample = () => {
+    this.props.onDelete(this.props.id)
+      .then(() => this.closeConfirmModal())
+      .then(() => this.closeModal())
   }
 
   setData = (data) => {
@@ -258,6 +273,7 @@ class SampleModal extends React.Component {
       sample,
       step,
       badgeDropdownOpen,
+      confirmDeletion,
     } = this.state
 
     const tags = sample ? this.props.tags.filter(t => !sample.data.tags.includes(t)) : []
@@ -317,12 +333,15 @@ class SampleModal extends React.Component {
                 </Dropdown>
               </div>
 
-              <EditableText
-                className='fill'
-                placeHolder='Enter sample notes...'
-                value={sample.data.notes}
-                onEnter={this.setNotes}
-              />
+              <div className='row'>
+                <EditableText
+                  className='fill'
+                  placeHolder='Enter sample notes...'
+                  value={sample.data.notes}
+                  onEnter={this.setNotes}
+                />
+
+              </div>
 
               { /* Steps Button Bar */ }
               <div className='ButtonBar'>
@@ -355,6 +374,26 @@ class SampleModal extends React.Component {
             </div>
         }
         </Modal.Content>
+
+        <Modal minimal title='Confirm Deletion' open={confirmDeletion} onClose={this.closeConfirmModal}>
+
+          <Modal.Content>
+            <Text large block>
+              Do you want to delete this sample permanently?
+            </Text>
+          </Modal.Content>
+
+          <Modal.Actions>
+            <Button onClick={this.closeConfirmModal}>
+              No, cancel
+            </Button>
+            <Button error onClick={this.deleteSample}>
+              Yes, delete this sample
+            </Button>
+          </Modal.Actions>
+
+        </Modal>
+
       </Modal>
     )
   }
@@ -515,6 +554,7 @@ class SampleModal extends React.Component {
                 <Title>Files</Title>
                 <div className='row'>
                   <EditableList
+                    className='full-width'
                     values={step.files}
                     onAdd={() => {/* nop */}}
                     onDelete={file => this.onDeleteFile(stepIndex, file)}
@@ -531,6 +571,15 @@ class SampleModal extends React.Component {
                     }
                   />
                 </div>
+
+                <div className='row'>
+                  <Button error
+                    onClick={this.onClickDelete}
+                  >
+                    Delete Sample
+                  </Button>
+                </div>
+
               </div>
 
               <div className='StepsModalStep__history'>
