@@ -92,7 +92,7 @@ class Modal extends React.Component {
                       <Button
                         className='Modal__close'
                         round
-                        flat={minimal}
+                        flat
                         icon='close'
                         onClick={this.props.onClose}
                       />

@@ -2,6 +2,8 @@ import React from 'react'
 import classname from 'classname'
 import { equals } from 'ramda'
 
+import Icon from './Icon'
+
 class Input extends React.Component {
 
   shouldComponentUpdate(nextProps) {
@@ -45,6 +47,7 @@ class Input extends React.Component {
   render() {
     const {
       className,
+      icon,
       small,
       large,
       value,
@@ -64,11 +67,13 @@ class Input extends React.Component {
         small,
         large,
         error: hasError,
+        'has-icon': icon !== undefined,
       }
     )
 
     return (
       <div className={inputClassName}>
+        { icon && <Icon name={icon} className='Input__icon' /> }
         <input type='text'
           { ...rest }
           className='Input__element'

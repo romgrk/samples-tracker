@@ -315,6 +315,7 @@ class SampleModal extends React.Component {
                   trigger={
                     <Input
                       className='badge'
+                      icon='plus-circle'
                       clearOnEnter
                       onEnter={this.addTag}
                       onFocus={this.openBadgeDropdown}
