@@ -38,19 +38,21 @@ router.use('/create', (req, res, next) => {
 
 /* POST update sample */
 router.use('/update/:id', (req, res, next) => {
-
   Sample.findById(req.params.id)
   .then(sample => {
 
-    const entry = generateHistoryEntry(
-      req.user,
-      JSON.parse(JSON.stringify(sample)),
-      req.body
-    )
-
     return Sample.update({ ...req.body, id: req.params.id })
     .then(updatedSample => {
-      History.create(entry)
+
+      const entry = generateHistoryEntry(
+        req.user,
+        JSON.parse(JSON.stringify(sample)),
+        req.body
+      )
+
+      if (entry)
+        History.create(entry)
+
       return updatedSample
     })
   })
