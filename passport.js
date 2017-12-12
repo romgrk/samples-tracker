@@ -15,7 +15,6 @@ module.exports = passport
 
 // used to serialize the user for the session
 passport.serializeUser((user, done) => {
-  console.log('SERIALIZE', user)
   done(undefined, user.id)
 })
 
@@ -35,7 +34,7 @@ passport.use(new OAuth2Strategy(config.google.auth, (token, refreshToken, profil
   process.nextTick(() => {
 
     // Try to find the user based on their google id
-    User.findById(profile.id)
+    User.findByGoogleId(profile.id)
     .then(user => {
 
       // if a user is found, log them in
@@ -52,7 +51,7 @@ passport.use(new OAuth2Strategy(config.google.auth, (token, refreshToken, profil
       if (err.type === k.ACCOUNT_NOT_FOUND) {
 
         const newUser = {
-          id: profile.id,
+          googleId: profile.id,
           token: token,
           name: profile.displayName,
           email: profile.emails[0].value,
@@ -63,9 +62,8 @@ passport.use(new OAuth2Strategy(config.google.auth, (token, refreshToken, profil
         .then(user => done(undefined, user))
         .catch(err => done(err))
       }
-      // if some other error happens, throw it
+      // if some other error happens
       else {
-        throw 'other'
         done(err)
       }
     })

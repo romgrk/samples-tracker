@@ -9,6 +9,7 @@ const k = require('../constants')
 module.exports = {
   findAll,
   findById,
+  findByGoogleId,
   update,
   create,
 }
@@ -27,6 +28,15 @@ function findById(id) {
     )
 }
 
+function findByGoogleId(googleId) {
+  return db.selectOne('SELECT * FROM users WHERE "googleId" = @googleId', { googleId })
+    .catch(err =>
+      err.type === k.ROW_NOT_FOUND ?
+        rejectMessage('User account not found', k.ACCOUNT_NOT_FOUND) :
+        Promise.reject(err)
+    )
+}
+
 function update(user) {
   return db.query(`
     UPDATE users
@@ -38,7 +48,14 @@ function update(user) {
 }
 
 function create(user) {
-  return db.insert('INSERT INTO users VALUES (@id, @token, @name, @email)', user)
+  return db.insert(`
+    INSERT INTO users ("googleId", token, name, email)
+    VALUES (
+      @googleId,
+      @token,
+      @name,
+      @email
+    )`, user)
     .then(id => findById(id))
 }
 

@@ -30,11 +30,12 @@ INSERT INTO settings VALUES
 ;
 
 CREATE TABLE users (
-    id       varchar(50) primary key,
-    token    text        null,
-    name     text        not null,
-    email    text        null,
-    password text        null
+    id         serial      primary key,
+    "googleId" varchar(50) null,
+    token      text        null,
+    name       text        not null,
+    email      text        null,
+    password   text        null
 );
 
 CREATE TABLE samples (
@@ -126,8 +127,9 @@ CREATE TABLE files (
 
 
 
-INSERT INTO users (id, token, name, email, password) VALUES (
-    'system',
+INSERT INTO users (id, "googleId", token, name, email, password) VALUES (
+    nextval('users_id_seq'),
+    null,
     null,
     'System',
     null,
@@ -152,7 +154,8 @@ INSERT INTO template_steps (template_id, index, name, "alertDelay", "completionF
     (2, 5, 'Archive',  '2 weeks', 1),
     (2, 6, 'Sleep',    '2 weeks', NULL)
 ;
-INSERT INTO users (id, token, name, email) VALUES (
+INSERT INTO users (id, "googleId", token, name, email) VALUES (
+    nextval('users_id_seq'),
     '113897916442927912291',
     'ya2GlsZBV75c-JxuuzblrbS7WoUmuWpJDJtgOOdzUcwFOaFt_7ADAIRKpiOXA1A_TtFl1AkMoXAPcqus6_ia',
     'Rom Grk',
