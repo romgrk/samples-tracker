@@ -115,7 +115,7 @@ router.use('/update-step/:id/:index', (req, res, next) => {
       return sample
     })
     .then(sample => {
-      sample.notes += notes
+      sample.notes += `\n${new Date().toDateString()}: ${notes}`
       return Sample.update(sample)
     }))
 
