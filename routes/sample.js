@@ -99,7 +99,7 @@ router.use('/update-step/:id/:index', (req, res, next) => {
   const sampleId = req.params.id
   const stepIndex = Number(req.params.index)
 
-  parseForm(req),
+  parseForm(req)
   .then(({ fields: { status, notes }, files }) => {
 
     const actions = []
