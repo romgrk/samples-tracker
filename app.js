@@ -79,6 +79,7 @@ function apiProtected(req, res, next) {
 
   if (username === 'system' && password) {
     return User.findById(user)
+    .then(user => user.password === password ? Promise.resolve(user) : Promise.reject())
     .then(user => {
       req.user = user
       next()
