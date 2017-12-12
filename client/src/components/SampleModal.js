@@ -461,7 +461,10 @@ class SampleModal extends React.Component {
                               <Label>Since</Label>
                           </td>
                           <td>
-                            <Time>{ step.started }</Time> <Button small onClick={() => this.setStepStarted(stepIndex)}>Reset</Button>
+                            <Time>{ step.started }</Time> <Button
+                              small
+                              normal
+                              onClick={() => this.setStepStarted(stepIndex)}>Reset</Button>
                           </td>
                         </tr>
                     }
@@ -572,6 +575,7 @@ class SampleModal extends React.Component {
                     control={
                       <div>
                         <Button
+                          normal
                           style={{ marginTop: 'var(--padding)' }}
                           onClick={() => openFile().then(file => this.onAddFile(stepIndex, file))}>
                           Add file
