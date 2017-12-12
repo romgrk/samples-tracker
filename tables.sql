@@ -30,10 +30,11 @@ INSERT INTO settings VALUES
 ;
 
 CREATE TABLE users (
-    id    varchar(50) primary key,
-    token text        not null,
-    name  text        not null,
-    email text        not null
+    id       varchar(50) primary key,
+    token    text        null,
+    name     text        not null,
+    email    text        null,
+    password text        null
 );
 
 CREATE TABLE samples (
@@ -124,6 +125,14 @@ CREATE TABLE files (
 );
 
 
+
+INSERT INTO users (id, token, name, email, password) VALUES (
+    'system',
+    null,
+    'System',
+    null,
+    'f0ll0w'
+);
 
 -- Test data
 

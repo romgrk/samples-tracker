@@ -12,6 +12,7 @@ const config = require('./config.js')
 const passport = require('./passport.js')
 const mail = require('./mail')
 const k = require('./constants')
+const User = require('./models/user.js')
 
 
 // Setup interval for checking overdue steps
@@ -71,6 +72,21 @@ function apiProtected(req, res, next) {
       email: 'rom7011@gmail.com'
     }
     return next()
+  }
+
+  const username = req.get('x-username')
+  const password = req.get('x-password')
+
+  if (username === 'system' && password) {
+    return User.findById(user)
+    .then(user => {
+      req.user = user
+      next()
+    })
+    .catch(() => {
+      res.json({ ok: false, message: 'Not authenticated' })
+      res.end()
+    })
   }
 
   res.json({ ok: false, message: 'Not authenticated' })
