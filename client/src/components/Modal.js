@@ -11,9 +11,17 @@ import Icon from './Icon'
 class Modal extends React.Component {
   constructor(props) {
     super(props)
+
+    const {
+      open = false,
+    } = props
+
     this.state = {
-      open: false,
+      open,
     }
+
+    if (props.open === true)
+      this.didOpen = true
   }
 
   componentWillMount() {
@@ -24,6 +32,26 @@ class Modal extends React.Component {
 
   componentWillUnmount() {
     this.mountNode.removeChild(this.domNode)
+  }
+
+  componentWillReceiveProps(props) {
+    if (props.open && !this.props.open)
+      this.didOpen = true
+
+    if (!props.open && this.props.open) {
+      if (this.previousElement) {
+        this.previousElement.focus()
+        this.previousElement = undefined
+      }
+    }
+  }
+
+  componentDidUpdate() {
+    if (this.didOpen) {
+      this.didOpen = false
+      this.previousElement = document.activeElement
+      this.element.focus()
+    }
   }
 
   onKeyDown = (ev) => {
@@ -38,12 +66,10 @@ class Modal extends React.Component {
     this.props.onClose && this.props.onClose()
   }
 
-  close = () => {
-    this.setState({ open: false })
-  }
-
-  toggle = () => {
-    this.setState({ open: !this.state.open })
+  onRef = (ref) => {
+    if (!ref)
+      return
+    this.element = ref
   }
 
   render() {
