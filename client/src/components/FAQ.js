@@ -25,6 +25,7 @@ const Images = {
   sampleMultiCreation: require('../assets/sample-multi-creation.png'),
   sampleRightClick: require('../assets/sample-right-click.png'),
   sampleCtrlClick: require('../assets/sample-ctrl-click.png'),
+  templateInterface: require('../assets/template-interface.png'),
 }
 
 function Question({ children }) {
@@ -55,11 +56,11 @@ class FAQ extends React.Component {
           <div className='row'>
             <div className='fill vbox'>
               <div>
-                <Label>The sample interface displays all the samples.</Label>
+                <Label>The sample interface displays all the samples</Label>
                 <Image src={Images.sampleInterface} height='250' />
               </div>
               <div>
-                <Label>Enter multiple sample names at once</Label>
+                <Label>Create multiple samples at once</Label>
                 <Image src={Images.sampleMultiCreation} height='100' />
               </div>
             </div>
@@ -70,12 +71,25 @@ class FAQ extends React.Component {
               </div>
               <Gap fill={10} />
               <div className='fill'>
-                <Label>Ctrl+Click, then right-click on steps to<br/> update their status.</Label>
+                <Label>Ctrl+Click, then right-click on steps to<br/> update multiple status at once</Label>
                 <Image src={Images.sampleCtrlClick} height='150' />
               </div>
             </div>
           </div>
           <div className='row'>
+          </div>
+
+          <hr/>
+
+          <Title>Templates</Title>
+
+          <div className='row'>
+            <div className='fill vbox'>
+              <div>
+                <Label>The templates interface displays the templates used to create new samples</Label>
+                <Image src={Images.templateInterface} height='150' />
+              </div>
+            </div>
           </div>
 
           <hr/>
