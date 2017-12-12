@@ -161,6 +161,9 @@
     box-shadow: 0 0 0 1px mix(map-get($values, bg), #fff, 75%);
     background-color: darken(map-get($values, bg), 8%);
   }
+  .Button.#{$level}.highlight {
+    background-color: lighten(map-get($values, bg), 10%);
+  }
   .Button.#{$level}[disabled] {
     color: #bbb;
     border-color: mix(grey, map-get($values, bg), 50%);

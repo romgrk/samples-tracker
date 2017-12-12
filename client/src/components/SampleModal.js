@@ -345,8 +345,10 @@ class SampleModal extends React.Component {
                 <div className='ButtonGroup flex-fill'>
                   {
                     sample.data.steps.map((step, stepIndex) =>
-                      <Tooltip content={step.name} delay={500} minWidth='parent'>
-                        <Button small
+                      <Tooltip key={stepIndex} content={step.name} delay={500} minWidth='parent'>
+                        <Button
+                          small
+                          normal
                           highlight={stepIndex === this.state.stepIndex}
                           onClick={() => this.gotoStep(stepIndex)}
                           ref={ref => ref && (this.buttons[stepIndex] = findDOMNode(ref))}
@@ -372,7 +374,10 @@ class SampleModal extends React.Component {
         }
         </Modal.Content>
 
-        <Modal minimal title='Confirm Deletion' open={confirmDeletion} onClose={this.closeConfirmModal}>
+        <Modal minimal
+          title={<span><Icon name='warning' error/> Confirm Deletion</span>}
+          open={confirmDeletion}
+          onClose={this.closeConfirmModal}>
 
           <Modal.Content>
             <Text large block>
@@ -382,7 +387,7 @@ class SampleModal extends React.Component {
 
           <Modal.Actions>
             <Button onClick={this.closeConfirmModal}>
-              No, cancel
+              No, keep this sample
             </Button>
             <Button error onClick={this.deleteSample}>
               Yes, delete this sample
@@ -552,7 +557,10 @@ class SampleModal extends React.Component {
                   />
                 </div>
 
-                <Title>Files</Title>
+                <div className='row'>
+                  <Title>Files</Title>
+                </div>
+
                 <div className='row'>
                   <EditableList
                     className='full-width'

@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import pure from 'recompose/pure'
 import styled from 'styled-components'
+import { sortBy, prop } from 'ramda'
 
 import * as _ from '../constants/text'
 import * as Interval from '../utils/postgres-interval'
@@ -13,6 +14,7 @@ import EditableList from './EditableList'
 import Help from './Help'
 import Icon from './Icon'
 import IntervalInput from './IntervalInput'
+import Label from './Label'
 import Text from './Text'
 import Title from './Title'
 
@@ -186,7 +188,7 @@ class Settings extends React.Component {
             This is the list of users with an account. <br/>
           </Text>
 
-          <table className='table'>
+          <table className='table UsersTable'>
             <thead>
               <tr>
                 <th>Name</th>
@@ -196,28 +198,41 @@ class Settings extends React.Component {
             </thead>
             <tbody>
               {
-                users.map(user =>
+                sortBy(prop('id'), users).map(user =>
                   <tr>
                     <td>
-                      <EditableLabel
-                        value={user.name}
-                        onEnter={name => this.onUpdateUserName(user.id, name)}
-                      />
+                      {
+                        user.googleId === null ?
+                          <Label>{user.name}</Label>
+                          :
+                          <EditableLabel
+                            value={user.name}
+                            onEnter={name => this.onUpdateUserName(user.id, name)}
+                          />
+                      }
                     </td>
                     <td>
-                      <EditableLabel
-                        value={user.email}
-                        onEnter={email => this.onUpdateUserEmail(user.id, email)}
-                      />
+                      {
+                        user.googleId === null ?
+                          <Label>{user.email}</Label>
+                          :
+                          <EditableLabel
+                            value={user.email}
+                            onEnter={email => this.onUpdateUserEmail(user.id, email)}
+                          />
+                      }
                   </td>
                     <td className='button-column'>
-                      <Button
-                        flat
-                        square
-                        small
-                        icon='close'
-                        onClick={() => this.onDeleteUser(user.id)}
-                      />
+                      {
+                        user.googleId !== null &&
+                          <Button
+                            flat
+                            square
+                            small
+                            icon='close'
+                            onClick={() => this.onDeleteUser(user.id)}
+                          />
+                      }
                     </td>
                   </tr>
                 )

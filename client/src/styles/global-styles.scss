@@ -888,6 +888,12 @@ section.Samples {
 }
 
 
+.UsersTable td:first-child {
+  width: 200px;
+}
+.UsersTable td .editable.label {
+  width: 100%;
+}
 
 .CreateSample__arrow {
   position: relative;
