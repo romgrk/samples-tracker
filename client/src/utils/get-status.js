@@ -30,11 +30,15 @@ export default function getStatus(sample) {
 
   switch (lastStatus) {
     case Status.DONE:        return SampleStatus.DONE
-    case Status.NOT_DONE:    throw new Error('unreachable')
     case Status.IN_PROGRESS: return SampleStatus.IN_PROGRESS
     case Status.ERROR:       return SampleStatus.ERROR
     case Status.ON_HOLD:     return SampleStatus.ON_HOLD
-    case Status.SKIP:        throw new Error('unreachable')
+    /*
+     * Should be reachable, but actually is for a short lapse of time
+     * when updating multiple steps.
+     */
+    case Status.NOT_DONE:    return SampleStatus.IN_PROGRESS
+    case Status.SKIP:        return SampleStatus.IN_PROGRESS
     default: throw new Error('unreachable')
   }
 }
