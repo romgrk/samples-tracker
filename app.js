@@ -64,6 +64,23 @@ function apiProtected(req, res, next) {
   if (req.isAuthenticated())
     return next()
 
+  const username = req.get('x-username')
+  const password = req.get('x-password')
+
+  if (username === 'system' && password) {
+    return User.findById(username)
+    .then(user => user.password === password ? Promise.resolve(user) : Promise.reject())
+    .then(user => {
+      console.log(user)
+      req.user = user
+      next()
+    })
+    .catch(() => {
+      res.json({ ok: false, message: 'Not authenticated' })
+      res.end()
+    })
+  }
+
   if (process.env.NODE_ENV === 'development') {
     req.user = {
       id: '113897916442927912291',
@@ -72,22 +89,6 @@ function apiProtected(req, res, next) {
       email: 'rom7011@gmail.com'
     }
     return next()
-  }
-
-  const username = req.get('x-username')
-  const password = req.get('x-password')
-
-  if (username === 'system' && password) {
-    return User.findById(user)
-    .then(user => user.password === password ? Promise.resolve(user) : Promise.reject())
-    .then(user => {
-      req.user = user
-      next()
-    })
-    .catch(() => {
-      res.json({ ok: false, message: 'Not authenticated' })
-      res.end()
-    })
   }
 
   res.json({ ok: false, message: 'Not authenticated' })
