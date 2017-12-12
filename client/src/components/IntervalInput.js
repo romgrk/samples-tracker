@@ -60,6 +60,7 @@ class IntervalInput extends React.Component {
     const {
       className,
       value,
+      defaultValue,
       onAccept,
       placeHolder,
       ...rest
@@ -69,7 +70,7 @@ class IntervalInput extends React.Component {
 
     const inputClassName = classname('IntervalInput', className)
 
-    let inputValue = value ? value : this.state.value
+    let inputValue = value ? value : defaultValue ? defaultValue : this.state.value
     let hasError = !Interval.isValid(inputValue)
 
     if (valueInProps && this.props.value === undefined) {
@@ -84,6 +85,7 @@ class IntervalInput extends React.Component {
         autoSelect
         className={inputClassName}
         value={inputValue}
+        defaultValue={defaultValue}
         hasError={hasError}
         onChange={this.onChange}
         onEnter={this.onAccept}
