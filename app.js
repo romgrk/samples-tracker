@@ -83,10 +83,12 @@ function apiProtected(req, res, next) {
 
   if (process.env.NODE_ENV === 'development') {
     req.user = {
-      id: '113897916442927912291',
-      token: 'ya29.O5ze6WD',
+      id: 2,
+      googleId: '113897916442927912291',
+      token: 'ya2GlsZBV75c-JxuuzblrbS7WoUmuWpJDJtgOOdzUcwFOaFt_7ADAIRKpiOXA1A_TtFl1AkMoXAPcqus6_ia',
       name: 'Rom Grk',
-      email: 'rom7011@gmail.com'
+      email: 'rom7011@gmail.com',
+      password: null
     }
     return next()
   }
