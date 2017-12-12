@@ -127,7 +127,7 @@ class EditableLabel extends React.Component {
           onClick={this.setEditing}
           ref={this.onRefButton}
         >
-        <span>{ value }{ children }</span> <Icon name='pencil' />
+        <span>{ value || <span>&nbsp;</span> }{ children }</span> <Icon name='pencil' />
       </button>
     )
   }
