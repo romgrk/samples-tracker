@@ -99,12 +99,6 @@ CREATE TABLE completion_functions (
     name        text    not null,
     code        text    not null
 );
-/* INSERT INTO completion_functions (name, code) VALUES (
-'has-one-file',
-'function(step, sample) {
-    return step.files.length > 0
-}'
-); */
 
 
 CREATE TABLE history (
