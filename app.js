@@ -71,9 +71,8 @@ function apiProtected(req, res, next) {
     return User.findById(username)
     .then(user => user.password === password ? Promise.resolve(user) : Promise.reject())
     .then(user => {
-      console.log(user)
       req.user = user
-      next()
+      return next()
     })
     .catch(() => {
       res.json({ ok: false, message: 'Not authenticated' })
