@@ -235,7 +235,10 @@ function create(sample) {
 }
 
 module.exports.delete = function(id) {
-  return db.query('DELETE FROM samples WHERE id = @id', { id })
+  return db.query(`
+    DELETE FROM samples WHERE id = @id;
+    DELETE FROM step    WHERE sample_id = @id;
+  `, { id })
 }
 
 
