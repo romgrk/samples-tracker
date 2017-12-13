@@ -6,7 +6,7 @@
 const path = require('path')
 const { readFile, writeFile, unlink, copyFile } = require('../helpers/fs-promise.js')
 const db = require('../database.js')
-const config = require('../config.js')
+const config = require('/usr/etc/config.js')
 
 module.exports = {
   findAll,

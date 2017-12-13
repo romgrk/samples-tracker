@@ -5,14 +5,15 @@ services:
     ports:
       - '5432:5432'
     environment:
-      #POSTGRES_DB: main
-      #POSTGRES_USER: app
       POSTGRES_PASSWORD: postgres
   web:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
     ports:
       - '3001:3001'
     volumes:
+      - ./config:/usr/etc
       - .:/usr/src/app
     links:
       - db

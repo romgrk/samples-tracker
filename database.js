@@ -17,7 +17,10 @@ client.connect((err) => {
   if (err)
     throw err
 
-  query(fs.readFileSync('./tables.sql').toString())
+  selectOne(`SELECT 1 FROM information_schema.tables WHERE table_name = 'samples'`)
+  .then(() => { /* nop */ })
+  .catch(err => err.type === k.ROW_NOT_FOUND &&
+    query(fs.readFileSync('./tables.sql').toString()))
 })
 
 const NOW = `to_char (now()::timestamp at time zone 'UTC', 'YYYY-MM-DD"T"HH24:MI:SS"Z"')::timestamp`

@@ -4,16 +4,14 @@ services:
     image: 'postgres:10'
     ports:
       - '5432:5432'
+    volumes:
+      - ./data/db:/var/lib/postgresql/data
     environment:
-      #POSTGRES_DB: main
-      #POSTGRES_USER: app
       POSTGRES_PASSWORD: postgres
   web:
     build: .
     ports:
       - '3001:3001'
-    volumes:
-      - .:/usr/src/app
     links:
       - db
     environment:

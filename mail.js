@@ -8,7 +8,7 @@ const Sample = require('./models/sample')
 const Settings = require('./models/settings')
 const Step = require('./models/step')
 const History = require('./models/history')
-const config = require('./config')
+const config = require('/usr/etc/config.js')
 
 const transporter = nodemailer.createTransport(config.nodemailer)
 

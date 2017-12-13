@@ -8,7 +8,7 @@ const cookieParser = require('cookie-parser')
 const bodyParser = require('body-parser')
 const flash = require('connect-flash')
 
-const config = require('./config.js')
+const config = require('/usr/etc/config.js')
 const passport = require('./passport.js')
 const mail = require('./mail')
 const k = require('./constants')
