@@ -84,7 +84,7 @@ function apiProtected(req, res, next) {
     req.user = {
       id: 2,
       googleId: '113897916442927912291',
-      token: 'ya2GlsZBV75c-JxuuzblrbS7WoUmuWpJDJtgOOdzUcwFOaFt_7ADAIRKpiOXA1A_TtFl1AkMoXAPcqus6_ia',
+      token: 'asldfhaosidhfaouifhnewofuiqnwerocfnq9wejfoqwuie',
       name: 'Rom Grk',
       email: 'rom7011@gmail.com',
       password: null
