@@ -114,7 +114,7 @@ export const fetchAll = () => {
       const state = getState()
 
       // Prefill some data for testing FIXME remove this
-      if (Object.keys(state.samples.data).length === 0) {
+      if (process.env.NODE_ENV === 'development' && Object.keys(state.samples.data).length === 0) {
 
         const newSample = getNewSample(state.templates.data[1].data)
         newSample.tags = ['other', 'tags']
