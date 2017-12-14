@@ -72,11 +72,11 @@ back-end image (copying front-end files in it).
 ## Running
 
 You will need to create three directories:
- - `$DB_DATA_DIRECTORY`: This will contain the database data. It's an external
+- `$DB_DATA_DIRECTORY`: This will contain the database data. It's an external
      volume that persits across docker restats.
- - `$FILES_DIRECTORY`: This will contain the database data. It's an external
+- `$FILES_DIRECTORY`: This will contain the database data. It's an external
      volume that persits across docker restats.
- - `$CONFIG_DIRECTORY`: This will contain the application configuration (e.g.
+- `$CONFIG_DIRECTORY`: This will contain the application configuration (e.g.
      SMTP account, Google OAuth account, etc). It must be created by copying the
      `/config` directory of this project, and modifying the
      `$CONFIG_DIRECTORY/config.js` file accordingly.
