@@ -826,6 +826,20 @@ a.link.text-normal:visited {
   padding: 0 2*$padding;
 }
 
+.HeaderBar {
+  height: 50px;
+  padding: 2*$padding;
+  background-color: $bg-color-dark;
+  border-left: 1px solid $border-color-dark;
+  border-bottom: 1px solid $border-color-dark;
+}
+.HeaderBar.no-border-bottom {
+  border-bottom: none;
+}
+.HeaderBar > .title:first-child {
+  margin-right: 2*$padding;
+}
+
 
 .Sidebar {
   position: relative;
@@ -879,14 +893,12 @@ a.link.text-normal:visited {
 section {
   flex: 1 1;
 }
-section.Settings {
+
+
+.Settings__content {
   padding: (4 * $padding) (6 * $padding);
 }
-section.Templates {
-  padding: (2 * $padding) 0;
-}
-section.Samples {
-}
+
 
 
 .UsersTable td:first-child {

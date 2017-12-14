@@ -122,134 +122,146 @@ class Settings extends React.Component {
     } = this.state
 
     return (
-      <section className='Settings hbox'>
+      <section className='Settings vbox'>
 
-        <div className='Settings__left fill'>
-          <Group>
-            <Title>Archive-Interval</Title>
-            <Text block muted>
-              Delay after which completed samples are hidden from the list.
-            </Text>
-            <IntervalInput
-              value={archiveInterval.data}
-              loading={archiveInterval.isLoading}
-              onChange={value => this.onChangeInterval('archiveInterval', value)}
-              onAccept={() => this.onAcceptInterval('archiveInterval')}
-            /> <Help>{ _.INTERVAL_FORMAT }</Help>
-          </Group>
+        <div className='HeaderBar row'>
+          <Title large keepCase muted>
+            GenAP FOLLOW
+          </Title>
 
-          <Group>
-            <Title>Alert-Delay</Title>
-            <Text block muted>
-              Default interval of time after which emails are sent when there is no activity.
-            </Text>
-            <IntervalInput
-              value={alertDelay.data}
-              loading={alertDelay.isLoading}
-              onChange={value => this.onChangeInterval('alertDelay', value)}
-              onAccept={() => this.onAcceptInterval('alertDelay')}
-            /> <Help>{ _.INTERVAL_FORMAT }</Help>
-          </Group>
-
-          <Group>
-            <Title>Alert-Emails</Title>
-            <Text block muted>
-              Emails in this list will receive notifications when a sample is overdue.
-            </Text>
-            <EditableList
-              help='Multiple emails allowed. Press <Enter> to submit.'
-              placeHolder='Add email…'
-              loading={alertEmails.isLoading}
-              values={alertEmails.data || []}
-              onAdd={value => this.onListAdd('alertEmails', value)}
-              onDelete={value => this.onListDelete('alertEmails', value)}
-            />
-          </Group>
-
-          <Group>
-            <Title>Whitelist</Title>
-            <Text block muted>
-              Emails in this list are allowed to log-in/sign-up to this application.
-            </Text>
-            <EditableList
-              help='Multiple emails allowed. Press <Enter> to submit.'
-              placeHolder='Add email…'
-              loading={whitelist.isLoading}
-              values={whitelist.data || []}
-              onAdd={value => this.onListAdd('whitelist', value)}
-              onDelete={value => this.onListDelete('whitelist', value)}
-            />
-          </Group>
-        </div>
-        <div className='Settings__right fill'>
-
-          <Title>Users</Title>
-          <Text block muted>
-            This is the list of users with an account. <br/>
-          </Text>
-
-          <table className='table UsersTable'>
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Email</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              {
-                sortBy(prop('id'), users).map(user =>
-                  <tr>
-                    <td>
-                      {
-                        user.googleId === null ?
-                          <Label>{user.name}</Label>
-                          :
-                          <EditableLabel
-                            value={user.name}
-                            onEnter={name => this.onUpdateUserName(user.id, name)}
-                          />
-                      }
-                    </td>
-                    <td>
-                      {
-                        user.googleId === null ?
-                          <Label>{user.email}</Label>
-                          :
-                          <EditableLabel
-                            value={user.email}
-                            onEnter={email => this.onUpdateUserEmail(user.id, email)}
-                          />
-                      }
-                  </td>
-                    <td className='button-column'>
-                      {
-                        user.googleId !== null &&
-                          <Button
-                            flat
-                            square
-                            small
-                            icon='close'
-                            onClick={() => this.onDeleteUser(user.id)}
-                          />
-                      }
-                    </td>
-                  </tr>
-                )
-              }
-              {
-                users.length === 0 &&
-                  <tr className='empty'>
-                    <td colSpan='3'>
-                      No users yet
-                    </td>
-                  </tr>
-              }
-            </tbody>
-          </table>
-
+          <Title large keepCase>
+            Settings
+          </Title>
         </div>
 
+        <div className='Settings__content hbox'>
+          <div className='Settings__left fill'>
+            <Group>
+              <Title>Archive-Interval</Title>
+              <Text block muted>
+                Delay after which completed samples are hidden from the list.
+              </Text>
+              <IntervalInput
+                value={archiveInterval.data}
+                loading={archiveInterval.isLoading}
+                onChange={value => this.onChangeInterval('archiveInterval', value)}
+                onAccept={() => this.onAcceptInterval('archiveInterval')}
+              /> <Help>{ _.INTERVAL_FORMAT }</Help>
+            </Group>
+
+            <Group>
+              <Title>Alert-Delay</Title>
+              <Text block muted>
+                Default interval of time after which emails are sent when there is no activity.
+              </Text>
+              <IntervalInput
+                value={alertDelay.data}
+                loading={alertDelay.isLoading}
+                onChange={value => this.onChangeInterval('alertDelay', value)}
+                onAccept={() => this.onAcceptInterval('alertDelay')}
+              /> <Help>{ _.INTERVAL_FORMAT }</Help>
+            </Group>
+
+            <Group>
+              <Title>Alert-Emails</Title>
+              <Text block muted>
+                Emails in this list will receive notifications when a sample is overdue.
+              </Text>
+              <EditableList
+                help='Multiple emails allowed. Press <Enter> to submit.'
+                placeHolder='Add email…'
+                loading={alertEmails.isLoading}
+                values={alertEmails.data || []}
+                onAdd={value => this.onListAdd('alertEmails', value)}
+                onDelete={value => this.onListDelete('alertEmails', value)}
+              />
+            </Group>
+
+            <Group>
+              <Title>Whitelist</Title>
+              <Text block muted>
+                Emails in this list are allowed to log-in/sign-up to this application.
+              </Text>
+              <EditableList
+                help='Multiple emails allowed. Press <Enter> to submit.'
+                placeHolder='Add email…'
+                loading={whitelist.isLoading}
+                values={whitelist.data || []}
+                onAdd={value => this.onListAdd('whitelist', value)}
+                onDelete={value => this.onListDelete('whitelist', value)}
+              />
+            </Group>
+          </div>
+
+          <div className='Settings__right fill'>
+
+            <Title>Users</Title>
+            <Text block muted>
+              This is the list of users with an account. <br/>
+            </Text>
+
+            <table className='table UsersTable'>
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                {
+                  sortBy(prop('id'), users).map(user =>
+                    <tr>
+                      <td>
+                        {
+                          user.googleId === null ?
+                            <Label>{user.name}</Label>
+                            :
+                            <EditableLabel
+                              value={user.name}
+                              onEnter={name => this.onUpdateUserName(user.id, name)}
+                            />
+                        }
+                      </td>
+                      <td>
+                        {
+                          user.googleId === null ?
+                            <Label>{user.email}</Label>
+                            :
+                            <EditableLabel
+                              value={user.email}
+                              onEnter={email => this.onUpdateUserEmail(user.id, email)}
+                            />
+                        }
+                    </td>
+                      <td className='button-column'>
+                        {
+                          user.googleId !== null &&
+                            <Button
+                              flat
+                              square
+                              small
+                              icon='close'
+                              onClick={() => this.onDeleteUser(user.id)}
+                            />
+                        }
+                      </td>
+                    </tr>
+                  )
+                }
+                {
+                  users.length === 0 &&
+                    <tr className='empty'>
+                      <td colSpan='3'>
+                        No users yet
+                      </td>
+                    </tr>
+                }
+              </tbody>
+            </table>
+
+          </div>
+        </div>
 
       </section>
     )

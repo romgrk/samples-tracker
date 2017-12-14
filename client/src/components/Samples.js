@@ -108,13 +108,11 @@ class Samples extends React.Component {
     return (
       <section className='Samples vbox'>
 
-        <div className='row bg-dark border-left'>
+        <div className='HeaderBar no-border-bottom row'>
 
           <Title large keepCase muted>
             GenAP FOLLOW
           </Title>
-
-          <Gap fill={10} />
 
           { createSampleDropdown }
 

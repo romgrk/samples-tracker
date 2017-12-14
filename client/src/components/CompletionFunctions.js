@@ -10,6 +10,7 @@ import Gap from './Gap'
 import Icon from './Icon'
 import Label from './Label'
 import Spinner from './Spinner'
+import Title from './Title'
 
 class CompletionFunctions extends React.Component {
   constructor(props) {
@@ -141,47 +142,56 @@ class CompletionFunctions extends React.Component {
     return (
       <section className='CompletionFunctions hbox'>
 
-        <div className='CompletionFunctions__list list'>
-          <div className='group'>
-            Completion Functions
+        <div className='vbox'>
+          <div className='HeaderBar'>
+            <Title large keepCase muted>
+              GenAP FOLLOW
+            </Title>
           </div>
-          {
-            completionFunctions.map(({ isLoading, data: { id, name }}) =>
-              <a key={id} href='#'
-                className={'item' + (id === +selectedId ? ' active' : '')}
-                onClick={ev => (ev.preventDefault(), this.setSelectedFunction(id))}
-              >
-                <div className='content'>
-                  <Label inline>{ name }</Label>
+
+          <div className='CompletionFunctions__list list fill'>
+
+            <div className='group'>
+              Completion Functions
+            </div>
+            {
+              completionFunctions.map(({ isLoading, data: { id, name }}) =>
+                <a key={id} href='#'
+                  className={'item' + (id === +selectedId ? ' active' : '')}
+                  onClick={ev => (ev.preventDefault(), this.setSelectedFunction(id))}
+                >
+                  <div className='content'>
+                    <Label inline>{ name }</Label>
+                  </div>
+                  {
+                    isLoading &&
+                      <Spinner />
+                  }
+                  {
+                    !isLoading &&
+                      <Icon
+                        className='delete-icon'
+                        name='trash'
+                        onClick={() => this.deleteFunction(id)}
+                      />
+                  }
+                </a>
+              )
+            }
+            {
+              completionFunctions.length === 0 &&
+                <div className='item disabled'>
+                  <Label muted>
+                    No completion functions yet
+                  </Label>
                 </div>
-                {
-                  isLoading &&
-                    <Spinner />
-                }
-                {
-                  !isLoading &&
-                    <Icon
-                      className='delete-icon'
-                      name='trash'
-                      onClick={() => this.deleteFunction(id)}
-                    />
-                }
-              </a>
-            )
-          }
-          {
-            completionFunctions.length === 0 &&
-              <div className='item disabled'>
-                <Label muted>
-                  No completion functions yet
-                </Label>
-              </div>
-          }
-          <div className='separator' />
-          <div className='item'>
-            <Button info onClick={this.createFunction} loading={isCreating}>
-              Create
-            </Button>
+            }
+            <div className='separator' />
+            <div className='item'>
+              <Button info onClick={this.createFunction} loading={isCreating}>
+                Create
+              </Button>
+            </div>
           </div>
         </div>
 

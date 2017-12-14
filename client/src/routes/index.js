@@ -58,16 +58,11 @@ function Routes({ isLoggedIn, isLoggingIn, logOut, showFAQ }) {
             const activeItem = items.find(i => i.path === props.location.pathname)
 
             if (!activeItem || activeItem.title === undefined)
-              return <div/>
+              return null
 
             document.title = `Follow - ${activeItem.title}`
 
-            if (activeItem.showTitle === false)
-              return <div/>
-
-            return (
-              <h1 className='App__section'>{ activeItem.title }</h1>
-            )
+            return null
           } }/>
 
           <Switch>

@@ -8,6 +8,7 @@ import Button from './Button'
 import Input from './Input'
 import Label from './Label'
 import Template from './Template'
+import Title from './Title'
 
 
 function Templates({
@@ -29,6 +30,16 @@ function Templates({
 
   return (
     <section className='Templates'>
+
+      <div className='HeaderBar row'>
+        <Title large keepCase muted>
+          GenAP FOLLOW
+        </Title>
+
+        <Title large keepCase>
+          Templates
+        </Title>
+      </div>
 
       {
         templates.map(template =>
