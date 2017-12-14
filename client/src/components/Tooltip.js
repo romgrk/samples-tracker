@@ -150,7 +150,12 @@ class Tooltip extends React.Component {
     )
 
     const child = children
-    const childChildren = [...(child.props.children || [])]
+    const childChildren = !child.props.children ?
+        [] :
+      Array.isArray(child.props.children) ?
+        [...child.props.children] :
+        [child.props.children]
+
     childChildren.push(
       createPortal(
         <div className={tooltipClassName} style={this.state.style} ref={this.onRefElement}>
