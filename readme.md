@@ -72,6 +72,7 @@ back-end image (copying front-end files in it).
 ## Running
 
 You will need to create three directories:
+
 - `$DB_DATA_DIRECTORY`: This will contain the database data. It's an external
      volume that persits across docker restats.
 - `$FILES_DIRECTORY`: This will contain the database data. It's an external
