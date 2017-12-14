@@ -999,6 +999,7 @@ $step-width: 40px;
 }
 .Sample__steps > div {
   display: flex;
+  overflow: auto;
 }
 .Sample__created {
   width: 100px;
