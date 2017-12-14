@@ -45,15 +45,18 @@
 
 The first time, run:
 ```sh
-mkdir -p data/db
-mkdir -p data/files
+npm run setup
+# The command above will do:
+#  mkdir -p data/db
+#  mkdir -p data/files
+#  cp -r config data/config
 ```
 
 Then, let these 3 commands run in separate terminals:
 
 ```sh
-npm run watch-css
 npm run docker:dev
+cd client && npm run watch-css
 cd client && npm start
 ```
 
