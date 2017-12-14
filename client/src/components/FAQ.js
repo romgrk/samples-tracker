@@ -109,7 +109,7 @@ class FAQ extends React.Component {
           <Question>
             <Label medium>I have another question</Label>
             <Text medium block>
-              <Link href='mailto:romain.gregoire@mcgill.ca'>Contact us</Link>
+              <Link href='mailto:support@genap.ca'>Contact us</Link>
             </Text>
           </Question>
 
