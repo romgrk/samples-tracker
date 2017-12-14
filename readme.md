@@ -61,12 +61,11 @@ cd client && npm start
 ## Building
 
 ```sh
-npm run build
-docker-compose build
+npm run build:all
+# The command above runs the two below
+npm run build:client # builds front-end
+npm run build:server # builds back-end docker image
 ```
-
-`npm run build` builds the front-end, and `docker-compose build` builds the
-back-end image (copying front-end files in it).
 
 
 ## Running
@@ -100,16 +99,26 @@ export CONFIG_DIRECTORY="$(pwd)/data/config"
 export PORT=8080
 
 docker-compose run \
-  --detach \
-  --volume $DB_DATA_DIRECTORY:/var/lib/postgresql/data \
+  -d \
+  -v $DB_DATA_DIRECTORY:/var/lib/postgresql/data \
   db
 
 docker-compose run \
-  --detach \
-  --volume $CONFIG_DIRECTORY:/usr/etc \
-  --volume $FILES_DIRECTORY:/usr/share/app \
-  --publish $PORT:3000 \
+  -d \
+  -v $CONFIG_DIRECTORY:/usr/etc \
+  -v $FILES_DIRECTORY:/usr/share/app \
+  -p $PORT:3001 \
   web
+```
+
+
+## Quick setup
+
+```sh
+npm run setup # creates directories
+npm run build:all # builds everything
+npm run docker:db # starts database (doesnt run detached)
+npm run docker:web # starts app (doesnt run detached)
 ```
 
 ### Backups
