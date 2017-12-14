@@ -20,9 +20,9 @@ import SettingsContainer from '../containers/SettingsContainer'
 import TemplatesContainer from '../containers/TemplatesContainer'
 
 const items = [
-  { type: 'item', icon: 'cogs',  path: '/settings',  title: 'Settings' },
-  { type: 'item', icon: 'flask', path: '/samples',   title: 'Samples', showTitle: false },
-  { type: 'item', icon: 'list',  path: '/templates', title: 'Templates' },
+  { type: 'item', icon: 'cogs',  path: '/settings',    title: 'Settings' },
+  { type: 'item', icon: 'flask', path: '/samples',     title: 'Samples', showTitle: false },
+  { type: 'item', icon: 'list',  path: '/templates',   title: 'Templates' },
   { type: 'item', icon: 'code',  path: '/completions', title: 'Completion Functions', showTitle: false },
 ]
 
@@ -47,8 +47,8 @@ function Routes({ isLoggedIn, isLoggingIn, logOut, showFAQ }) {
               index={items.findIndex(i => props.location.pathname.startsWith(i.path))}
               items={items}
             >
-              <Sidebar.Button icon='question-circle' onClick={showFAQ} />
-              <Sidebar.Button icon='sign-out' onClick={logOut} />
+              <Sidebar.Button icon='question-circle' title='Help' onClick={showFAQ} />
+              <Sidebar.Button icon='sign-out'        title='Log Out' onClick={logOut} />
             </Sidebar>
 
           }/>

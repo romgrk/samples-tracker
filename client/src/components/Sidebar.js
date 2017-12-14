@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import classname from 'classname'
 
 import Icon from './Icon'
+import Tooltip from './Tooltip'
 
 /*{
    index: 0,
@@ -26,12 +27,13 @@ class Sidebar extends React.Component {
       <div className={ classname('Sidebar vbox', { visible }) }>
         {
           items.map((n, i) =>
-            <Link key={i} className={'Sidebar__item ' + (i === index ? 'active' : '')}
-              to={n.path}
-              title={n.title}
-            >
-              <Icon large name={n.icon} />
-            </Link>
+            <Tooltip content={n.title} position='right'>
+              <Link key={i} className={'Sidebar__item ' + (i === index ? 'active' : '')}
+                to={n.path}
+              >
+                <Icon large name={n.icon} />
+              </Link>
+            </Tooltip>
           )
         }
         <div className='fill' />
@@ -44,11 +46,20 @@ class Sidebar extends React.Component {
   }
 }
 
-Sidebar.Button = function({ icon, onClick, ...rest }) {
-  return (
+Sidebar.Button = function({ icon, title, onClick, ...rest }) {
+  const element = (
     <button className='Sidebar__item' onClick={onClick} {...rest}>
       <Icon large name={icon} />
     </button>
+  )
+
+  if (!title)
+    return element
+
+  return (
+    <Tooltip content={title} position='right'>
+      { element }
+    </Tooltip>
   )
 }
 
