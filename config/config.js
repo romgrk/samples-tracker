@@ -6,7 +6,9 @@ const path = require('path')
 
 module.exports = {
   paths: {
-    files: path.join(__dirname, 'data', 'files'),
+    /* Do not modify this */
+    files: process.env.FILES_DIRECTORY || path.join(__dirname, 'data', 'files'),
+    /* process.env.FILES_DIRECTORY is only set in the production docker image. */
   },
   google: {
     auth: {

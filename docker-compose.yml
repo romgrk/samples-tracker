@@ -19,4 +19,5 @@ services:
       PGDATABASE: postgres
       PGUSER: postgres
       PGPASSWORD: postgres
+      FILES_DIRECTORY: /usr/share/app
     command: ["sh", "-c", "sleep 3; npm run start"]
