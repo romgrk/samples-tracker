@@ -3,6 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
+    "postinstall": "cd client && npm install",
+
     "setup": "mkdir -p data/db && mkdir -p data/files && cp -r config data/config",
 
     "start": "node ./bin/www",
